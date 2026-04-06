@@ -4,8 +4,8 @@ namespace App\Model;
 
 class VetClinica {
      private $VetCli_id;
-    private $fk_vet_id;
-    private $fk_cli_id;
+    private $fk_veterinario_id;
+    private $fk_clinica_id;
 
     public __get($nome) {
         return $this->$nome;
