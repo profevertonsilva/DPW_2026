@@ -8,7 +8,6 @@ class AnimalModel {
     private $anl_nome;
     private $anl_sexo;
     private $anl_dn;
-    private $fk_especie;
 
     public function __get($nome) {
         return $this->$nome;
