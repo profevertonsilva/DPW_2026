@@ -12,11 +12,11 @@ class HistoricoAnimalModel {
     private $fk_ong_id;
     private $fk_veterinario_id;
 
-    public __get($nome) {
+    public function __get($nome) {
         return $this->$nome;
     }
 
-    public __set($nome, $valor) {
+    public function __set($nome, $valor) {
         $this->$nome = $valor;
     }
     

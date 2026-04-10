@@ -8,11 +8,11 @@ class RacaModel {
     private $raca_nome;
     private $fk_especie_id;
 
-    public __get($nome) {
+    public function __get($nome) {
         return $this->$nome;
     }
 
-    public __set($nome, $valor) {
+    public function __set($nome, $valor) {
         $this->$nome = $valor;
     }
 }

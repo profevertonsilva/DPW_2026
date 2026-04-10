@@ -8,7 +8,6 @@ class ClinicaModel {
     private $cln_nome;
     private $cln_cep;
     private $cln_estado;
-    private $cln_cidade;
     private $cln_bairro;
     private $cln_logradouro;
     private $cln_cidade;
@@ -18,11 +17,11 @@ class ClinicaModel {
     private $cln_tel2;
 
 
-    public __get($nome) {
+    public function __get($nome) {
         return $this->$nome;
     }
 
-    public __set($nome, $valor) {
+    public function __set($nome, $valor) {
         $this->$nome = $valor;
     }
 }
