@@ -71,8 +71,16 @@ class AdotanteDAO extends DAO
         $stmt->bindValue('adt_status', $adt_status);
         $stmt->excecute();
     }
-    
-    public  function excluir($obj) {}
+
+    public  function excluir($obj) {
+        $adt_id = $obj->__get("adt_id");
+
+        $sql = "DELETE FROM adotante WHERE id = :adt_id";
+
+        $stmt = $this->getConn()->prepare($sql);
+        $stmt->bindValue("id", $adt_id);
+        $stmt->execute();
+    }
     public  function alterar($obj) {}
     public  function buscarPorId($obj) {}
     public  function listar() {}
