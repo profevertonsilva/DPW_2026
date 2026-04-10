@@ -27,36 +27,35 @@ class AdotanteDAO extends DAO
             $adt_status = $obj->__get("adt_status");
 
 
-            $sql = "INSERT INTO adotante 
-        (
-            nome
-            cpf
-            dn
-            cep
-            estado
-            cidade
-            bairro
-            logradouro
-            numero
-            complemento
-            tel1
-            tel2
-            status
-         ) VALUES (
-            :adt_nome
-            :adt_cpf
-            :adt_dn
-            :adt_cep
-            :adt_estado
-            :adt_cidade
-            :adt_bairro
-            :adt_logradouro
-            :adt_numero
-            :adt_complemento
-            :adt_tel1
-            :adt_tel2
-            :adt_status
-         )";
+            $sql = "INSERT INTO adotante (
+                nome
+                cpf
+                dn
+                cep
+                estado
+                cidade
+                bairro
+                logradouro
+                numero
+                complemento
+                tel1
+                tel2
+                status
+            ) VALUES (
+                :adt_nome
+                :adt_cpf
+                :adt_dn
+                :adt_cep
+                :adt_estado
+                :adt_cidade
+                :adt_bairro
+                :adt_logradouro
+                :adt_numero
+                :adt_complemento
+                :adt_tel1
+                :adt_tel2
+                :adt_status
+            )";
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue('adt_nome', $adt_nome);
