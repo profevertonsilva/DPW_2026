@@ -4,7 +4,7 @@ namespace App\Model;
 
 class EspecieModel {
     private $esp_id;
-    private $nome_id;
+    private $esp_nome;
 
     public function __get($nome) {
         return $this->$nome;

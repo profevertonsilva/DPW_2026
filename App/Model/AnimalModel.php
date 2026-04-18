@@ -4,10 +4,10 @@ namespace App\Model;
 
 class AnimalModel {
 
-    private $anl_id;
-    private $anl_nome;
-    private $anl_sexo;
-    private $anl_dn;
+    private $ani_id;
+    private $ani_nome;
+    private $ani_sexo;
+    private $ani_data_nascimento;
 
     public function __get($nome) {
         return $this->$nome;
