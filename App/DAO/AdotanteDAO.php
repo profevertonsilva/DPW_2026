@@ -215,6 +215,43 @@ class AdotanteDAO extends DAO
             die();
         }
     }
-    public  function buscarPorId($obj) {}
+    public  function buscarPorId($obj)
+    {
+        try {
+            $adt_id = $obj->__get("adt_id");
+
+            $sql = "SELECT * 
+            FROM Adotante
+            WHERE id = :adt_id";
+
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue('adt_id', $adt_id);
+            $stmt->execute();
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($resultado > 0) {
+                $AdotanteModel = new AdotanteModel();
+                $AdotanteModel->__set('adt_id', $resultado['id']);
+                $AdotanteModel->__set('adt_nome', $resultado['nome']);
+                $AdotanteModel->__set('adt_cpf', $resultado['cpf']);
+                $AdotanteModel->__set('adt_dn', $resultado['data_nascimento']);
+                $AdotanteModel->__set('adt_cep', $resultado['cep']);
+                $AdotanteModel->__set('adt_estado', $resultado['numero']);
+                $AdotanteModel->__set('adt_cidade', $resultado['cidade']);
+                $AdotanteModel->__set('adt_bairro', $resultado['bairro']);
+                $AdotanteModel->__set('adt_logradouro', $resultado['logradouro']);
+                $AdotanteModel->__set('adt_numero', $resultado['numero']);
+                $AdotanteModel->__set('adt_complemento', $resultado['complemento']);
+                $AdotanteModel->__set('adt_tel1', $resultado['telefone_1']);
+                $AdotanteModel->__set('adt_tel2', $resultado['telefone_2']);
+                $AdotanteModel->__set('adt_status', $resultado['status']);
+                return $AdotanteModel;
+            }
+
+            return false;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
+    }
     public  function listar() {}
 }
