@@ -73,7 +73,7 @@ class AdotanteDAO extends DAO
     //         $stmt->bindValue('adt_tel1', $adt_tel1);
     //         $stmt->bindValue('adt_tel2', $adt_tel2);
     //         $stmt->bindValue('adt_status', $adt_status);
-    //         $stmt->excecute();
+    //         $stmt->execute();
     //     } catch (\PDOException $ex) {
     //         header('Location:/error103');
     //         die();
@@ -142,7 +142,7 @@ class AdotanteDAO extends DAO
             $stmt->bindValue('adt_tel1', $adt_tel1);
             $stmt->bindValue('adt_tel2', $adt_tel2);
             $stmt->bindValue('adt_status', $adt_status);
-            $stmt->excecute();
+            $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
@@ -209,7 +209,7 @@ class AdotanteDAO extends DAO
             $stmt->bindValue('adt_tel1', $adt_tel1);
             $stmt->bindValue('adt_tel2', $adt_tel2);
             $stmt->bindValue('adt_status', $adt_status);
-            $stmt->excecute();
+            $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
