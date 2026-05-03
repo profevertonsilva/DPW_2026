@@ -253,5 +253,37 @@ class AdotanteDAO extends DAO
             die();
         }
     }
-    public  function listar() {}
+    public function listar() {
+        try {
+            $adotantes = array();
+
+            $sql = "SELECT 
+                a.*,
+                l.email
+            FROM 
+                adotante a,
+                login l
+            WHERE
+                a.fk_login_log_id = l.id
+            ";
+
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            foreach($resultado as $row) {
+                $adotanteModel = new AdotanteModel();
+
+                $global = new FuncoesGlobais();
+                $global->popularModel($adotanteModel, $row);
+
+                array_push($adotantes, $adotanteModel);
+            }
+
+            return $adotantes;
+
+        }catch(\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }   
+    }
 }
