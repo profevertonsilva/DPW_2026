@@ -99,33 +99,33 @@ class AdotanteDAO extends DAO
 
 
             $sql = "INSERT INTO adotante (
-                nome
-                cpf
-                dn
-                cep
-                estado
-                cidade
-                bairro
-                logradouro
-                numero
-                complemento
-                tel1
-                tel2
+                nome,
+                cpf,
+                dn,
+                cep,
+                estado,
+                cidade,
+                bairro,
+                logradouro,
+                numero,
+                complemento,
+                tel1,
+                tel2,
                 status
             ) VALUES (
-                :adt_nome
-                :adt_cpf
-                :adt_dn
-                :adt_cep
-                :adt_estado
-                :adt_cidade
-                :adt_bairro
-                :adt_logradouro
-                :adt_numero
-                :adt_complemento
-                :adt_tel1
-                :adt_tel2
-                :adt_status
+                :adt_nome,
+                :adt_cpf,
+                :adt_dn,
+                :adt_cep,
+                :adt_estado,
+                :adt_cidade,
+                :adt_bairro,
+                :adt_logradouro,
+                :adt_numero,
+                :adt_complemento,
+                :adt_tel1,
+                :adt_tel2,
+                :adt_status,
             )";
 
             $stmt = $this->getConn()->prepare($sql);
@@ -149,14 +149,14 @@ class AdotanteDAO extends DAO
         }
     }
 
-    public  function excluir($obj)
+    public  function excluir($id)
     {
-        $adt_id = $obj->__get("adt_id");
+        
 
         $sql = "DELETE FROM adotante WHERE id = :adt_id";
 
         $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue("id", $adt_id);
+        $stmt->bindValue("id", $id);
         $stmt->execute();
     }
     public  function alterar($obj)
@@ -215,17 +215,15 @@ class AdotanteDAO extends DAO
             die();
         }
     }
-    public  function buscarPorId($obj)
+    public  function buscarPorId($id)
     {
         try {
-            $adt_id = $obj->__get("adt_id");
-
             $sql = "SELECT * 
             FROM Adotante
             WHERE id = :adt_id";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue('adt_id', $adt_id);
+            $stmt->bindValue('adt_id', $id);
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
             if ($resultado > 0) {
@@ -269,7 +267,7 @@ class AdotanteDAO extends DAO
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->execute();
-            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $resultado = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             foreach($resultado as $row) {
                 $adotanteModel = new AdotanteModel();
 
