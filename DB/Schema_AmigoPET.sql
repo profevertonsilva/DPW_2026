@@ -256,3 +256,13 @@ alter table rastreador add numero int(11);
 
 -- Alteração de nome errado na tabela do veterinario
 alter table veterinario change crvm crmv VARCHAR(8);
+
+-- Alteração da tabela Login, remoção das Fk desnecessarias do login
+alter table login 
+drop column fk_adotante_id,
+drop column fk_rastreador_id,
+drop column fk_ong_id,
+drop column fk_administrador_id,
+drop column fk_veterinario_id;
+
+
