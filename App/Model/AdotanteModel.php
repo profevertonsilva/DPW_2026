@@ -4,20 +4,20 @@ namespace App\Model;
 
 class AdotanteModel {
 
-    private $adt_id;
-    private $adt_nome;
-    private $adt_cpf;
-    private $adt_dn;
-    private $adt_cep;
-    private $adt_estado;
-    private $adt_cidade;
-    private $adt_bairro;
-    private $adt_logradouro;
-    private $adt_numero;
-    private $adt_complemento;
-    private $adt_tel1;
-    private $adt_tel2;
-    private $adt_status;
+    private $id;
+    private $nome;
+    private $cpf;
+    private $dn;
+    private $cep;
+    private $estado;
+    private $cidade;
+    private $bairro;
+    private $logradouro;
+    private $numero;
+    private $complemento;
+    private $telefone_1;
+    private $telefone_2;
+    private $status;
     private $fk_login_id;
 
     public function __set($nome, $valor) {
