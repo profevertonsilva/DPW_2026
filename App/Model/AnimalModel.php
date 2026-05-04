@@ -21,8 +21,6 @@ class AnimalModel
     private $ani_castrado;
     private $ani_foto;
     private $ani_descricao;
-    private $ani_fk_especie_id;
-
 
     public function __get($nome)
     {
