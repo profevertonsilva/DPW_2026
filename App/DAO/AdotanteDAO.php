@@ -225,22 +225,12 @@ class AdotanteDAO extends DAO
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
             if ($resultado > 0) {
-                $AdotanteModel = new AdotanteModel();
-                $AdotanteModel->__set('id', $resultado['id']);
-                $AdotanteModel->__set('nome', $resultado['nome']);
-                $AdotanteModel->__set('cpf', $resultado['cpf']);
-                $AdotanteModel->__set('data_nascimento', $resultado['data_nascimento']);
-                $AdotanteModel->__set('cep', $resultado['cep']);
-                $AdotanteModel->__set('estado', $resultado['numero']);
-                $AdotanteModel->__set('cidade', $resultado['cidade']);
-                $AdotanteModel->__set('bairro', $resultado['bairro']);
-                $AdotanteModel->__set('logradouro', $resultado['logradouro']);
-                $AdotanteModel->__set('numero', $resultado['numero']);
-                $AdotanteModel->__set('complemento', $resultado['complemento']);
-                $AdotanteModel->__set('telefone_1', $resultado['telefone_1']);
-                $AdotanteModel->__set('telefone_2', $resultado['telefone_2']);
-                $AdotanteModel->__set('status', $resultado['status']);
-                return $AdotanteModel;
+                $adotanteModel = new AdotanteModel();
+
+                $global = new FuncoesGlobais();
+                $global->popularModel($adotanteModel, $resultado);
+
+                return $adotanteModel;
             }
 
             return false;
@@ -249,7 +239,8 @@ class AdotanteDAO extends DAO
             die();
         }
     }
-    public function listar() {
+    public function listar()
+    {
         try {
             $adotantes = array();
 
@@ -267,7 +258,7 @@ class AdotanteDAO extends DAO
             $stmt = $this->getConn()->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            foreach($resultado as $row) {
+            foreach ($resultado as $row) {
                 $adotanteModel = new AdotanteModel();
 
                 $global = new FuncoesGlobais();
@@ -277,10 +268,9 @@ class AdotanteDAO extends DAO
             }
 
             return $adotantes;
-
-        }catch(\PDOException $ex) {
+        } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
-        }   
+        }
     }
 }
