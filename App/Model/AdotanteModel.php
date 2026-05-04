@@ -7,7 +7,7 @@ class AdotanteModel {
     private $id;
     private $nome;
     private $cpf;
-    private $dn;
+    private $data_nascimento;
     private $cep;
     private $estado;
     private $cidade;
