@@ -258,8 +258,9 @@ class AdotanteDAO extends DAO
                 l.email
             FROM 
                 adotante a,
-                login l
-            WHERE
+            JOIN 
+                login l 
+            ON 
                 a.fk_login_id = l.id
             ";
 
