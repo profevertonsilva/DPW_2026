@@ -18,7 +18,7 @@ class AdotanteModel {
     private $adt_tel1;
     private $adt_tel2;
     private $adt_status;
-    private $fk_login_log_id;
+    private $fk_login_id;
 
     public function __set($nome, $valor) {
         $this->$nome = $valor;
