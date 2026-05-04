@@ -260,7 +260,7 @@ class AdotanteDAO extends DAO
                 adotante a,
                 login l
             WHERE
-                a.fk_login_log_id = l.id
+                a.fk_login_id = l.id
             ";
 
             $stmt = $this->getConn()->prepare($sql);
