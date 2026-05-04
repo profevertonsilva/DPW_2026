@@ -265,4 +265,12 @@ drop column fk_ong_id,
 drop column fk_administrador_id,
 drop column fk_veterinario_id;
 
+-- Alteração da tabela Adotante, adicionando a Fk do Login
+Alter table adotante 
+add fk_login_id int(11) NOT NULL;
+Alter table adotante 
+add constraint fk_adotante_login
+ foreign key(fk_login_id)
+ references login(id);
+
 
