@@ -125,7 +125,7 @@ class AdotanteDAO extends DAO
                 :adt_complemento,
                 :adt_tel1,
                 :adt_tel2,
-                :adt_status,
+                :adt_status
             )";
 
             $stmt = $this->getConn()->prepare($sql);
@@ -151,12 +151,10 @@ class AdotanteDAO extends DAO
 
     public  function excluir($id)
     {
-        
-
         $sql = "DELETE FROM adotante WHERE id = :adt_id";
 
         $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue("id", $id);
+        $stmt->bindValue(":adt_id", $id);
         $stmt->execute();
     }
     public  function alterar($obj)
