@@ -9,30 +9,30 @@ use FW\Controller\FuncoesGlobais;
 class AdotanteDAO extends DAO
 {
     /**
-     * Mapeia colunas do banco (sem prefixo) para propriedades do Model (com prefixo adt_)
+     * Mapeia colunas do banco (sem prefixo) para propriedades do Model (com prefixo )
      */
     // private function mapRowToModel(array $row): AdotanteModel
     // {
     //     try {
-    //         $adt_nome = $obj->__get("adt_nome");
-    //         $adt_cpf = $obj->__get("adt_cpf");
-    //         $adt_dn = $obj->__get("adt_dn");
-    //         $adt_cep = $obj->__get("adt_cep");
-    //         $adt_estado = $obj->__get("adt_estado");
-    //         $adt_cidade = $obj->__get("adt_cidade");
-    //         $adt_bairro = $obj->__get("adt_bairro");
-    //         $adt_logradouro = $obj->__get("adt_logradouro");
-    //         $adt_numero = $obj->__get("adt_numero");
-    //         $adt_complemento = $obj->__get("adt_complemento");
-    //         $adt_tel1 = $obj->__get("adt_tel1");
-    //         $adt_tel2 = $obj->__get("adt_tel2");
-    //         $adt_status = $obj->__get("adt_status");
+    //         $nome = $obj->__get("nome");
+    //         $cpf = $obj->__get("cpf");
+    //         $data_nascimento = $obj->__get("data_nascimento");
+    //         $cep = $obj->__get("cep");
+    //         $estado = $obj->__get("estado");
+    //         $cidade = $obj->__get("cidade");
+    //         $bairro = $obj->__get("bairro");
+    //         $logradouro = $obj->__get("logradouro");
+    //         $numero = $obj->__get("numero");
+    //         $complemento = $obj->__get("complemento");
+    //         $telefone_1 = $obj->__get("telefone_1");
+    //         $telefone_2 = $obj->__get("telefone_2");
+    //         $status = $obj->__get("status");
 
 
     //         $sql = "INSERT INTO adotante (
     //             nome
     //             cpf
-    //             dn
+    //             data_nascimento
     //             cep
     //             estado
     //             cidade
@@ -40,39 +40,39 @@ class AdotanteDAO extends DAO
     //             logradouro
     //             numero
     //             complemento
-    //             tel1
-    //             tel2
+    //             telefone_1
+    //             telefone_2
     //             status
     //         ) VALUES (
-    //             :adt_nome
-    //             :adt_cpf
-    //             :adt_dn
-    //             :adt_cep
-    //             :adt_estado
-    //             :adt_cidade
-    //             :adt_bairro
-    //             :adt_logradouro
-    //             :adt_numero
-    //             :adt_complemento
-    //             :adt_tel1
-    //             :adt_tel2
-    //             :adt_status
+    //             :nome
+    //             :cpf
+    //             :data_nascimento
+    //             :cep
+    //             :estado
+    //             :cidade
+    //             :bairro
+    //             :logradouro
+    //             :numero
+    //             :complemento
+    //             :telefone_1
+    //             :telefone_2
+    //             :status
     //         )";
 
     //         $stmt = $this->getConn()->prepare($sql);
-    //         $stmt->bindValue('adt_nome', $adt_nome);
-    //         $stmt->bindValue('adt_cpf', $adt_cpf);
-    //         $stmt->bindValue('adt_dn', $adt_dn);
-    //         $stmt->bindValue('adt_cep', $adt_cep);
-    //         $stmt->bindValue('adt_estado', $adt_estado);
-    //         $stmt->bindValue('adt_cidade', $adt_cidade);
-    //         $stmt->bindValue('adt_bairro', $adt_bairro);
-    //         $stmt->bindValue('adt_logradouro', $adt_logradouro);
-    //         $stmt->bindValue('adt_numero', $adt_numero);
-    //         $stmt->bindValue('adt_complemento', $adt_complemento);
-    //         $stmt->bindValue('adt_tel1', $adt_tel1);
-    //         $stmt->bindValue('adt_tel2', $adt_tel2);
-    //         $stmt->bindValue('adt_status', $adt_status);
+    //         $stmt->bindValue('nome', $nome);
+    //         $stmt->bindValue('cpf', $cpf);
+    //         $stmt->bindValue('data_nascimento', $data_nascimento);
+    //         $stmt->bindValue('cep', $cep);
+    //         $stmt->bindValue('estado', $estado);
+    //         $stmt->bindValue('cidade', $cidade);
+    //         $stmt->bindValue('bairro', $bairro);
+    //         $stmt->bindValue('logradouro', $logradouro);
+    //         $stmt->bindValue('numero', $numero);
+    //         $stmt->bindValue('complemento', $complemento);
+    //         $stmt->bindValue('telefone_1', $telefone_1);
+    //         $stmt->bindValue('telefone_2', $telefone_2);
+    //         $stmt->bindValue('status', $status);
     //         $stmt->execute();
     //     } catch (\PDOException $ex) {
     //         header('Location:/error103');
@@ -83,25 +83,25 @@ class AdotanteDAO extends DAO
     public function inserir($obj)
     {
         try {
-            $adt_nome = $obj->__get("adt_nome");
-            $adt_cpf = $obj->__get("adt_cpf");
-            $adt_dn = $obj->__get("adt_dn");
-            $adt_cep = $obj->__get("adt_cep");
-            $adt_estado = $obj->__get("adt_estado");
-            $adt_cidade = $obj->__get("adt_cidade");
-            $adt_bairro = $obj->__get("adt_bairro");
-            $adt_logradouro = $obj->__get("adt_logradouro");
-            $adt_numero = $obj->__get("adt_numero");
-            $adt_complemento = $obj->__get("adt_complemento");
-            $adt_tel1 = $obj->__get("adt_tel1");
-            $adt_tel2 = $obj->__get("adt_tel2");
-            $adt_status = $obj->__get("adt_status");
+            $nome = $obj->__get("nome");
+            $cpf = $obj->__get("cpf");
+            $data_nascimento = $obj->__get("data_nascimento");
+            $cep = $obj->__get("cep");
+            $estado = $obj->__get("estado");
+            $cidade = $obj->__get("cidade");
+            $bairro = $obj->__get("bairro");
+            $logradouro = $obj->__get("logradouro");
+            $numero = $obj->__get("numero");
+            $complemento = $obj->__get("complemento");
+            $telefone_1 = $obj->__get("telefone_1");
+            $telefone_2 = $obj->__get("telefone_2");
+            $status = $obj->__get("status");
 
 
             $sql = "INSERT INTO adotante (
                 nome,
                 cpf,
-                dn,
+                data_nascimento,
                 cep,
                 estado,
                 cidade,
@@ -109,39 +109,39 @@ class AdotanteDAO extends DAO
                 logradouro,
                 numero,
                 complemento,
-                tel1,
-                tel2,
+                telefone_1,
+                telefone_2,
                 status
             ) VALUES (
-                :adt_nome,
-                :adt_cpf,
-                :adt_dn,
-                :adt_cep,
-                :adt_estado,
-                :adt_cidade,
-                :adt_bairro,
-                :adt_logradouro,
-                :adt_numero,
-                :adt_complemento,
-                :adt_tel1,
-                :adt_tel2,
-                :adt_status
+                :nome,
+                :cpf,
+                :data_nascimento,
+                :cep,
+                :estado,
+                :cidade,
+                :bairro,
+                :logradouro,
+                :numero,
+                :complemento,
+                :telefone_1,
+                :telefone_2,
+                :status
             )";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue('adt_nome', $adt_nome);
-            $stmt->bindValue('adt_cpf', $adt_cpf);
-            $stmt->bindValue('adt_dn', $adt_dn);
-            $stmt->bindValue('adt_cep', $adt_cep);
-            $stmt->bindValue('adt_estado', $adt_estado);
-            $stmt->bindValue('adt_cidade', $adt_cidade);
-            $stmt->bindValue('adt_bairro', $adt_bairro);
-            $stmt->bindValue('adt_logradouro', $adt_logradouro);
-            $stmt->bindValue('adt_numero', $adt_numero);
-            $stmt->bindValue('adt_complemento', $adt_complemento);
-            $stmt->bindValue('adt_tel1', $adt_tel1);
-            $stmt->bindValue('adt_tel2', $adt_tel2);
-            $stmt->bindValue('adt_status', $adt_status);
+            $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':cpf', $cpf);
+            $stmt->bindValue(':data_nascimento', $data_nascimento);
+            $stmt->bindValue(':cep', $cep);
+            $stmt->bindValue(':estado', $estado);
+            $stmt->bindValue(':cidade', $cidade);
+            $stmt->bindValue(':bairro', $bairro);
+            $stmt->bindValue(':logradouro', $logradouro);
+            $stmt->bindValue(':numero', $numero);
+            $stmt->bindValue(':complemento', $complemento);
+            $stmt->bindValue(':telefone_1', $telefone_1);
+            $stmt->bindValue(':telefone_2', $telefone_2);
+            $stmt->bindValue(':status', $status);
             $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
@@ -151,62 +151,62 @@ class AdotanteDAO extends DAO
 
     public  function excluir($id)
     {
-        $sql = "DELETE FROM adotante WHERE id = :adt_id";
+        $sql = "DELETE FROM adotante WHERE id = :id";
 
         $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":adt_id", $id);
+        $stmt->bindValue(":id", $id);
         $stmt->execute();
     }
     public  function alterar($obj)
     {
         try {
-            $adt_id = $obj->__get("adt_id");
-            $adt_nome = $obj->__get("adt_nome");
-            $adt_cpf = $obj->__get("adt_cpf");
-            $adt_dn = $obj->__get("adt_dn");
-            $adt_cep = $obj->__get("adt_cep");
-            $adt_estado = $obj->__get("adt_estado");
-            $adt_cidade = $obj->__get("adt_cidade");
-            $adt_bairro = $obj->__get("adt_bairro");
-            $adt_logradouro = $obj->__get("adt_logradouro");
-            $adt_numero = $obj->__get("adt_numero");
-            $adt_complemento = $obj->__get("adt_complemento");
-            $adt_tel1 = $obj->__get("adt_tel1");
-            $adt_tel2 = $obj->__get("adt_tel2");
-            $adt_status = $obj->__get("adt_status");
+            $id = $obj->__get("id");
+            $nome = $obj->__get("nome");
+            $cpf = $obj->__get("cpf");
+            $data_nascimento = $obj->__get("data_nascimento");
+            $cep = $obj->__get("cep");
+            $estado = $obj->__get("estado");
+            $cidade = $obj->__get("cidade");
+            $bairro = $obj->__get("bairro");
+            $logradouro = $obj->__get("logradouro");
+            $numero = $obj->__get("numero");
+            $complemento = $obj->__get("complemento");
+            $telefone_1 = $obj->__get("telefone_1");
+            $telefone_2 = $obj->__get("telefone_2");
+            $status = $obj->__get("status");
 
             $sql = "UPDATE adotante as a
                 SET 
-                nome = :adt_nome,
-                cpf = :adt_cpf,
-                data_nascimento = :adt_dn,
-                cep = :adt_cep,
-                estado = :adt_estado,
-                cidade = :adt_cidade,
-                bairro = :adt_bairro,
-                logradouro = :adt_logradouro,
-                numero = :adt_numero,
-                complemento = :adt_complemento,
-                tel1 = :adt_tel1,
-                tel2 = :adt_tel2,
-                `status` = :adt_status
-            WHERE id = :adt_id";
+                nome = :nome,
+                cpf = :cpf,
+                data_nascimento = :data_nascimento,
+                cep = :cep,
+                estado = :estado,
+                cidade = :cidade,
+                bairro = :bairro,
+                logradouro = :logradouro,
+                numero = :numero,
+                complemento = :complemento,
+                telefone_1 = :telefone_1,
+                telefone_2 = :telefone_2,
+                `status` = :status
+            WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue('adt_id', $adt_id);
-            $stmt->bindValue('adt_nome', $adt_nome);
-            $stmt->bindValue('adt_cpf', $adt_cpf);
-            $stmt->bindValue('adt_dn', $adt_dn);
-            $stmt->bindValue('adt_cep', $adt_cep);
-            $stmt->bindValue('adt_estado', $adt_estado);
-            $stmt->bindValue('adt_cidade', $adt_cidade);
-            $stmt->bindValue('adt_bairro', $adt_bairro);
-            $stmt->bindValue('adt_logradouro', $adt_logradouro);
-            $stmt->bindValue('adt_numero', $adt_numero);
-            $stmt->bindValue('adt_complemento', $adt_complemento);
-            $stmt->bindValue('adt_tel1', $adt_tel1);
-            $stmt->bindValue('adt_tel2', $adt_tel2);
-            $stmt->bindValue('adt_status', $adt_status);
+            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':cpf', $cpf);
+            $stmt->bindValue(':data_nascimento', $data_nascimento);
+            $stmt->bindValue(':cep', $cep);
+            $stmt->bindValue(':estado', $estado);
+            $stmt->bindValue(':cidade', $cidade);
+            $stmt->bindValue(':bairro', $bairro);
+            $stmt->bindValue(':logradouro', $logradouro);
+            $stmt->bindValue(':numero', $numero);
+            $stmt->bindValue(':complemento', $complemento);
+            $stmt->bindValue(':telefone_1', $telefone_1);
+            $stmt->bindValue(':telefone_2', $telefone_2);
+            $stmt->bindValue(':status', $status);
             $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
@@ -218,28 +218,28 @@ class AdotanteDAO extends DAO
         try {
             $sql = "SELECT * 
             FROM Adotante
-            WHERE id = :adt_id";
+            WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue('adt_id', $id);
+            $stmt->bindValue(':id', $id);
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
             if ($resultado > 0) {
                 $AdotanteModel = new AdotanteModel();
-                $AdotanteModel->__set('adt_id', $resultado['id']);
-                $AdotanteModel->__set('adt_nome', $resultado['nome']);
-                $AdotanteModel->__set('adt_cpf', $resultado['cpf']);
-                $AdotanteModel->__set('adt_dn', $resultado['data_nascimento']);
-                $AdotanteModel->__set('adt_cep', $resultado['cep']);
-                $AdotanteModel->__set('adt_estado', $resultado['numero']);
-                $AdotanteModel->__set('adt_cidade', $resultado['cidade']);
-                $AdotanteModel->__set('adt_bairro', $resultado['bairro']);
-                $AdotanteModel->__set('adt_logradouro', $resultado['logradouro']);
-                $AdotanteModel->__set('adt_numero', $resultado['numero']);
-                $AdotanteModel->__set('adt_complemento', $resultado['complemento']);
-                $AdotanteModel->__set('adt_tel1', $resultado['telefone_1']);
-                $AdotanteModel->__set('adt_tel2', $resultado['telefone_2']);
-                $AdotanteModel->__set('adt_status', $resultado['status']);
+                $AdotanteModel->__set('id', $resultado['id']);
+                $AdotanteModel->__set('nome', $resultado['nome']);
+                $AdotanteModel->__set('cpf', $resultado['cpf']);
+                $AdotanteModel->__set('data_nascimento', $resultado['data_nascimento']);
+                $AdotanteModel->__set('cep', $resultado['cep']);
+                $AdotanteModel->__set('estado', $resultado['numero']);
+                $AdotanteModel->__set('cidade', $resultado['cidade']);
+                $AdotanteModel->__set('bairro', $resultado['bairro']);
+                $AdotanteModel->__set('logradouro', $resultado['logradouro']);
+                $AdotanteModel->__set('numero', $resultado['numero']);
+                $AdotanteModel->__set('complemento', $resultado['complemento']);
+                $AdotanteModel->__set('telefone_1', $resultado['telefone_1']);
+                $AdotanteModel->__set('telefone_2', $resultado['telefone_2']);
+                $AdotanteModel->__set('status', $resultado['status']);
                 return $AdotanteModel;
             }
 
