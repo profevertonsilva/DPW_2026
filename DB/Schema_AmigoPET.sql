@@ -6,12 +6,7 @@ create table login (
     tipo_usuario enum('administrador', 'ong', 'rastreador', 'adotante', 'veterinario'),
     email varchar(255),
     senha varchar(50),
-    status enum('a', 'i'),
-    fk_adotante_id int(11),
-    fk_rastreador_id int(11),
-    fk_ong_id int(11),
-    fk_administrador_id int(11),
-    fk_veterinario_id int(11)
+    status enum('a', 'i')
 );
 
 create table administrador (
@@ -256,14 +251,6 @@ alter table rastreador add numero int(11);
 
 -- Alteração de nome errado na tabela do veterinario
 alter table veterinario change crvm crmv VARCHAR(8);
-
--- Alteração da tabela Login, remoção das Fk desnecessarias do login
-alter table login 
-drop column fk_adotante_id,
-drop column fk_rastreador_id,
-drop column fk_ong_id,
-drop column fk_administrador_id,
-drop column fk_veterinario_id;
 
 -- Alteração da tabela Adotante, adicionando a Fk do Login
 Alter table adotante 
