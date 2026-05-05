@@ -17,26 +17,26 @@ class SolicitacaoAdocaoDAO extends DAO {
 
             $sql = "INSERT INTO solicitacaoadocao 
             (
-                $solAdc_data
-                $solAdc_status
-                $solAdc_motivo
-                $fk_adotante_id
-                $fk_animal_id
+                data,
+                status,
+                motivo,
+                fk_adotante_id,
+                fk_animal_id
             ) VALUES (
-                :solAdc_data
-                :solAdc_status
-                :solAdc_motivo
-                :fk_adotante_id
+                :solAdc_data,
+                :solAdc_status,
+                :solAdc_motivo,
+                :fk_adotante_id,
                 :fk_animal_id
             )";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue('solAdc_data', $solAdc_data);
-            $stmt->bindValue('solAdc_status', $solAdc_status);
-            $stmt->bindValue('solAdc_motivo', $solAdc_motivo);
-            $stmt->bindValue('fk_adotante_id', $fk_adotante_id);
-            $stmt->bindValue('fk_animal_id', $fk_animal_id);
-            $stmt->excecute();
+            $stmt->bindValue(':solAdc_data', $solAdc_data);
+            $stmt->bindValue(':solAdc_status', $solAdc_status);
+            $stmt->bindValue(':solAdc_motivo', $solAdc_motivo);
+            $stmt->bindValue(':fk_adotante_id', $fk_adotante_id);
+            $stmt->bindValue(':fk_animal_id', $fk_animal_id);
+            $stmt->execute();
         }
         catch(\PDOException $ex) {
             header('Location:/error103');
