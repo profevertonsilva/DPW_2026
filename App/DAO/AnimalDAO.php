@@ -1,6 +1,8 @@
 <?php
 /*
  * @Author marcus rito
+ * 
+ * Data: 04/05/2026
  */
 
 namespace App\DAO;
@@ -16,24 +18,24 @@ class AnimalDAO extends DAO
     public function inserir($obj)
     {
         try {
-            $anl_nome = $obj->__get('anl_nome');
-            $anl_dn   = $obj->__get('anl_dn');
-            $anl_sexo = $obj->__get('anl_sexo');
+            $nome = $obj->__get('nome');
+            $data_nascimento   = $obj->__get('data_nascimento');
+            $sexo = $obj->__get('sexo');
 
             $sql = "INSERT INTO animal (
                         nome,
                         data_nascimento,
                         sexo
                     ) VALUES (
-                        :anl_nome,
-                        :anl_dn,
-                        :anl_sexo
+                        :nome,
+                        :data_nascimento,
+                        :sexo
                     )";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':anl_nome', $anl_nome);
-            $stmt->bindValue(':anl_dn',   $anl_dn);
-            $stmt->bindValue(':anl_sexo', $anl_sexo);
+            $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':data_nascimento',   $data_nascimento);
+            $stmt->bindValue(':sexo', $sexo);
             $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
@@ -94,23 +96,23 @@ class AnimalDAO extends DAO
     public function alterar($obj)
     {
         try {
-            $anl_id   = $obj->__get('anl_id');
-            $anl_nome = $obj->__get('anl_nome');
-            $anl_dn   = $obj->__get('anl_dn');
-            $anl_sexo = $obj->__get('anl_sexo');
+            $id   = $obj->__get('id');
+            $nome = $obj->__get('nome');
+            $data_nascimento   = $obj->__get('data_nascimento');
+            $sexo = $obj->__get('sexo');
 
             $sql = "UPDATE animal SET
-                        nome            = :anl_nome,
-                        data_nascimento = :anl_dn,
-                        sexo            = :anl_sexo
+                        nome            = :nome,
+                        data_nascimento = :data_nascimento,
+                        sexo            = :sexo
                     WHERE
-                        id = :anl_id";
+                        id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':anl_id',   $anl_id,   \PDO::PARAM_INT);
-            $stmt->bindValue(':anl_nome', $anl_nome);
-            $stmt->bindValue(':anl_dn',   $anl_dn);
-            $stmt->bindValue(':anl_sexo', $anl_sexo);
+            $stmt->bindValue(':id',   $id,   \PDO::PARAM_INT);
+            $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':data_nascimento',   $data_nascimento);
+            $stmt->bindValue(':sexo', $sexo);
             $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
@@ -121,12 +123,12 @@ class AnimalDAO extends DAO
     public function excluir($obj)
     {
         try {
-            $anl_id = $obj->__get('anl_id');
+            $id = $obj->__get('id');
 
-            $sql = "DELETE FROM animal WHERE id = :anl_id";
+            $sql = "DELETE FROM animal WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':anl_id', $anl_id, \PDO::PARAM_INT);
+            $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
             $stmt->execute();
         } catch (\PDOException $ex) {
             header('Location:/error103');
