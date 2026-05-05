@@ -260,4 +260,9 @@ add constraint fk_adotante_login
  foreign key(fk_login_id)
  references login(id);
 
-
+alter table animal 
+    add column especie varchar(50) null,
+    add column porte enum('pequeno', 'medio', 'grande') null,
+    add column localizacao varchar(100) null,
+    add column foto varchar(255) null,
+    add column status enum('disponivel', 'adotado', 'em_tratamento', 'reservado') not null default 'disponivel';
