@@ -9,18 +9,18 @@ namespace App\Model;
 class AnimalModel
 {
 
-    private $ani_id;
-    private $ani_nome;
-    private $ani_sexo;
-    private $ani_data_nascimento;
+    private $id;
+    private $nome;
+    private $sexo;
+    private $data_nascimento;
 
     // Inserção dos novos campos - 27/04/2026
-    private $ani_cor;
-    private $ani_porte;
-    private $ani_status;
-    private $ani_castrado;
-    private $ani_foto;
-    private $ani_descricao;
+    private $cor;
+    private $porte;
+    private $status;
+    private $castrado;
+    private $foto;
+    private $descricao;
 
     public function __get($nome)
     {
