@@ -7,8 +7,8 @@ namespace App\Model;
 
 class EspecieModel
 {
-    private $esp_id;
-    private $esp_nome;
+    private $id;
+    private $nome;
 
     public function __get($nome)
     {
