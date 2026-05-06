@@ -31,19 +31,19 @@ class AdotanteController extends Action
     public function cadastrar()
     {
         $model = new AdotanteModel();
-        $model->__set('adt_nome',   $_POST['nome']            ?? '');
-        $model->__set('adt_cpf',    $_POST['cpf']             ?? '');
-        $model->__set('adt_dn',     $_POST['data_nascimento'] ?? null);
-        $model->__set('adt_cep',    $_POST['cep']             ?? '');
-        $model->__set('adt_estado', $_POST['estado']          ?? '');
-        $model->__set('adt_cidade', $_POST['cidade']          ?? '');
-        $model->__set('adt_bairro', $_POST['bairro']          ?? '');
-        $model->__set('adt_logradouro',  $_POST['logradouro']  ?? '');
-        $model->__set('adt_numero',      $_POST['numero']      ?? '');
-        $model->__set('adt_complemento', $_POST['complemento'] ?? '');
-        $model->__set('adt_tel1',   $_POST['telefone_1'] ?? '');
-        $model->__set('adt_tel2',   $_POST['telefone_2'] ?? '');
-        $model->__set('adt_status', $_POST['status']     ?? 'bom');
+        $model->__set('nome',   $_POST['nome']            ?? '');
+        $model->__set('cpf',    $_POST['cpf']             ?? '');
+        $model->__set('data_nascimento',     $_POST['data_nascimento'] ?? null);
+        $model->__set('cep',    $_POST['cep']             ?? '');
+        $model->__set('estado', $_POST['estado']          ?? '');
+        $model->__set('cidade', $_POST['cidade']          ?? '');
+        $model->__set('bairro', $_POST['bairro']          ?? '');
+        $model->__set('logradouro',  $_POST['logradouro']  ?? '');
+        $model->__set('numero',      $_POST['numero']      ?? '');
+        $model->__set('complemento', $_POST['complemento'] ?? '');
+        $model->__set('telefone1',   $_POST['telefone_1'] ?? '');
+        $model->__set('telefone2',   $_POST['telefone_2'] ?? '');
+        $model->__set('status', $_POST['status']     ?? 'bom');
 
         $dao = new AdotanteDAO();
         $dao->inserir($model);
@@ -68,20 +68,20 @@ class AdotanteController extends Action
     public function alterar()
     {
         $model = new AdotanteModel();
-        $model->__set('adt_id',   $_POST['id']             ?? null);
-        $model->__set('adt_nome', $_POST['nome']            ?? '');
-        $model->__set('adt_cpf',  $_POST['cpf']             ?? '');
-        $model->__set('adt_dn',   $_POST['data_nascimento'] ?? null);
-        $model->__set('adt_cep',  $_POST['cep']             ?? '');
-        $model->__set('adt_estado', $_POST['estado']        ?? '');
-        $model->__set('adt_cidade', $_POST['cidade']        ?? '');
-        $model->__set('adt_bairro', $_POST['bairro']        ?? '');
-        $model->__set('adt_logradouro',  $_POST['logradouro']  ?? '');
-        $model->__set('adt_numero',      $_POST['numero']      ?? '');
-        $model->__set('adt_complemento', $_POST['complemento'] ?? '');
-        $model->__set('adt_tel1',   $_POST['telefone_1'] ?? '');
-        $model->__set('adt_tel2',   $_POST['telefone_2'] ?? '');
-        $model->__set('adt_status', $_POST['status']     ?? 'bom');
+        $model->__set('id',   $_POST['id']             ?? null);
+        $model->__set('nome', $_POST['nome']            ?? '');
+        $model->__set('cpf',  $_POST['cpf']             ?? '');
+        $model->__set('data_nascimento',   $_POST['data_nascimento'] ?? null);
+        $model->__set('cep',  $_POST['cep']             ?? '');
+        $model->__set('estado', $_POST['estado']        ?? '');
+        $model->__set('cidade', $_POST['cidade']        ?? '');
+        $model->__set('bairro', $_POST['bairro']        ?? '');
+        $model->__set('logradouro',  $_POST['logradouro']  ?? '');
+        $model->__set('numero',      $_POST['numero']      ?? '');
+        $model->__set('complemento', $_POST['complemento'] ?? '');
+        $model->__set('telefone1',   $_POST['telefone_1'] ?? '');
+        $model->__set('telefone2',   $_POST['telefone_2'] ?? '');
+        $model->__set('status', $_POST['status']     ?? 'bom');
 
         $dao = new AdotanteDAO();
         $dao->alterar($model);
