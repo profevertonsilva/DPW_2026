@@ -41,8 +41,8 @@ class AdotanteController extends Action
         $model->__set('logradouro',  $_POST['logradouro']  ?? '');
         $model->__set('numero',      $_POST['numero']      ?? '');
         $model->__set('complemento', $_POST['complemento'] ?? '');
-        $model->__set('telefone1',   $_POST['telefone_1'] ?? '');
-        $model->__set('telefone2',   $_POST['telefone_2'] ?? '');
+        $model->__set('telefone_1',   $_POST['telefone_1'] ?? '');
+        $model->__set('telefone_2',   $_POST['telefone_2'] ?? '');
         $model->__set('status', $_POST['status']     ?? 'bom');
 
         $dao = new AdotanteDAO();
@@ -79,8 +79,8 @@ class AdotanteController extends Action
         $model->__set('logradouro',  $_POST['logradouro']  ?? '');
         $model->__set('numero',      $_POST['numero']      ?? '');
         $model->__set('complemento', $_POST['complemento'] ?? '');
-        $model->__set('telefone1',   $_POST['telefone_1'] ?? '');
-        $model->__set('telefone2',   $_POST['telefone_2'] ?? '');
+        $model->__set('telefone_1',   $_POST['telefone_1'] ?? '');
+        $model->__set('telefone_2',   $_POST['telefone_2'] ?? '');
         $model->__set('status', $_POST['status']     ?? 'bom');
 
         $dao = new AdotanteDAO();
