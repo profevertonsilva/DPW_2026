@@ -248,7 +248,7 @@ class AdotanteDAO extends DAO
                 a.*,
                 l.email
             FROM 
-                adotante a,
+                adotante a
             JOIN 
                 login l 
             ON 
