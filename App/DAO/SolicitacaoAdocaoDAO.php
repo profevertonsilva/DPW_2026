@@ -15,7 +15,7 @@ class SolicitacaoAdocaoDAO extends DAO {
             $fk_adotante_id =  $obj->__get('fk_adotante_id');
             $fk_animal_id =  $obj->__get('fk_animal_id');
 
-            $sql = "INSERT INTO solicitacaoadocao 
+            $sql = "INSERT INTO solicitacao_adocao 
             (
                 data,
                 status,
@@ -37,9 +37,14 @@ class SolicitacaoAdocaoDAO extends DAO {
             $stmt->bindValue(':fk_adotante_id', $fk_adotante_id);
             $stmt->bindValue(':fk_animal_id', $fk_animal_id);
             $stmt->execute();
+
+            // Debug temporário
+            echo "SQL: " . $sql . "\n";
+            echo "Dados: $solAdc_data | $solAdc_status | $solAdc_motivo | $fk_adotante_id | $fk_animal_id\n";
+
         }
         catch(\PDOException $ex) {
-            header('Location:/error103');
+            echo "ERRO PDO: " . $ex->getMessage() . "\n";
             die();
         }
     }
