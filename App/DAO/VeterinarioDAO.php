@@ -55,19 +55,19 @@ class VeterinarioDAO extends DAO {
             )";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue('vet_nome', $adt_nome);
-            $stmt->bindValue('vet_cpf', $adt_cpf);
-            $stmt->bindValue('vet_crmv', $adt_dn);
-            $stmt->bindValue('vet_dn', $adt_cep);
-            $stmt->bindValue('vet_cep', $adt_estado);
-            $stmt->bindValue('vet_estado', $adt_cidade);
-            $stmt->bindValue('vet_cidade', $adt_bairro);
-            $stmt->bindValue('vet_bairro', $adt_logradouro);
-            $stmt->bindValue('vet_logradouro', $adt_tel1);
-            $stmt->bindValue('vet_numero', $adt_tel2);
-            $stmt->bindValue('vet_complemento', $adt_status);
-            $stmt->bindValue('vet_tel1', $adt_tel2);
-            $stmt->bindValue('vet_tel2', $adt_status);
+            $stmt->bindValue('vet_nome', $vet_nome);
+            $stmt->bindValue('vet_cpf', $vet_cpf);
+            $stmt->bindValue('vet_crmv', $vet_dn);
+            $stmt->bindValue('vet_dn', $vet_cep);
+            $stmt->bindValue('vet_cep', $vet_estado);
+            $stmt->bindValue('vet_estado', $vet_cidade);
+            $stmt->bindValue('vet_cidade', $vet_bairro);
+            $stmt->bindValue('vet_bairro', $vet_logradouro);
+            $stmt->bindValue('vet_logradouro', $vet_tel1);
+            $stmt->bindValue('vet_numero', $vet_numero);
+            $stmt->bindValue('vet_complemento', $vet_complemento);
+            $stmt->bindValue('vet_tel1', $vet_tel1);
+            $stmt->bindValue('vet_tel2', $vet_tel2);
             $stmt->excecute();
         }
         catch(\PDOException $ex) {
@@ -78,6 +78,22 @@ class VeterinarioDAO extends DAO {
 
     public function listar(){
         try{
+            $veterinarios = array();
+
+            $sql = "SELECT * FROM veterinario";
+
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->excecute();
+            $resultado = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            foreach($resultado as $row){
+                $vet = new VeterinarioModel();
+
+                $global = new FuncoesGlobais();
+                $global->popular_model($vet, $row);
+
+                array_push($veterinarios, $vet);
+            }
 
         }
         catch(\PDOException $ex){
