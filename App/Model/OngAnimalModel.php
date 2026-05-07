@@ -2,8 +2,9 @@
 
 namespace App\Model;
 
-class OngAnimal {
-    private $OngAnl_id;
+class OngAnimalModel {
+
+    private $onganl_id;
     private $fk_ong_id;
     private $fk_animal_id;
 
