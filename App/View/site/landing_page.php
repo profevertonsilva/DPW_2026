@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AmigoPet — Cuidado Animal Completo</title>
+<title>AmigoPet — Cuidado Animal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -1194,7 +1194,6 @@ footer {
     AmigoPet
   </a>
   <ul class="nav-links">
-    <li><a href="#features">Funcionalidades</a></li>
     <li><a href="#como-funciona">Como Funciona</a></li>
     <li><a href="#saude">Saúde Animal</a></li>
     <li><a href="#adocao">Adoção</a></li>
@@ -1219,7 +1218,7 @@ footer {
       com <span class="line-orange">amor</span>
     </h1>
     <p class="hero-desc">
-      Do alerta de animal perdido à adoção responsável — com prontuário veterinário completo, vacinação, exames e muito mais. Tudo em um só lugar.
+      Do alerta de animal perdido à adoção responsável, com prontuário veterinário completo, vacinação, exames e muito mais. Tudo em um só lugar.
     </p>
     <div class="hero-actions">
       <a href="#cta" class="btn-main">Começar gratuitamente →</a>
@@ -1570,20 +1569,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <a href="#" class="footer-logo">
-    <div class="logo-paw" style="width:28px;height:28px;font-size:0.8rem;">🐾</div>
-    AmigoPet
-  </a>
-  <span class="footer-copy">© 2025 AmigoPet. Todos os direitos reservados.</span>
-  <ul class="footer-links">
-    <li><a href="#">Privacidade</a></li>
-    <li><a href="#">Termos de Uso</a></li>
-    <li><a href="#">Contato</a></li>
-    <li><a href="#">Blog</a></li>
-  </ul>
-</footer>
+<?php require __DIR__ . '/../includes/dashboard/footer.php'; ?>
 
 <script>
   const obs = new IntersectionObserver((entries) => {
