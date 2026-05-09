@@ -1,28 +1,141 @@
-.btn_salvar{
-    float: right;
-}
-.fa-whatsapp{
-    color: rgb(11, 104, 11);
-}
-.fa-trash-can{
-    color: #f00;
-}
-.fa-pen-to-square{
-    color: #d37801;
-}
-.tamanho_icone{
-    font-size: 15px;
-}
-.is-valid {
-    border-color: #28a745;
+/**
+* AmigoPet - Estilos Globais
+* I.D. Visual: Poppins (Títulos), Inter (Textos)
+* Cores: Verde (#6FCF97), Laranja (#F2994A), Off White (#FAF9F6)
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap');
+
+:root {
+--primary-green: #6FCF97;
+--secondary-orange: #F2994A;
+--info-blue: #56CCF2;
+--bg-off-white: #FAF9F6;
+--text-gray: #4F4F4F;
+--sidebar-width: 260px;
 }
 
-.is-invalid {
-    border-color: #dc3545;
+body {
+background-color: var(--bg-off-white);
+font-family: 'Inter', sans-serif;
+color: var(--text-gray);
+margin: 0;
 }
 
-.icone-dashboard
-{
-    font-size: 45px;
-    color: #d37801;
+/* Personalização da Navbar */
+.navbar-amigopet {
+background-color: #ffffff;
+box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+padding: 0.8rem 1.5rem;
+z-index: 1030;
+}
+
+.navbar-brand {
+font-family: 'Poppins', sans-serif;
+font-weight: 700;
+font-size: 1.5rem;
+}
+
+.brand-text-pet { color: var(--primary-green); }
+.brand-text-amigo { color: var(--secondary-orange); }
+
+/* Estilos da Barra Lateral (Sidebar) */
+.sidebar-amigopet {
+width: var(--sidebar-width);
+height: 100vh;
+background-color: #ffffff;
+border-right: 1px solid rgba(0,0,0,0.05);
+position: fixed;
+top: 0;
+left: 0;
+padding-top: 80px; /* Espaço para a navbar */
+transition: all 0.3s;
+z-index: 1020;
+}
+
+.sidebar-nav {
+padding: 1rem 0.5rem;
+}
+
+.sidebar-heading {
+font-family: 'Poppins', sans-serif;
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+color: #ADB5BD;
+padding: 0.75rem 1.25rem;
+font-weight: 600;
+}
+
+.nav-item-amigopet {
+display: flex;
+align-items: center;
+padding: 0.8rem 1.25rem;
+color: var(--text-gray);
+text-decoration: none;
+border-radius: 12px;
+margin-bottom: 5px;
+font-weight: 500;
+transition: all 0.2s;
+gap: 12px;
+}
+
+.nav-item-amigopet:hover {
+background-color: #f8f9fa;
+color: var(--primary-green);
+}
+
+.nav-item-amigopet.active {
+background-color: rgba(111, 207, 151, 0.1);
+color: var(--primary-green);
+}
+
+.nav-item-amigopet svg {
+width: 20px;
+height: 20px;
+stroke-width: 2;
+}
+
+/* Botão de Notificação (Sininho) */
+.notification-btn {
+position: relative;
+background: none;
+border: none;
+color: var(--primary-green); 
+padding: 8px;
+transition: transform 0.2s;
+}
+
+.notification-btn:hover {
+transform: scale(1.1);
+color: var(--secondary-orange);
+}
+
+.notification-badge {
+position: absolute;
+top: 5px;
+right: 5px;
+width: 10px;
+height: 10px;
+background-color: var(--secondary-orange);
+border: 2px solid #fff;
+border-radius: 50%;
+}
+
+/* Content Wrapper */
+.main-content {
+margin-left: var(--sidebar-width);
+padding: 100px 2rem 2rem; 
+}
+
+@media (max-width: 991px) {
+.sidebar-amigopet {
+left: calc(-1 * var(--sidebar-width));
+}
+.main-content {
+margin-left: 0;
+}
+.sidebar-amigopet.show {
+left: 0;
+}
 }
