@@ -13,7 +13,7 @@ class LoginController extends Action
     {
 
         if (!isset($_POST['email']) || !isset($_POST['senha'])) {
-            header('Location: /login?erro=1');
+            header('Location: /?erro=1');
             die();
         }
 
@@ -24,19 +24,19 @@ class LoginController extends Action
         $login = $loginDAO->buscarPorEmail($email);
 
         if (!$login) {
-            header('Location: /login?erro=2');
+            header('Location: /?erro=3');
             die();
         }
 
         $senhaSalva = $login->__get('senha');
 
         if (!password_verify($senha, $senhaSalva)) {
-            header('Location: /login?erro=3');
+            header('Location: /?erro=1');
             die();
         }
 
         if ($login->__get('status') !== 'a') {
-            header('Location: /login?erro=4');
+            header('Location: /?erro=2');
             die();
         }
 
@@ -51,7 +51,7 @@ class LoginController extends Action
         $_SESSION['tipo_usuario'] = $login->__get('tipo_usuario');
         $_SESSION['status'] = $login->__get('status');
 
-        header('Location: /dashboard/dashboard_index');
+        header('Location: /dashboard');
         die();
     }
 
