@@ -269,8 +269,19 @@ alter table animal
 
 -- adição da data de atualização a tabela login 
 alter table login 
-	add column data_atualizacao datetime default now();
+	add column data_atualizacao datetime default current_timestamp;
 
 -- alteração do valor da coluna senha do login
 alter table login
-	change senha senha varchar(255);
+	change senha senha varchar(255) NOT NULL;
+    
+-- alteraçõe necessarias na tabela de login; 
+alter table login 
+	modify data_atualizacao datetime default current_timestamp on update current_timestamp not null,
+    modify email varchar(255) not null,
+    modify tipo_usuario enum('administrador','ong', 'rastreador', 'adotante', 'veterinario') default 'adotante' not null,
+    modify status enum('a', 'i') default 'a' not null,
+    modify data_cadastro datetime default current_timestamp not null;
+
+alter table login 
+	modify email varchar(255) unique not null ;
