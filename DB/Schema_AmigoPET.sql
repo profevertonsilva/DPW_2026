@@ -283,5 +283,8 @@ alter table login
     modify status enum('a', 'i') default 'a' not null,
     modify data_cadastro datetime default current_timestamp not null;
 
-alter table login 
-	modify email varchar(255) unique not null ;
+ALTER TABLE login 
+	MODIFY email VARCHAR(191) NOT NULL;
+
+ALTER TABLE login 
+	ADD CONSTRAINT uq_login_email UNIQUE (email);
