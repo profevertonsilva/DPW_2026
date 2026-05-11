@@ -11,7 +11,6 @@ class LoginController extends Action
 
     public function autenticar()
     {
-        // TODO: implementar autenticação do usuário
 
         if (!isset($_POST['email']) || !isset($_POST['senha'])) {
             header('Location: /login?erro=1');
