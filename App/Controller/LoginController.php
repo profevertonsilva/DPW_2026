@@ -51,7 +51,7 @@ class LoginController extends Action
         $_SESSION['tipo_usuario'] = $login->__get('tipo_usuario');
         $_SESSION['status'] = $login->__get('status');
 
-        header('Location: /dashboard');
+        header('Location: /dashboard/dashboard_index');
         die();
     }
 
