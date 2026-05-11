@@ -270,3 +270,7 @@ alter table animal
 -- adição da data de atualização a tabela login 
 alter table login 
 	add column data_atualizacao datetime default now();
+
+-- alteração do valor da coluna senha do login
+alter table login
+	change senha senha varchar(255);
