@@ -18,7 +18,7 @@
                     </div>
                 <?php elseif ($_GET['erro'] == 3): ?>
                     <div class="alert alert-danger" role="alert">
-                        Você precisa estar logado para acessar essa página.
+                        Você precisa não possue login no sistema.
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
