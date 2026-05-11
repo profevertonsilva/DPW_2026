@@ -266,3 +266,7 @@ alter table animal
     add column localizacao varchar(100) null,
     add column foto varchar(255) null,
     add column status enum('disponivel', 'adotado', 'em_tratamento', 'reservado') not null default 'disponivel';
+
+-- adição da data de atualização a tabela login 
+alter table login 
+	add column data_atualizacao datetime default now();
