@@ -2,7 +2,6 @@
     .main-content {
         margin-left: 0 ;
         padding-left: 0 ;
-
         min-height: calc(100vh - 500px);
         display: flex;
         align-items: center;
