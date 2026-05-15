@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use FW\Controller\Action;
+use App\DAO\ClinicaDAO;
+use App\Model\ClinicaModel;
 
 class ClinicaController extends Action {
 
