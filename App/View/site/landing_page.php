@@ -485,9 +485,9 @@ nav {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── STATS BAND ─── */
+/* ─── DIVISÓRIA ─── */
 .stats-band {
-  background: var(--orange);
+  background: var(--dark);
   padding: 1.75rem 5rem;
   display: flex;
   justify-content: space-between;
@@ -1183,7 +1183,605 @@ footer {
 }
 
 .reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ════════════════════════════════
+   SEÇÃO ADOÇÃO — CARDS
+════════════════════════════════ */
+.adocao-section {
+  padding: 6rem 5rem;
+  background: var(--cream);
+}
+
+.adocao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.btn-ver-todos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  color: var(--dark-d);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 100px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.22s;
+  box-shadow: 0 2px 8px rgba(79,79,79,0.06);
+  flex-shrink: 0;
+}
+
+.btn-ver-todos:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+  box-shadow: 0 6px 18px rgba(242,153,74,0.3);
+  gap: 0.65rem;
+}
+
+.btn-ver-todos svg { transition: transform 0.22s; }
+.btn-ver-todos:hover svg { transform: translateX(3px); }
+
+.filtros-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.filtros-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-right: 0.25rem;
+  white-space: nowrap;
+}
+
+.filtro-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  user-select: none;
+  box-shadow: 0 1px 4px rgba(79,79,79,0.05);
+}
+
+.filtro-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange-d);
+  background: var(--orange-l);
+}
+
+.filtro-btn.ativo {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(242,153,74,0.3);
+}
+
+.filtro-btn.ativo.verde {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 4px 14px rgba(111,207,151,0.3);
+}
+
+.filtro-btn.verde:hover {
+  border-color: var(--green);
+  color: var(--green-d);
+  background: var(--green-l);
+}
+
+.filtro-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 0.2rem;
+}
+
+.filtro-emoji { font-size: 0.85rem; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.animal-card {
+  background: var(--white);
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s;
+  cursor: pointer;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardIn 0.4s ease forwards;
+}
+
+.animal-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(79,79,79,0.12);
+}
+
+.animal-card:nth-child(1) { animation-delay: 0.05s; }
+.animal-card:nth-child(2) { animation-delay: 0.12s; }
+.animal-card:nth-child(3) { animation-delay: 0.19s; }
+.animal-card:nth-child(4) { animation-delay: 0.26s; }
+
+@keyframes cardIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animal-card.hidden { display: none; }
+
+.card-foto {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.card-foto-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.animal-card:hover .card-foto-img { transform: scale(1.06); }
+
+.card-foto-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 3.2rem;
+  background: linear-gradient(135deg, var(--orange-l) 0%, var(--green-l) 100%);
+}
+
+.placeholder-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #bbb;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-badge-especie {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 100px;
+  padding: 0.28rem 0.7rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--dark-d);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card-badge-porte {
+  position: absolute;
+  top: 10px; right: 10px;
+  border-radius: 100px;
+  padding: 0.28rem 0.7rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.porte-p { background: var(--sky-l); color: #1a98be; }
+.porte-m { background: var(--orange-l); color: var(--orange-d); }
+.porte-g { background: var(--green-l); color: var(--green-d); }
+
+.card-fav {
+  position: absolute;
+  bottom: 10px; right: 10px;
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.card-fav:hover { transform: scale(1.18); }
+
+.card-info { padding: 1.1rem 1.2rem 1.3rem; }
+
+.card-nome {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--dark-d);
+  margin-bottom: 0.35rem;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 400;
+}
+
+.meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #ddd; }
+
+.chip-sexo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  margin-top: 0.55rem;
+}
+
+.sexo-f { background: #fde8f5; color: #b5479a; }
+.sexo-m { background: var(--sky-l); color: #1a98be; }
+
+.card-btn-adotar {
+  display: block;
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.6rem;
+  border-radius: 12px;
+  border: none;
+  background: var(--green-l);
+  color: var(--green-d);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.22s;
+  letter-spacing: 0.01em;
+}
+
+.card-btn-adotar:hover {
+  background: var(--green);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(111,207,151,0.4);
+}
+
+.adocao-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.btn-ver-todos-bottom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--orange);
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: 100px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(242,153,74,0.38);
+  transition: all 0.25s;
+  letter-spacing: 0.01em;
+}
+
+.btn-ver-todos-bottom:hover {
+  background: var(--orange-d);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(242,153,74,0.45);
+  gap: 0.7rem;
+}
+
+.adocao-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #bbb;
+  font-weight: 300;
+}
+
+.adocao-count strong { color: var(--dark); font-weight: 600; }
+
+.empty-state {
+  display: none;
+  text-align: center;
+  padding: 4rem 2rem;
+  grid-column: 1 / -1;
+}
+
+.empty-emoji { font-size: 3rem; margin-bottom: 1rem; }
+
+.empty-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--dark-d);
+  margin-bottom: 0.4rem;
+}
+
+.empty-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  color: #bbb;
+  font-weight: 300;
+}
+
+@media (max-width: 1100px) {
+  .cards-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .adocao-section { padding: 4rem 1.5rem; }
+  .adocao-header { flex-direction: column; align-items: flex-start; }
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .cards-grid { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════
+   SEÇÃO DESENVOLVEDORES
+════════════════════════════════ */
+.devs-section {
+  padding: 5rem 0 4rem;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.devs-section::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--orange-l) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.devs-section::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--green-l) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.devs-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--orange-d);
+  margin-bottom: 0.75rem;
+}
+
+.devs-tag::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 2.5px;
+  background: var(--orange);
+  border-radius: 2px;
+}
+
+.devs-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.12;
+  color: var(--dark-d);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.45rem;
+}
+
+.devs-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #aaa;
+  font-weight: 300;
+}
+
+.dev-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.3rem 1rem 1.1rem;
+  text-align: center;
+  transition: transform 0.26s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.26s ease;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: devCardIn 0.4s ease forwards;
+}
+
+.dev-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--green));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.dev-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(79,79,79,0.11); }
+.dev-card:hover::before { transform: scaleX(1); }
+
+.dev-avatar-wrap {
+  position: relative;
+  width: 64px;
+  margin: 0 auto 0.8rem;
+}
+
+.dev-avatar-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--orange), var(--green));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.dev-card:hover .dev-avatar-wrap::after { opacity: 1; }
+
+.dev-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-family: 'Poppins', sans-serif;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.dev-nome {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--dark-d);
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+}
+
+.dev-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  color: #bbb;
+  font-weight: 400;
+  margin-bottom: 0.7rem;
+}
+
+.dev-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #888;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.dev-linkedin svg {
+  width: 13px; height: 13px;
+  flex-shrink: 0;
+  transition: fill 0.2s ease;
+  fill: #aaa;
+}
+
+.dev-linkedin:hover { background: #0A66C2; border-color: #0A66C2; color: var(--white); }
+.dev-linkedin:hover svg { fill: var(--white); }
+
+.devs-footer-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: #ccc;
+  font-weight: 300;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.devs-footer-text span { color: var(--orange); font-weight: 600; }
+
+@keyframes devCardIn { to { opacity: 1; } }
+
+.dev-card:nth-child(1)  { animation-delay: 0.04s; }
+.dev-card:nth-child(2)  { animation-delay: 0.08s; }
+.dev-card:nth-child(3)  { animation-delay: 0.12s; }
+.dev-card:nth-child(4)  { animation-delay: 0.16s; }
+.dev-card:nth-child(5)  { animation-delay: 0.20s; }
+.dev-card:nth-child(6)  { animation-delay: 0.24s; }
+.dev-card:nth-child(7)  { animation-delay: 0.28s; }
+.dev-card:nth-child(8)  { animation-delay: 0.32s; }
+.dev-card:nth-child(9)  { animation-delay: 0.36s; }
+.dev-card:nth-child(10) { animation-delay: 0.40s; }
+.dev-card:nth-child(11) { animation-delay: 0.44s; }
+.dev-card:nth-child(12) { animation-delay: 0.48s; }
+.dev-card:nth-child(13) { animation-delay: 0.52s; }
+.dev-card:nth-child(14) { animation-delay: 0.56s; }
+.dev-card:nth-child(15) { animation-delay: 0.60s; }
+.dev-card:nth-child(16) { animation-delay: 0.64s; }
+.dev-card:nth-child(17) { animation-delay: 0.68s; }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -1306,18 +1904,8 @@ footer {
   </div>
 </section>
 
-<!-- ═══ STATS BAND ═══ -->
-<div class="stats-band">
-  <div class="sb-item"><div class="sb-num">48k+</div><div class="sb-lbl">Animais cadastrados</div></div>
-  <div class="sb-div"></div>
-  <div class="sb-item"><div class="sb-num">3.6k</div><div class="sb-lbl">Adoções realizadas</div></div>
-  <div class="sb-div"></div>
-  <div class="sb-item"><div class="sb-num">91%</div><div class="sb-lbl">Taxa de reencontro</div></div>
-  <div class="sb-div"></div>
-  <div class="sb-item"><div class="sb-num">320+</div><div class="sb-lbl">Clínicas parceiras</div></div>
-  <div class="sb-div"></div>
-  <div class="sb-item"><div class="sb-num">4.9★</div><div class="sb-lbl">Avaliação dos usuários</div></div>
-</div>
+<!-- ═══ DIVISÓRIA ═══ -->
+<div class="stats-band"></div>
 
 <!-- ═══ FEATURES ═══ -->
 <section class="features-bg" id="features">
@@ -1395,32 +1983,6 @@ footer {
     </div>
   </div>
 </section>
-
-<!-- ═══ DUAL PANELS ═══ -->
-<div class="dual" id="adocao">
-  <div class="panel panel-a">
-    <div class="tag tag-green">Adoção Responsável</div>
-    <div class="panel-title">Cada animal merece<br>um lar de verdade</div>
-    <p class="panel-desc">Nosso processo conecta animais com tutores compatíveis, garantindo bem-estar e segurança para todos os lados.</p>
-    <ul class="check-list">
-      <li><span class="chk chk-g">✓</span> Filtros por porte, raça, idade e localização</li>
-      <li><span class="chk chk-g">✓</span> Histórico de saúde disponível ao adotante</li>
-      <li><span class="chk chk-g">✓</span> Acompanhamento pós-adoção integrado</li>
-      <li><span class="chk chk-g">✓</span> Parceria com abrigos e ONGs verificados</li>
-    </ul>
-  </div>
-  <div class="panel panel-b">
-    <div class="tag tag-orange">Perdidos & Encontrados</div>
-    <div class="panel-title">Reencontros que<br>mudam histórias</div>
-    <p class="panel-desc">Sistema de alerta inteligente que mobiliza a comunidade em segundos para encontrar animais desaparecidos.</p>
-    <ul class="check-list">
-      <li><span class="chk chk-o">✓</span> Alertas geolocalizados em tempo real</li>
-      <li><span class="chk chk-o">✓</span> Notificações push para usuários na região</li>
-      <li><span class="chk chk-o">✓</span> Integração com redes sociais e grupos locais</li>
-      <li><span class="chk chk-o">✓</span> Identificação visual por foto do animal</li>
-    </ul>
-  </div>
-</div>
 
 <!-- ═══ VETERINARY ═══ -->
 <div class="vet-section" id="saude">
@@ -1513,50 +2075,266 @@ footer {
   </div>
 </div>
 
-<!-- ═══ TESTIMONIALS ═══ -->
-<section class="testi-section">
-  <div class="testi-header reveal">
-    <div class="tag tag-green" style="justify-content: center;">Depoimentos</div>
-    <h2 class="sec-title">O que dizem quem já usa</h2>
-    <p class="sec-sub">Tutores, veterinários e protetores que transformaram o cuidado animal com o AmigoPet.</p>
+<!-- ═══ ADOÇÃO — CARDS ═══ -->
+<section class="adocao-section" id="adocao-cards">
+
+  <!-- Cabeçalho -->
+  <div class="adocao-header">
+    <div>
+      <div class="tag tag-green">Adoção Responsável</div>
+      <h2 class="sec-title">Encontre seu novo<br>melhor amigo</h2>
+      <p class="sec-sub">Animais carinhosos esperando por um lar cheio de amor. Adote e transforme duas vidas.</p>
+    </div>
+    <a href="/adocao" class="btn-ver-todos">
+      Ver todos os animais
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
   </div>
 
-  <div class="testi-grid">
-    <div class="testi-card reveal">
-      <div class="stars">⭐⭐⭐⭐⭐</div>
-      <p class="testi-quote">"Minha cachorra sumiu e em menos de 2 horas, graças aos alertas do AmigoPet, uma vizinha me ligou dizendo que ela estava com ela. Não tenho palavras para descrever o alívio."</p>
-      <div class="testi-author">
-        <div class="testi-av ta-o">MC</div>
-        <div>
-          <div class="testi-name">Maria Clara Oliveira</div>
-          <div class="testi-role">Tutora · São Paulo, SP</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="stars">⭐⭐⭐⭐⭐</div>
-      <p class="testi-quote">"O prontuário digital mudou a rotina da minha clínica. Tenho o histórico de todos os pacientes na palma da mão. A facilidade de acesso é impressionante."</p>
-      <div class="testi-author">
-        <div class="testi-av ta-g">RM</div>
-        <div>
-          <div class="testi-name">Dr. Rafael Matos</div>
-          <div class="testi-role">Médico Veterinário · Belo Horizonte</div>
-        </div>
-      </div>
-    </div>
-    <div class="testi-card reveal">
-      <div class="stars">⭐⭐⭐⭐⭐</div>
-      <p class="testi-quote">"Adotei meu gato pelo AmigoPet e o processo foi incrível. Ver todo o histórico de vacinação e saúde antes de adotar me deu uma segurança enorme."</p>
-      <div class="testi-author">
-        <div class="testi-av ta-s">LF</div>
-        <div>
-          <div class="testi-name">Lucas Ferreira</div>
-          <div class="testi-role">Tutor adotante · Rio de Janeiro</div>
-        </div>
-      </div>
-    </div>
+  <!-- Filtros -->
+  <div class="filtros-wrapper">
+    <span class="filtros-label">Filtrar por:</span>
+
+    <button class="filtro-btn ativo" data-filtro="especie" data-valor="todos" onclick="filtrar(this)">
+      <span class="filtro-emoji">🐾</span> Todos
+    </button>
+    <button class="filtro-btn" data-filtro="especie" data-valor="cao" onclick="filtrar(this)">
+      <span class="filtro-emoji">🐕</span> Cães
+    </button>
+    <button class="filtro-btn" data-filtro="especie" data-valor="gato" onclick="filtrar(this)">
+      <span class="filtro-emoji">🐈</span> Gatos
+    </button>
+    <button class="filtro-btn" data-filtro="especie" data-valor="outro" onclick="filtrar(this)">
+      <span class="filtro-emoji">🐇</span> Outros
+    </button>
+
+    <div class="filtro-divider"></div>
+
+    <button class="filtro-btn verde ativo" data-filtro="porte" data-valor="todos" onclick="filtrarPorte(this)">
+      Todos os portes
+    </button>
+    <button class="filtro-btn verde" data-filtro="porte" data-valor="pequeno" onclick="filtrarPorte(this)">
+      Pequeno
+    </button>
+    <button class="filtro-btn verde" data-filtro="porte" data-valor="medio" onclick="filtrarPorte(this)">
+      Médio
+    </button>
+    <button class="filtro-btn verde" data-filtro="porte" data-valor="grande" onclick="filtrarPorte(this)">
+      Grande
+    </button>
   </div>
+
+  <!-- Grid de cards -->
+  <div class="cards-grid" id="cardsGrid">
+
+    <div class="animal-card" data-especie="cao" data-porte="medio">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Thor"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐕</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐕</span> Cão</div>
+        <div class="card-badge-porte porte-m">Médio</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Thor</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 2 anos</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 São Paulo</span>
+        </div>
+        <span class="chip-sexo sexo-m">♂ Macho</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="gato" data-porte="pequeno">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Luna"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐈</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐈</span> Gato</div>
+        <div class="card-badge-porte porte-p">Pequeno</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Luna</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 1 ano</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 Campinas</span>
+        </div>
+        <span class="chip-sexo sexo-f">♀ Fêmea</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="cao" data-porte="grande">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1534361960057-19f4434a958d?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Rex"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐕</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐕</span> Cão</div>
+        <div class="card-badge-porte porte-g">Grande</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Rex</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 4 anos</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 Sorocaba</span>
+        </div>
+        <span class="chip-sexo sexo-m">♂ Macho</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="gato" data-porte="pequeno">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Mel"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐈</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐈</span> Gato</div>
+        <div class="card-badge-porte porte-p">Pequeno</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Mel</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 6 meses</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 Ribeirão Preto</span>
+        </div>
+        <span class="chip-sexo sexo-f">♀ Fêmea</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="cao" data-porte="pequeno">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Pipoca"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐕</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐕</span> Cão</div>
+        <div class="card-badge-porte porte-p">Pequeno</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Pipoca</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 3 anos</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 São Paulo</span>
+        </div>
+        <span class="chip-sexo sexo-f">♀ Fêmea</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="outro" data-porte="pequeno">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Coco"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐇</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐇</span> Coelho</div>
+        <div class="card-badge-porte porte-p">Pequeno</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Coco</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 1 ano</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 Curitiba</span>
+        </div>
+        <span class="chip-sexo sexo-m">♂ Macho</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="cao" data-porte="medio">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Bolinha"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐕</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐕</span> Cão</div>
+        <div class="card-badge-porte porte-m">Médio</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Bolinha</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 5 anos</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 Santos</span>
+        </div>
+        <span class="chip-sexo sexo-m">♂ Macho</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <div class="animal-card" data-especie="gato" data-porte="medio">
+      <div class="card-foto">
+        <img class="card-foto-img"
+          src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=400&h=300&fit=crop&auto=format"
+          alt="Foto de Nala"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-foto-placeholder" style="display:none"><span>🐈</span><span class="placeholder-label">sem foto</span></div>
+        <div class="card-badge-especie"><span>🐈</span> Gato</div>
+        <div class="card-badge-porte porte-m">Médio</div>
+        <div class="card-fav" title="Favoritar">🤍</div>
+      </div>
+      <div class="card-info">
+        <div class="card-nome">Nala</div>
+        <div class="card-meta">
+          <span class="meta-item">🎂 2 anos</span>
+          <span class="meta-dot"></span>
+          <span class="meta-item">📍 Osasco</span>
+        </div>
+        <span class="chip-sexo sexo-f">♀ Fêmea</span>
+        <button class="card-btn-adotar">Quero adotar →</button>
+      </div>
+    </div>
+
+    <!-- Estado vazio -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-emoji">🔍</div>
+      <div class="empty-title">Nenhum animal encontrado</div>
+      <p class="empty-sub">Tente ajustar os filtros para ver mais resultados.</p>
+    </div>
+
+  </div><!-- /cards-grid -->
+
+  <!-- Rodapé da seção -->
+  <div class="adocao-footer">
+    <a href="/adocao" class="btn-ver-todos-bottom">
+      Ver todos os animais disponíveis
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M1 8h14M9 2l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <span class="adocao-count">Mostrando <strong id="countVisiveis">8</strong> de <strong>143</strong> animais</span>
+  </div>
+
 </section>
+<!-- ════════ FIM DA SEÇÃO ADOÇÃO ════════ -->
 
 <!-- ═══ CTA ═══ -->
 <section class="cta-section" id="cta">
@@ -1568,6 +2346,270 @@ footer {
     <a href="#" class="cta-btn-ghost">Falar com a equipe →</a>
   </div>
 </section>
+
+<!-- ═══ DESENVOLVEDORES ═══ -->
+<section class="devs-section" id="desenvolvedores">
+  <div class="container">
+
+    <div class="row mb-4">
+      <div class="col-12 col-md-8">
+        <div class="devs-tag">Quem fez acontecer</div>
+        <h2 class="devs-title">Nossa equipe de<br>desenvolvimento</h2>
+        <p class="devs-sub">Pessoas apaixonadas por tecnologia e por animais que tornaram o AmigoPet realidade.</p>
+      </div>
+    </div>
+
+    <div class="row g-3" id="devsGrid">
+
+      <!-- DEV 1 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #F2994A, #D97B2A);">AE</div>
+          </div>
+          <div class="dev-nome">Adrian Elias</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 2 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #6FCF97, #3da96e);">AZ</div>
+          </div>
+          <div class="dev-nome">Adryel Zanetti</div>
+          <a href="https://linkedin.com/in/adryel-dearo" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 3 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #56CCF2, #1a98be);">AC</div>
+          </div>
+          <div class="dev-nome">Arthur Cavalari</div>
+          <a href="https://www.linkedin.com/in/arthur-cavalari-martins-37413a3b0/" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 4 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #F2994A, #6FCF97);">CA</div>
+          </div>
+          <div class="dev-nome">Cauan Abreu</div>
+          <a href="https://www.linkedin.com/in/cauan-abreu-a2a748265/" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 5 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #7c3aed, #a78bfa);">DC</div>
+          </div>
+          <div class="dev-nome">Derek Cazarin</div>
+          <a href="https://www.linkedin.com/in/derek-cazarin-4a06b829a/" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 6 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #1d6fa5, #56CCF2);">DC</div>
+          </div>
+          <div class="dev-nome">Diego Cortez</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 7 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #c05621, #F2994A);">FQ</div>
+          </div>
+          <div class="dev-nome">Felipe Queiroz</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 8 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #6FCF97, #56CCF2);">IS</div>
+          </div>
+          <div class="dev-nome">Isac Sagiorato</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 9 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #b5479a, #f9a8d4);">JM</div>
+          </div>
+          <div class="dev-nome">João Marcondes</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 10 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #2A2A2A, #4F4F4F);">LG</div>
+          </div>
+          <div class="dev-nome">Lucas Giavaroti</div>
+          <a href="https://www.linkedin.com/in/lucas-giavaroti/" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 11 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #F2994A, #7c3aed);">LB</div>
+          </div>
+          <div class="dev-nome">Lucca Bonato</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 12 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #1a98be, #6FCF97);">MV</div>
+          </div>
+          <div class="dev-nome">Marcus Vinicius</div>
+          <a href="https://www.linkedin.com/in/ritomarcus/" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 13 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #3da96e, #F2994A);">MH</div>
+          </div>
+          <div class="dev-nome">Murilo Henrique</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 14 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #1d6fa5, #2A2A2A);">RH</div>
+          </div>
+          <div class="dev-nome">Renan Henrique</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 15 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #c05621, #b5479a);">VO</div>
+          </div>
+          <div class="dev-nome">Vagner de Oliveira</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 16 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #56CCF2, #F2994A);">VL</div>
+          </div>
+          <div class="dev-nome">Victor Luiz</div>
+          <a href="https://www.linkedin.com/in/victor-schiavoni-24420b293/" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+      <!-- DEV 17 -->
+      <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+        <div class="dev-card h-100">
+          <div class="dev-avatar-wrap">
+            <div class="dev-avatar" style="background: linear-gradient(135deg, #6FCF97, #7c3aed);">WO</div>
+          </div>
+          <div class="dev-nome">Willian de Oliveira</div>
+          <a href="" target="_blank" rel="noopener" class="dev-linkedin">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /row -->
+
+    <p class="devs-footer-text mt-4">
+      Feito com <span>♥</span> e muito café por 17 pessoas apaixonadas por tecnologia e animais.
+    </p>
+
+  </div><!-- /container -->
+</section>
+<!-- ════════ FIM DA SEÇÃO DESENVOLVEDORES ════════ -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 
 <?php require __DIR__ . '/../includes/dashboard/footer.php'; ?>
 
@@ -1588,6 +2630,54 @@ footer {
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').style.boxShadow =
       window.scrollY > 20 ? '0 4px 24px rgba(79,79,79,0.08)' : 'none';
+  });
+
+  /* ── Filtros de adoção ── */
+  let filtroEspecie = 'todos';
+  let filtroPorte   = 'todos';
+
+  function filtrar(btn) {
+    document.querySelectorAll('[data-filtro="especie"]').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    filtroEspecie = btn.dataset.valor;
+    aplicarFiltros();
+  }
+
+  function filtrarPorte(btn) {
+    document.querySelectorAll('[data-filtro="porte"]').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    filtroPorte = btn.dataset.valor;
+    aplicarFiltros();
+  }
+
+  function aplicarFiltros() {
+    const cards = document.querySelectorAll('.animal-card[data-especie]');
+    let visiveis = 0;
+    cards.forEach((card) => {
+      const okEspecie = filtroEspecie === 'todos' || card.dataset.especie === filtroEspecie;
+      const okPorte   = filtroPorte   === 'todos' || card.dataset.porte   === filtroPorte;
+      const mostrar   = okEspecie && okPorte;
+      if (mostrar) {
+        card.classList.remove('hidden');
+        card.style.animation = 'none';
+        card.offsetHeight;
+        card.style.animation = `cardIn 0.35s ease ${visiveis * 0.07}s forwards`;
+        card.style.opacity = '0';
+        visiveis++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    document.getElementById('countVisiveis').textContent = visiveis;
+    document.getElementById('emptyState').style.display = visiveis === 0 ? 'block' : 'none';
+  }
+
+  /* ── Favoritar ── */
+  document.querySelectorAll('.card-fav').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      btn.textContent = btn.textContent.trim() === '❤️' ? '🤍' : '❤️';
+    });
   });
 </script>
 </body>
