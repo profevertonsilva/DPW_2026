@@ -1575,31 +1575,12 @@ footer {
 ════════════════════════════════ */
 .devs-section {
   padding: 5rem 0 4rem;
-  background: var(--white);
+  background: var(--sky);
   border-top: 1px solid var(--border);
   position: relative;
   overflow: hidden;
 }
 
-.devs-section::before {
-  content: '';
-  position: absolute;
-  top: -80px; right: -80px;
-  width: 320px; height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--orange-l) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.devs-section::after {
-  content: '';
-  position: absolute;
-  bottom: -60px; left: -60px;
-  width: 260px; height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--green-l) 0%, transparent 70%);
-  pointer-events: none;
-}
 
 .devs-tag {
   display: inline-flex;
@@ -1637,8 +1618,9 @@ footer {
   font-family: 'Inter', sans-serif;
   font-size: 0.88rem;
   line-height: 1.7;
-  color: #aaa;
+  color: var(--cream);
   font-weight: 300;
+
 }
 
 .dev-card {
@@ -1753,7 +1735,7 @@ footer {
 .devs-footer-text {
   font-family: 'Inter', sans-serif;
   font-size: 0.78rem;
-  color: #ccc;
+  color: var(--cream);
   font-weight: 300;
   text-align: center;
   padding-top: 1rem;
