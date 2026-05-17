@@ -175,7 +175,7 @@ class AdotanteDAO extends DAO
             $telefone_2 = $obj->__get("telefone_2");
             $status = $obj->__get("status");
 
-            $sql = "UPDATE adotante as a
+            $sql = "UPDATE adotante
                 SET 
                 nome = :nome,
                 cpf = :cpf,
