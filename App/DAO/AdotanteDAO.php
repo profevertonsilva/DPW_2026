@@ -227,7 +227,7 @@ class AdotanteDAO extends DAO
     {
         try {
             $sql = "SELECT * 
-            FROM Adotante
+            FROM adotante
             WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
