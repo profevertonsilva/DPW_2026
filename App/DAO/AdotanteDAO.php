@@ -95,7 +95,6 @@ class AdotanteDAO extends DAO
             $complemento = $obj->__get("complemento");
             $telefone_1 = $obj->__get("telefone_1");
             $telefone_2 = $obj->__get("telefone_2");
-            $status = $obj->__get("status");
             $fk_login_id = $obj->__get("fk_login_id");
 
             $sql = "INSERT INTO adotante (
@@ -126,7 +125,6 @@ class AdotanteDAO extends DAO
                 :complemento,
                 :telefone_1,
                 :telefone_2,
-                :status,
                 :fk_login_id
             )";
 
@@ -145,7 +143,6 @@ class AdotanteDAO extends DAO
             $stmt->bindValue(':complemento', $complemento);
             $stmt->bindValue(':telefone_1', $telefone_1);
             $stmt->bindValue(':telefone_2', $telefone_2);
-            $stmt->bindValue(':status', $status);
             $stmt->bindValue(':fk_login_id', $fk_login_id);
             $stmt->execute();
 
