@@ -164,7 +164,7 @@ class AdotanteDAO extends DAO
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue(":id", $id);
             $stmt->execute();
-            
+
         } catch (\PDOException $ex) {
             header('Location: /error103');
             die();
@@ -237,7 +237,7 @@ class AdotanteDAO extends DAO
             $stmt->bindValue(':id', $id);
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($resultado > 0) {
+            if ($resultado) {
                 $adotanteModel = new AdotanteModel();
 
                 $global = new FuncoesGlobais();
