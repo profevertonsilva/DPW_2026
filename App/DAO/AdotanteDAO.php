@@ -158,11 +158,17 @@ class AdotanteDAO extends DAO
 
     public  function excluir($id)
     {
-        $sql = "DELETE FROM adotante WHERE id = :id";
+        try {
+            $sql = "DELETE FROM adotante WHERE id = :id";
 
-        $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        $stmt->execute();
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+            
+        } catch (\PDOException $ex) {
+            header('Location: /error103');
+            die();
+        }
     }
     public  function alterar($obj)
     {
