@@ -110,7 +110,6 @@ class AdotanteDAO extends DAO
                 complemento,
                 telefone_1,
                 telefone_2,
-                status,
                 fk_login_id
             ) VALUES (
                 :nome,
