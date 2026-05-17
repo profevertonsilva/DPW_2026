@@ -266,3 +266,25 @@ alter table animal
     add column localizacao varchar(100) null,
     add column foto varchar(255) null,
     add column status enum('disponivel', 'adotado', 'em_tratamento', 'reservado') not null default 'disponivel';
+
+-- adição da data de atualização a tabela login 
+alter table login 
+	add column data_atualizacao datetime default current_timestamp;
+
+-- alteração do valor da coluna senha do login
+alter table login
+	change senha senha varchar(255) NOT NULL;
+    
+-- alteraçõe necessarias na tabela de login; 
+alter table login 
+	modify data_atualizacao datetime default current_timestamp on update current_timestamp not null,
+    modify email varchar(255) not null,
+    modify tipo_usuario enum('administrador','ong', 'rastreador', 'adotante', 'veterinario') default 'adotante' not null,
+    modify status enum('a', 'i') default 'a' not null,
+    modify data_cadastro datetime default current_timestamp not null;
+
+ALTER TABLE login 
+	MODIFY email VARCHAR(191) NOT NULL;
+
+ALTER TABLE login 
+	ADD CONSTRAINT uq_login_email UNIQUE (email);
