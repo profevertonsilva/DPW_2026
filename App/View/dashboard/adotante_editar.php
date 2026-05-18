@@ -12,7 +12,7 @@ $adotante = $this->getView()->adotante;
     <div class="card shadow">
         <div class="card-body">
             <form method="POST" action="/dashboard/adotante/alterar">
-                <input type="hidden" name="id" value="<?= htmlspecialchars($adotante->__get('adt_id')) ?>">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($adotante->__get('id')) ?>">
 
                 <!-- Dados Pessoais -->
                 <h5 class="mb-3 text-primary">Dados Pessoais</h5>
@@ -20,30 +20,30 @@ $adotante = $this->getView()->adotante;
                     <div class="col-md-6">
                         <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nome" name="nome" required
-                               value="<?= htmlspecialchars($adotante->__get('adt_nome')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('nome') ?? '') ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="cpf" class="form-label">CPF</label>
                         <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14"
                                placeholder="000.000.000-00"
-                               value="<?= htmlspecialchars($adotante->__get('adt_cpf')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('cpf') ?? '') ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" id="data_nascimento" name="data_nascimento"
-                               value="<?= htmlspecialchars($adotante->__get('adt_dn')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('data_nascimento') ?? '') ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="telefone_1" class="form-label">Telefone 1</label>
                         <input type="text" class="form-control" id="telefone_1" name="telefone_1"
                                placeholder="(00) 00000-0000"
-                               value="<?= htmlspecialchars($adotante->__get('adt_tel1')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('telefone_1') ?? '') ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="telefone_2" class="form-label">Telefone 2 <small class="text-muted">(opcional)</small></label>
                         <input type="text" class="form-control" id="telefone_2" name="telefone_2"
                                placeholder="(00) 00000-0000"
-                               value="<?= htmlspecialchars($adotante->__get('adt_tel2')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('telefone_2') ?? '') ?>">
                     </div>
                 </div>
 
@@ -54,37 +54,37 @@ $adotante = $this->getView()->adotante;
                         <label for="cep" class="form-label">CEP</label>
                         <input type="text" class="form-control" id="cep" name="cep" maxlength="9"
                                placeholder="00000-000"
-                               value="<?= htmlspecialchars($adotante->__get('adt_cep')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('cep') ?? '') ?>">
                     </div>
                     <div class="col-md-6">
                         <label for="logradouro" class="form-label">Logradouro</label>
                         <input type="text" class="form-control" id="logradouro" name="logradouro" readonly
-                               value="<?= htmlspecialchars($adotante->__get('adt_logradouro')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('logradouro') ?? '') ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="numero" class="form-label">Número</label>
                         <input type="text" class="form-control" id="numero" name="numero"
-                               value="<?= htmlspecialchars($adotante->__get('adt_numero')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('numero') ?? '') ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="complemento" class="form-label">Complemento</label>
                         <input type="text" class="form-control" id="complemento" name="complemento"
-                               value="<?= htmlspecialchars($adotante->__get('adt_complemento')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('complemento') ?? '') ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="bairro" class="form-label">Bairro</label>
                         <input type="text" class="form-control" id="bairro" name="bairro" readonly
-                               value="<?= htmlspecialchars($adotante->__get('adt_bairro')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('bairro') ?? '') ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="cidade" class="form-label">Cidade</label>
                         <input type="text" class="form-control" id="cidade" name="cidade" readonly
-                               value="<?= htmlspecialchars($adotante->__get('adt_cidade')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('cidade') ?? '') ?>">
                     </div>
                     <div class="col-md-1">
                         <label for="estado" class="form-label">UF</label>
                         <input type="text" class="form-control" id="estado" name="estado" readonly maxlength="2"
-                               value="<?= htmlspecialchars($adotante->__get('adt_estado')) ?>">
+                               value="<?= htmlspecialchars($adotante->__get('estado') ?? '') ?>">
                     </div>
                 </div>
 
@@ -95,7 +95,7 @@ $adotante = $this->getView()->adotante;
                         <label for="status" class="form-label">Status do Adotante</label>
                         <select class="form-select" id="status" name="status">
                             <?php
-                            $statusAtual = $adotante->__get('adt_status');
+                            $statusAtual = $adotante->__get('status');
                             $opcoes = [
                                 'pessimo'   => 'Péssimo',
                                 'regular'   => 'Regular',

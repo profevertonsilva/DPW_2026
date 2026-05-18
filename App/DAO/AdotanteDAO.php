@@ -95,8 +95,7 @@ class AdotanteDAO extends DAO
             $complemento = $obj->__get("complemento");
             $telefone_1 = $obj->__get("telefone_1");
             $telefone_2 = $obj->__get("telefone_2");
-            $status = $obj->__get("status");
-
+            $fk_login_id = $obj->__get("fk_login_id");
 
             $sql = "INSERT INTO adotante (
                 nome,
@@ -111,7 +110,7 @@ class AdotanteDAO extends DAO
                 complemento,
                 telefone_1,
                 telefone_2,
-                status
+                fk_login_id
             ) VALUES (
                 :nome,
                 :cpf,
@@ -125,10 +124,12 @@ class AdotanteDAO extends DAO
                 :complemento,
                 :telefone_1,
                 :telefone_2,
-                :status
+                :fk_login_id
             )";
 
-            $stmt = $this->getConn()->prepare($sql);
+            $conn = $this->getConn();
+
+            $stmt = $conn->prepare($sql);
             $stmt->bindValue(':nome', $nome);
             $stmt->bindValue(':cpf', $cpf);
             $stmt->bindValue(':data_nascimento', $data_nascimento);
@@ -141,8 +142,10 @@ class AdotanteDAO extends DAO
             $stmt->bindValue(':complemento', $complemento);
             $stmt->bindValue(':telefone_1', $telefone_1);
             $stmt->bindValue(':telefone_2', $telefone_2);
-            $stmt->bindValue(':status', $status);
+            $stmt->bindValue(':fk_login_id', $fk_login_id);
             $stmt->execute();
+
+            return $conn->lastInsertId();
         } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
@@ -151,11 +154,17 @@ class AdotanteDAO extends DAO
 
     public  function excluir($id)
     {
-        $sql = "DELETE FROM adotante WHERE id = :id";
+        try {
+            $sql = "DELETE FROM adotante WHERE id = :id";
 
-        $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        $stmt->execute();
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+
+        } catch (\PDOException $ex) {
+            header('Location: /error103');
+            die();
+        }
     }
     public  function alterar($obj)
     {
@@ -175,7 +184,7 @@ class AdotanteDAO extends DAO
             $telefone_2 = $obj->__get("telefone_2");
             $status = $obj->__get("status");
 
-            $sql = "UPDATE adotante as a
+            $sql = "UPDATE adotante
                 SET 
                 nome = :nome,
                 cpf = :cpf,
@@ -217,14 +226,14 @@ class AdotanteDAO extends DAO
     {
         try {
             $sql = "SELECT * 
-            FROM Adotante
+            FROM adotante
             WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue(':id', $id);
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($resultado > 0) {
+            if ($resultado) {
                 $adotanteModel = new AdotanteModel();
 
                 $global = new FuncoesGlobais();

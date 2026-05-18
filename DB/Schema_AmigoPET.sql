@@ -288,3 +288,7 @@ ALTER TABLE login
 
 ALTER TABLE login 
 	ADD CONSTRAINT uq_login_email UNIQUE (email);
+
+-- Alteração da tabela adotante, adicionado o valor bom com padrao da coluna status    
+alter table adotante 
+	modify status enum('pessimo','ruim', 'bom', 'muito bom', 'excelente') not null default 'bom';
