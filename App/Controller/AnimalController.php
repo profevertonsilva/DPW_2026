@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use FW\Controller\Action;
 use App\DAO\AnimalDAO;
+use App\DAO\EspecieDAO;
 use App\Model\AnimalModel;
 
 class AnimalController extends Action
@@ -22,8 +23,11 @@ class AnimalController extends Action
 
     public function cadastro()
     {
+        $especieDAO = new EspecieDAO();
+
         $this->getView()->title        = 'Cadastro de Animal';
         $this->getView()->title_pagina = 'Cadastro de Animal';
+        $this->getView()->especies     = $especieDAO->listar();
 
         $this->render('../dashboard/animal_cadastro', 'dashboard');
     }
@@ -54,12 +58,14 @@ class AnimalController extends Action
     {
         $id  = $params['id'] ?? ($params[0] ?? null);
 
-        $dao    = new AnimalDAO();
-        $animal = $dao->buscarPorId($id);
+        $dao        = new AnimalDAO();
+        $especieDAO = new EspecieDAO();
+        $animal     = $dao->buscarPorId($id);
 
         $this->getView()->title        = 'Editar Animal';
         $this->getView()->title_pagina = 'Editar Animal';
         $this->getView()->animal       = $animal;
+        $this->getView()->especies     = $especieDAO->listar();
         $this->getView()->params       = $params;
 
         $this->render('../dashboard/animal_editar', 'dashboard');
