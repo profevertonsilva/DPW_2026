@@ -38,6 +38,17 @@
                             <option value="grande">Grande</option>
                         </select>
                     </div>
+                    <div class="col-md-4">
+                        <label for="fk_especie_id" class="form-label">Espécie</label>
+                        <select class="form-select" id="fk_especie_id" name="fk_especie_id">
+                            <option value="">Selecione a espécie</option>
+                            <?php foreach ($this->getView()->especies as $especie): ?>
+                                <option value="<?= $especie->__get('id') ?>">
+                                    <?= htmlspecialchars($especie->__get('nome')) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="col-md-3">
                         <label for="cor" class="form-label">Cor</label>
                         <input type="text" class="form-control" id="cor" name="cor" placeholder="Ex: Caramelo, Preto">
@@ -46,7 +57,7 @@
                         <label for="localizacao" class="form-label">Localização</label>
                         <input type="text" class="form-control" id="localizacao" name="localizacao" placeholder="Ex: São Paulo - SP">
                     </div>
-                    <div class="col-md-3 d-flex align-items-end">
+                    <div class="col-md-2 d-flex align-items-end">
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="castrado" name="castrado" value="1">
                             <label class="form-check-label" for="castrado">Castrado</label>
@@ -60,7 +71,7 @@
                     <div class="col-md-12">
                         <label for="descricao" class="form-label">Descrição</label>
                         <textarea class="form-control" id="descricao" name="descricao" rows="3"
-                            placeholder="Descreva o temperamento, histórico e outras informações relevantes do animal."></textarea>
+                                  placeholder="Descreva o temperamento, histórico e outras informações relevantes do animal."></textarea>
                     </div>
                 </div>
 

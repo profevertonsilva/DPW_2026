@@ -1,5 +1,6 @@
 <?php
-$animal = $this->getView()->animal;
+$animal  = $this->getView()->animal;
+$especies = $this->getView()->especies;
 ?>
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -20,12 +21,12 @@ $animal = $this->getView()->animal;
                     <div class="col-md-4">
                         <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nome" name="nome" required
-                            value="<?= htmlspecialchars($animal->__get('nome')) ?>">
+                               value="<?= htmlspecialchars($animal->__get('nome')) ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="data_nascimento" class="form-label">Data de Nascimento</label>
                         <input type="date" class="form-control" id="data_nascimento" name="data_nascimento"
-                            value="<?= htmlspecialchars($animal->__get('data_nascimento') ?? '') ?>">
+                               value="<?= htmlspecialchars($animal->__get('data_nascimento') ?? '') ?>">
                     </div>
                     <div class="col-md-2">
                         <label for="sexo" class="form-label">Sexo <span class="text-danger">*</span></label>
@@ -49,22 +50,34 @@ $animal = $this->getView()->animal;
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <div class="col-md-4">
+                        <label for="fk_especie_id" class="form-label">Espécie</label>
+                        <select class="form-select" id="fk_especie_id" name="fk_especie_id">
+                            <option value="">Selecione a espécie</option>
+                            <?php foreach ($especies as $especie): ?>
+                                <option value="<?= $especie->__get('id') ?>"
+                                    <?= (int)$animal->__get('fk_especie_id') === (int)$especie->__get('id') ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars($especie->__get('nome')) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="col-md-3">
                         <label for="cor" class="form-label">Cor</label>
                         <input type="text" class="form-control" id="cor" name="cor"
-                            placeholder="Ex: Caramelo, Preto"
-                            value="<?= htmlspecialchars($animal->__get('cor') ?? '') ?>">
+                               placeholder="Ex: Caramelo, Preto"
+                               value="<?= htmlspecialchars($animal->__get('cor') ?? '') ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="localizacao" class="form-label">Localização</label>
                         <input type="text" class="form-control" id="localizacao" name="localizacao"
-                            placeholder="Ex: São Paulo - SP"
-                            value="<?= htmlspecialchars($animal->__get('localizacao') ?? '') ?>">
+                               placeholder="Ex: São Paulo - SP"
+                               value="<?= htmlspecialchars($animal->__get('localizacao') ?? '') ?>">
                     </div>
-                    <div class="col-md-3 d-flex align-items-end">
+                    <div class="col-md-2 d-flex align-items-end">
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="castrado" name="castrado" value="1"
-                                <?= $animal->__get('castrado') ? 'checked' : '' ?>>
+                                   <?= $animal->__get('castrado') ? 'checked' : '' ?>>
                             <label class="form-check-label" for="castrado">Castrado</label>
                         </div>
                     </div>
@@ -76,7 +89,7 @@ $animal = $this->getView()->animal;
                     <div class="col-md-12">
                         <label for="descricao" class="form-label">Descrição</label>
                         <textarea class="form-control" id="descricao" name="descricao" rows="3"
-                            placeholder="Descreva o temperamento, histórico e outras informações relevantes do animal."><?= htmlspecialchars($animal->__get('descricao') ?? '') ?></textarea>
+                                  placeholder="Descreva o temperamento, histórico e outras informações relevantes do animal."><?= htmlspecialchars($animal->__get('descricao') ?? '') ?></textarea>
                     </div>
                 </div>
 
