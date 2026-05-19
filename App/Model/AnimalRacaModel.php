@@ -3,7 +3,7 @@
 namespace App\Model;
 
 class AnimalRaca {
-    private $anlRa_id;
+    private $id;
     private $fk_animal_id;
     private $fk_raca_id;
 

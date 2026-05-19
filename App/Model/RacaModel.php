@@ -4,7 +4,7 @@ namespace App\Model;
 
 class RacaModel {
 
-    private $raca_id;
+    private $id;
     private $raca_nome;
     private $fk_especie_id;
 
