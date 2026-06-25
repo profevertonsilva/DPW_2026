@@ -18,12 +18,13 @@ class OngModel {
     private $ong_tel2;
     private $ong_status;
 
+    // Método mágico para definir valores nos atributos
     public function __set($nome, $valor) {
         $this->$nome = $valor;
     }
 
+    // Método mágico para buscar valores dos atributos
     public function __get($nome) {
         return $this->$nome;
     }
-
 }

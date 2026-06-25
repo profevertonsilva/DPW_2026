@@ -1,8 +1,7 @@
 <?php
 /*
  * @Author marcus rito
- * 
- * Data: 04/05/2026
+ * Refatorado para suporte completo a novos campos e tratamento estável de erros - 2026
  */
 
 namespace App\DAO;
@@ -11,35 +10,56 @@ use App\DAO;
 use App\Model\AnimalModel;
 use FW\Controller\FuncoesGlobais;
 
-
 class AnimalDAO extends DAO
 {
-
     public function inserir($obj)
     {
         try {
-            $nome = $obj->__get('nome');
-            $data_nascimento   = $obj->__get('data_nascimento');
-            $sexo = $obj->__get('sexo');
+            $nome            = $obj->__get('nome');
+            $data_nascimento = $obj->__get('data_nascimento');
+            $sexo            = $obj->__get('sexo');
+            $cor             = $obj->__get('cor');
+            $porte           = $obj->__get('porte');
+            $status          = $obj->__get('status');
+            $castrado        = $obj->__get('castrado');
+            $foto            = $obj->__get('foto');
+            $descricao       = $obj->__get('descricao');
 
             $sql = "INSERT INTO animal (
                         nome,
                         data_nascimento,
-                        sexo
+                        sexo,
+                        cor,
+                        porte,
+                        status,
+                        castrado,
+                        foto,
+                        descricao
                     ) VALUES (
                         :nome,
                         :data_nascimento,
-                        :sexo
+                        :sexo,
+                        :cor,
+                        :porte,
+                        :status,
+                        :castrado,
+                        :foto,
+                        :descricao
                     )";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':nome', $nome);
-            $stmt->bindValue(':data_nascimento',   $data_nascimento);
-            $stmt->bindValue(':sexo', $sexo);
+            $stmt->bindValue(':nome',            $nome);
+            $stmt->bindValue(':data_nascimento', $data_nascimento);
+            $stmt->bindValue(':sexo',            $sexo);
+            $stmt->bindValue(':cor',             $cor);
+            $stmt->bindValue(':porte',           $porte);
+            $stmt->bindValue(':status',          $status);
+            $stmt->bindValue(':castrado',        $castrado);
+            $stmt->bindValue(':foto',            $foto);
+            $stmt->bindValue(':descricao',       $descricao);
             $stmt->execute();
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao inserir animal no banco: " . $ex->getMessage());
         }
     }
 
@@ -63,8 +83,7 @@ class AnimalDAO extends DAO
 
             return $animais;
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao listar animais: " . $ex->getMessage());
         }
     }
 
@@ -88,42 +107,59 @@ class AnimalDAO extends DAO
 
             return null;
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao buscar animal por ID: " . $ex->getMessage());
         }
     }
 
     public function alterar($obj)
     {
         try {
-            $id   = $obj->__get('id');
-            $nome = $obj->__get('nome');
-            $data_nascimento   = $obj->__get('data_nascimento');
-            $sexo = $obj->__get('sexo');
+            $id              = $obj->__get('id');
+            $nome            = $obj->__get('nome');
+            $data_nascimento = $obj->__get('data_nascimento');
+            $sexo            = $obj->__get('sexo');
+            $cor             = $obj->__get('cor');
+            $porte           = $obj->__get('porte');
+            $status          = $obj->__get('status');
+            $castrado        = $obj->__get('castrado');
+            $foto            = $obj->__get('foto');
+            $descricao       = $obj->__get('descricao');
 
             $sql = "UPDATE animal SET
                         nome            = :nome,
                         data_nascimento = :data_nascimento,
-                        sexo            = :sexo
+                        sexo            = :sexo,
+                        cor             = :cor,
+                        porte           = :porte,
+                        status          = :status,
+                        castrado        = :castrado,
+                        foto            = :foto,
+                        descricao       = :descricao
                     WHERE
                         id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':id',   $id,   \PDO::PARAM_INT);
-            $stmt->bindValue(':nome', $nome);
-            $stmt->bindValue(':data_nascimento',   $data_nascimento);
-            $stmt->bindValue(':sexo', $sexo);
+            $stmt->bindValue(':id',              $id, \PDO::PARAM_INT);
+            $stmt->bindValue(':nome',            $nome);
+            $stmt->bindValue(':data_nascimento', $data_nascimento);
+            $stmt->bindValue(':sexo',            $sexo);
+            $stmt->bindValue(':cor',             $cor);
+            $stmt->bindValue(':porte',           $porte);
+            $stmt->bindValue(':status',          $status);
+            $stmt->bindValue(':castrado',        $castrado);
+            $stmt->bindValue(':foto',            $foto);
+            $stmt->bindValue(':descricao',       $descricao);
             $stmt->execute();
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao alterar animal no banco: " . $ex->getMessage());
         }
     }
 
     public function excluir($obj)
     {
         try {
-            $id = $obj->__get('id');
+            // Aceita tanto o ID puro quanto o objeto completo para evitar erros de chamada
+            $id = is_object($obj) ? $obj->__get('id') : $obj;
 
             $sql = "DELETE FROM animal WHERE id = :id";
 
@@ -131,8 +167,7 @@ class AnimalDAO extends DAO
             $stmt->bindValue(':id', $id, \PDO::PARAM_INT);
             $stmt->execute();
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao excluir animal do banco: " . $ex->getMessage());
         }
     }
 
@@ -157,8 +192,7 @@ class AnimalDAO extends DAO
 
             return $animais;
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao buscar por logado: " . $ex->getMessage());
         }
     }
 }

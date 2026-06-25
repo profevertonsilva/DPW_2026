@@ -4,52 +4,39 @@
  * Localização: ~/App/View/dashboard/adotante_listar.php
  */
 
+// Captura a lista de adotantes enviada pelo Controller (garante array se vier nulo)
 $adotantes = $this->getView()->adotantes ?? [];
 ?>
 
 <style>
-    /* RESET ABSOLUTO PARA RESOLVER TAGS ABERTAS NA NAVBAR */
-    .amigopet-wrapper-listar-fix {
+    /* Identidade Visual Obrigatória AmigoPet */
+    .amigopet-wrapper {
         font-family: 'Inter', sans-serif;
         color: #4F4F4F;
-        
-        /* Força a div a ignorar os pais quebrados e se posicionar na tela limpa */
-        position: absolute !important;
-        top: 70px !important;       /* Altura aproximada da navbar superior */
-        left: 260px !important;     /* Largura da sidebar */
-        
-        /* Define o tamanho exato do painel restante */
-        width: calc(100vw - 290px) !important; 
-        min-height: calc(100vh - 70px) !important;
-        
-        padding: 30px !important;
-        box-sizing: border-box !important;
-        background-color: #f8f9fa !important;
-        z-index: 5 !important; /* Fica acima de divs fantasmas, mas abaixo de modais */
+        padding: 40px;
+        margin-top: 40px;
+        margin-left: 260px; /* Alinhamento correto com a Sidebar */
     }
-    
-    .amigopet-wrapper-listar-fix h1 {
+    .amigopet-wrapper h1 {
         font-family: 'Poppins', sans-serif;
         font-weight: 600;
         color: #4F4F4F;
     }
-    
     .btn-main-success {
         background-color: #6FCF97 !important;
         color: white !important;
         font-weight: 600;
         border: none !important;
+        transition: background-color 0.2s ease;
     }
     .btn-main-success:hover {
         background-color: #5bba84 !important;
     }
-    
+    /* Estilização da Tabela */
     .table-responsive {
         border-radius: 12px;
-        overflow-x: auto !important;
-        background-color: #ffffff;
+        overflow: hidden;
     }
-    
     .custom-table thead {
         background-color: #FAF9F6 !important;
         color: #4F4F4F;
@@ -58,10 +45,8 @@ $adotantes = $this->getView()->adotantes ?? [];
     .custom-table th, .custom-table td {
         padding: 16px 12px !important;
         vertical-align: middle !important;
-        white-space: nowrap;
     }
-    
-    /* Badges */
+    /* Badge de Avaliação de Perfil */
     .badge-status {
         font-weight: 600;
         padding: 6px 12px;
@@ -76,7 +61,7 @@ $adotantes = $this->getView()->adotantes ?? [];
     .badge-pessimo { background-color: #FEE2E2; color: #991B1B; }
 </style>
 
-<div class="amigopet-wrapper-listar-fix">
+<div class="amigopet-wrapper">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-1">Lista de Adotantes 👥</h1>
@@ -111,8 +96,10 @@ $adotantes = $this->getView()->adotantes ?? [];
                             </tr>
                         <?php else: ?>
                             <?php foreach ($adotantes as $adotante): 
+                                // Proteção nativa extra para garantir que o laço não quebre se houver registro corrompido
                                 if (!is_object($adotante) || !method_exists($adotante, '__get')) continue;
                                 
+                                // Captura e trata o status para a estilização do badge
                                 $status = strtolower($adotante->__get('adt_status') ?? 'regular');
                                 $badgeClass = 'badge-regular';
                                 if ($status === 'excelente')  $badgeClass = 'badge-excelente';

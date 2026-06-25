@@ -18,11 +18,12 @@ class VeterinarioModel {
     private $vet_tel1;
     private $vet_tel2;
 
-     public function __set($nome, $valor) {
+    public function __set($nome, $valor) {
         $this->$nome = $valor;
     }
 
     public function __get($nome) {
-        return $this->$nome;
+        // O "?? null" garante segurança caso a propriedade ainda não tenha sido populada
+        return $this->$nome ?? null;
     }
 }

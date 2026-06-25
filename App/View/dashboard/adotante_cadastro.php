@@ -1,105 +1,159 @@
-<div class="container-fluid">
+<?php
+/**
+ * AmigoPet - Módulo de Adotantes (Cadastro)
+ * Localização: ~/App/View/dashboard/adotante_cadastro.php
+ */
+
+// Captura um possível objeto adotante enviado para repopulate
+$adotante = $this->getView()->adotante ?? null;
+?>
+
+<style>
+    /* Identidade Visual Obrigatória AmigoPet */
+    .amigopet-wrapper {
+        font-family: 'Inter', sans-serif;
+        color: #4F4F4F;
+        padding: 40px;
+        margin-top: 40px;
+        margin-left: 260px; /* Alinhamento correto com a Sidebar */
+    }
+    .amigopet-wrapper h1 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: #4F4F4F;
+    }
+    .section-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        color: #6FCF97 !important; /* Verde Principal para Novos Cadastros */
+    }
+    .btn-main-success {
+        background-color: #6FCF97 !important;
+        color: white !important;
+        font-weight: 600;
+        border: none !important;
+        transition: background-color 0.2s ease;
+    }
+    .btn-main-success:hover {
+        background-color: #5bba84 !important;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #6FCF97 !important;
+        box-shadow: 0 0 0 0.25rem rgba(111, 207, 151, 0.25) !important;
+    }
+</style>
+
+<div class="amigopet-wrapper">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Cadastro de Adotante</h1>
-        <a href="/dashboard/adotante/listar" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Voltar
+        <div>
+            <h1 class="h3 mb-1">Novo Adotante 📝</h1>
+            <p class="text-muted mb-0">Cadastre um novo tutor interessado em adoção responsável.</p>
+        </div>
+        <a href="/dashboard/adotante/listar" class="btn btn-light border" style="color: #4F4F4F;">
+            <i class="fas fa-arrow-left me-2"></i> Voltar
         </a>
     </div>
 
-    <div class="card shadow">
-        <div class="card-body">
-            <form method="POST" action="/dashboard/adotante/cadastrar">
+    <!-- COMPONENTE DE ALERTA DE ERRO INTEGRADO -->
+    <?php 
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
+    if (isset($_SESSION['erro_cadastro_adotante'])): 
+    ?>
+        <div class="alert alert-danger alert-dismissible fade show mb-4 border-0 shadow-sm" role="alert" style="border-radius: 8px;">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <strong>Atenção:</strong> <?= $_SESSION['erro_cadastro_adotante']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php 
+        unset($_SESSION['erro_cadastro_adotante']); // Limpa a mensagem após exibir
+    endif; 
+    ?>
 
-                <!-- Dados Pessoais -->
-                <h5 class="mb-3 text-primary">Dados Pessoais</h5>
+    <div class="card shadow-sm border-0 p-4" style="border-radius: 12px; background-color: #ffffff;">
+        <div class="card-body p-0">
+            <form method="POST" action="/dashboard/adotante/cadastrar">
+                
+                <h5 class="mb-3 section-title"><i class="fa-regular fa-user me-2"></i>Dados Pessoais</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                        <label for="nome" class="form-label fw-medium">Nome Completo <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control shadow-none" id="nome" name="nome" required
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_nome') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00">
+                        <label for="cpf" class="form-label fw-medium">CPF <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control shadow-none" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00" required
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_cpf') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento">
+                        <label for="data_nascimento" class="form-label fw-medium">Data de Nascimento</label>
+                        <input type="date" class="form-control shadow-none" id="data_nascimento" name="data_nascimento"
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_dn') ?? '') : '' ?>">
                     </div>
-                    <div class="col-md-4">
-                        <label for="telefone_1" class="form-label">Telefone 1</label>
-                        <input type="text" class="form-control" id="telefone_1" name="telefone_1" placeholder="(00) 00000-0000">
+                    <div class="col-md-6">
+                        <label for="telefone_1" class="form-label fw-medium">Telefone Principal <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control shadow-none" id="telefone_1" name="telefone_1" placeholder="(00) 00000-0000" required
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_tel1') ?? '') : '' ?>">
                     </div>
-                    <div class="col-md-4">
-                        <label for="telefone_2" class="form-label">Telefone 2 <small class="text-muted">(opcional)</small></label>
-                        <input type="text" class="form-control" id="telefone_2" name="telefone_2" placeholder="(00) 00000-0000">
+                    <div class="col-md-6">
+                        <label for="telefone_2" class="form-label fw-medium">Telefone Secundário <small class="text-muted">(Opcional)</small></label>
+                        <input type="text" class="form-control shadow-none" id="telefone_2" name="telefone_2" placeholder="(00) 00000-0000"
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_tel2') ?? '') : '' ?>">
                     </div>
                 </div>
 
-                <!-- Endereço -->
-                <h5 class="mb-3 text-primary">Endereço</h5>
+                <hr class="text-muted opacity-25 my-4">
+
+                <h5 class="mb-3 section-title"><i class="fa-solid fa-location-dot me-2"></i>Endereço Residencial</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-3">
-                        <label for="cep" class="form-label">CEP</label>
-                        <input type="text" class="form-control" id="cep" name="cep" maxlength="9" placeholder="00000-000">
+                        <label for="cep" class="form-label fw-medium">CEP <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control shadow-none" id="cep" name="cep" maxlength="9" placeholder="00000-000" required
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_cep') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-6">
-                        <label for="logradouro" class="form-label">Logradouro</label>
-                        <input type="text" class="form-control" id="logradouro" name="logradouro" readonly>
+                        <label for="logradouro" class="form-label fw-medium">Logradouro</label>
+                        <input type="text" class="form-control shadow-none" id="logradouro" name="logradouro" readonly
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_logradouro') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="numero">
+                        <label for="numero" class="form-label fw-medium">Número <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control shadow-none" id="numero" name="numero" required
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_numero') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-4">
-                        <label for="complemento" class="form-label">Complemento</label>
-                        <input type="text" class="form-control" id="complemento" name="complemento">
+                        <label for="complemento" class="form-label fw-medium">Complemento</label>
+                        <input type="text" class="form-control shadow-none" id="complemento" name="complemento"
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_complemento') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-4">
-                        <label for="bairro" class="form-label">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" readonly>
+                        <label for="bairro" class="form-label fw-medium">Bairro</label>
+                        <input type="text" class="form-control shadow-none" id="bairro" name="bairro" readonly
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_bairro') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-3">
-                        <label for="cidade" class="form-label">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" readonly>
+                        <label for="cidade" class="form-label fw-medium">Cidade</label>
+                        <input type="text" class="form-control shadow-none" id="cidade" name="cidade" readonly
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_cidade') ?? '') : '' ?>">
                     </div>
                     <div class="col-md-1">
-                        <label for="estado" class="form-label">UF</label>
-                        <input type="text" class="form-control" id="estado" name="estado" readonly maxlength="2">
+                        <label for="estado" class="form-label fw-medium">UF</label>
+                        <input type="text" class="form-control shadow-none text-center" id="estado" name="estado" readonly maxlength="2"
+                               value="<?= (is_object($adotante) && method_exists($adotante, '__get')) ? htmlspecialchars($adotante->__get('adt_estado') ?? '') : '' ?>">
                     </div>
                 </div>
 
-                <!-- Status -->
-                <h5 class="mb-3 text-primary">Status</h5>
-                <div class="row g-3 mb-4">
-                    <div class="col-md-4">
-                        <label for="status" class="form-label">Status do Adotante</label>
-                        <select class="form-select" id="status" name="status">
-                            <option value="pessimo">Péssimo</option>
-                            <option value="regular">Regular</option>
-                            <option value="bom" selected>Bom</option>
-                            <option value="muito bom">Muito Bom</option>
-                            <option value="excelente">Excelente</option>
-                        </select>
-                    </div>
+                <div class="d-flex gap-2 justify-content-end mt-4">
+                    <a href="/dashboard/adotante/listar" class="btn btn-light border px-4" style="color: #4F4F4F;">Cancelar</a>
+                    <button type="submit" class="btn btn-main-success px-4 py-2">Concluir Cadastro</button>
                 </div>
-
-                <!-- Botões -->
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Salvar
-                    </button>
-                    <a href="/dashboard/adotante/listar" class="btn btn-secondary">
-                        <i class="fas fa-times"></i> Cancelar
-                    </a>
-                </div>
-
             </form>
         </div>
     </div>
 </div>
 
 <script>
-// Máscara CPF: 000.000.000-00
+// Máscaras em Vanilla JS para o formulário
 document.getElementById('cpf').addEventListener('input', function(e) {
     var v = e.target.value.replace(/\D/g, '');
     v = v.substring(0, 11);
@@ -113,7 +167,6 @@ document.getElementById('cpf').addEventListener('input', function(e) {
     e.target.value = v;
 });
 
-// Máscara CEP: 00000-000
 document.getElementById('cep').addEventListener('input', function(e) {
     var v = e.target.value.replace(/\D/g, '');
     v = v.substring(0, 8);
@@ -123,8 +176,8 @@ document.getElementById('cep').addEventListener('input', function(e) {
     e.target.value = v;
 });
 
-// Máscara Telefone
 function mascaraTelefone(campo) {
+    if (!campo) return;
     campo.addEventListener('input', function(e) {
         var v = e.target.value.replace(/\D/g, '');
         v = v.substring(0, 11);
@@ -143,7 +196,7 @@ function mascaraTelefone(campo) {
 mascaraTelefone(document.getElementById('telefone_1'));
 mascaraTelefone(document.getElementById('telefone_2'));
 
-// ViaCEP
+// Consulta de CEP
 document.getElementById('cep').addEventListener('blur', function() {
     var cep = this.value.replace(/\D/g, '');
     if (cep.length !== 8) return;
@@ -152,10 +205,10 @@ document.getElementById('cep').addEventListener('blur', function() {
         .then(function(response) { return response.json(); })
         .then(function(data) {
             if (data.erro) return;
-            document.getElementById('logradouro').value  = data.logradouro  || '';
-            document.getElementById('bairro').value      = data.bairro      || '';
-            document.getElementById('cidade').value      = data.localidade   || '';
-            document.getElementById('estado').value      = data.uf           || '';
+            document.getElementById('logradouro').value = data.logradouro  || '';
+            document.getElementById('bairro').value     = data.bairro      || '';
+            document.getElementById('cidade').value     = data.localidade   || '';
+            document.getElementById('estado').value     = data.uf           || '';
             document.getElementById('numero').focus();
         })
         .catch(function() {});

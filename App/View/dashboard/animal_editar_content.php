@@ -1,37 +1,28 @@
 <?php
 /**
- * AmigoPet - Módulo de Animais (Edição de Prontuário)
- * Localização: ~/App/View/dashboard/animal_editar.php
+ * AmigoPet - Módulo de Animais (Conteúdo da Edição)
+ * Localização: ~/App/View/dashboard/animal_editar_content.php
  */
 
-// Captura o objeto do animal vindo do Controller
+// Resgata o animal disponível na View
 $animal = $this->getView()->animal ?? null;
 
-// Se por algum motivo não encontrar o animal, exibe um aviso seguro
 if (!$animal || !is_object($animal)) {
-    echo "<div class='alert alert-danger m-5'>Erro: Dados do animal não foram localizados para edição.</div>";
-    die();
+    echo "<div class='alert alert-danger' style='margin-left: 280px; margin-top: 80px;'>Erro crítico: Os dados do pet não puderam ser carregados pelo Controller. Verifique o ID no banco.</div>";
+    return;
 }
 ?>
 
 <style>
-    /* Identidade Visual Obrigatória AmigoPet - Edição */
-    .amigopet-wrapper-editar-fix {
+    /* Identidade Visual Obrigatória AmigoPet - Alinhamento com Menu */
+    .amigopet-wrapper-content-fix {
         font-family: 'Inter', sans-serif;
         color: #4F4F4F;
-        
-        position: absolute !important;
-        top: 70px !important;
-        left: 260px !important;
-        width: calc(100vw - 290px) !important; 
-        min-height: calc(100vh - 70px) !important;
-        
-        padding: 40px !important;
-        box-sizing: border-box !important;
-        background-color: #f8f9fa !important;
-        z-index: 5 !important;
+        padding: 40px;
+        margin-top: 40px;
+        margin-left: 260px; /* Recuo perfeito para não ficar atrás do menu */
     }
-    .amigopet-wrapper-editar-fix h1 {
+    .amigopet-wrapper-content-fix h1 {
         font-family: 'Poppins', sans-serif;
         font-weight: 600;
         color: #4F4F4F;
@@ -39,7 +30,7 @@ if (!$animal || !is_object($animal)) {
     .section-title {
         font-family: 'Poppins', sans-serif;
         font-weight: 600;
-        color: #6FCF97 !important; /* Verde AmigoPet */
+        color: #6FCF97 !important;
     }
     .btn-main-success {
         background-color: #6FCF97 !important;
@@ -57,7 +48,7 @@ if (!$animal || !is_object($animal)) {
     }
 </style>
 
-<div class="amigopet-wrapper-editar-fix">
+<div class="amigopet-wrapper-content-fix">
     <div class="row mb-4">
         <div class="col-12">
             <h1 class="h3 mb-1">Editar Prontuário do Pet ✏️</h1>
@@ -68,6 +59,7 @@ if (!$animal || !is_object($animal)) {
     <div class="card shadow-sm border-0 p-4" style="border-radius: 12px; background-color: #ffffff;">
         <form action="/dashboard/animal/alterar" method="POST" id="formEditarAnimal">
             
+            <!-- ID Oculto para o WHERE do SQL -->
             <input type="hidden" name="id" value="<?= htmlspecialchars($animal->__get('id')) ?>">
 
             <div class="row g-3">
