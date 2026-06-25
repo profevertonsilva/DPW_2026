@@ -6,6 +6,7 @@ use App\Controller\ApiHealthController;
 use App\Controller\ApiPublicCatalogController;
 use App\Controller\ApiRankingController;
 use App\Controller\ApiUserController;
+use App\Controller\OngController; // Importação da sua OngController mantida aqui!
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -104,6 +105,58 @@ $routes->add('api.animals.destroy', new Route(
     ],
     methods: ['DELETE'],
 ));
+
+/* ==========================================================================
+   ROTAS DO MÓDULO DE ONGS (CORRIGIDAS PARA COMPATIBILIDADE TOTAL)
+   ========================================================================== */
+
+// PÁGINAS VISUAIS (Mantêm o prefixo dinâmico para carregar a View no Apache e 8080)
+/* ==========================================================================
+   ROTAS DO MÓDULO DE ONGS (ESTRATÉGIA PADRÃO E PADRONIZADA DO PROJETO)
+   ========================================================================== */
+
+$routes->add('dashboard.ong.listar', new Route(
+    path: '{prefix}/dashboard/ong/listar',
+    defaults: ['_controller' => OngController::class, '_action' => 'listar', 'prefix' => ''],
+    requirements: ['prefix' => '.*'],
+    methods: ['GET'],
+));
+
+$routes->add('dashboard.ong.cadastro', new Route(
+    path: '{prefix}/dashboard/ong/cadastro',
+    defaults: ['_controller' => OngController::class, '_action' => 'cadastro', 'prefix' => ''],
+    requirements: ['prefix' => '.*'],
+    methods: ['GET'],
+));
+
+$routes->add('dashboard.ong.editar', new Route(
+    path: '{prefix}/dashboard/ong/editar',
+    defaults: ['_controller' => OngController::class, '_action' => 'editar', 'prefix' => ''],
+    requirements: ['prefix' => '.*'],
+    methods: ['GET'],
+));
+
+$routes->add('dashboard.ong.salvar', new Route(
+    path: '{prefix}/dashboard/ong/salvar',
+    defaults: ['_controller' => OngController::class, '_action' => 'salvar', 'prefix' => ''],
+    requirements: ['prefix' => '.*'],
+    methods: ['POST'],
+));
+
+$routes->add('dashboard.ong.alterar', new Route(
+    path: '{prefix}/dashboard/ong/alterar',
+    defaults: ['_controller' => OngController::class, '_action' => 'alterar', 'prefix' => ''],
+    requirements: ['prefix' => '.*'],
+    methods: ['POST'],
+));
+
+$routes->add('dashboard.ong.excluir', new Route(
+    path: '{prefix}/dashboard/ong/excluir',
+    defaults: ['_controller' => OngController::class, '_action' => 'excluir', 'prefix' => ''],
+    requirements: ['prefix' => '.*'],
+    methods: ['GET'],
+));
+/* ========================================================================== */
 
 foreach (['species', 'breeds', 'ongs', 'clinics', 'veterinarians'] as $entity) {
     $routes->add("api.{$entity}.index", new Route(

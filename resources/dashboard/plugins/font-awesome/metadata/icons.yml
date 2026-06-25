@@ -8943,7 +8943,7 @@ mobile:
       - iphone
       - number
       - screen
-      - telephone
+      - telefone
       - text
   styles:
     - solid
@@ -8962,7 +8962,7 @@ mobile-alt:
       - iphone
       - number
       - screen
-      - telephone
+      - telefone
       - text
   styles:
     - solid
@@ -9880,7 +9880,7 @@ phone:
       - earphone
       - number
       - support
-      - telephone
+      - telefone
       - voice
   styles:
     - solid
@@ -9905,7 +9905,7 @@ phone-square:
       - call
       - number
       - support
-      - telephone
+      - telefone
       - voice
   styles:
     - solid
@@ -9918,7 +9918,7 @@ phone-volume:
   label: Phone Volume
   search:
     terms:
-      - telephone
+      - telefone
       - volume-control-phone
   styles:
     - solid

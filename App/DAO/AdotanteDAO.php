@@ -8,6 +8,9 @@ use FW\Controller\FuncoesGlobais;
 
 class AdotanteDAO extends DAO
 {
+    /**
+     * Insere um novo adotante com blindagem contra CPF duplicado
+     */
     public function inserir($obj)
     {
         try {
@@ -26,34 +29,34 @@ class AdotanteDAO extends DAO
             $status = $obj->__get("status");
 
             $sql = "INSERT INTO adotante (
-                nome,
-                cpf,
-                data_nascimento,
-                cep,
-                estado,
-                cidade,
-                bairro,
-                logradouro,
-                numero,
-                complemento,
-                telefone_1,
-                telefone_2,
-                status
-            ) VALUES (
-                :nome,
-                :cpf,
-                :data_nascimento,
-                :cep,
-                :estado,
-                :cidade,
-                :bairro,
-                :logradouro,
-                :numero,
-                :complemento,
-                :telefone_1,
-                :telefone_2,
-                :status
-            )";
+                        nome,
+                        cpf,
+                        data_nascimento,
+                        cep,
+                        estado,
+                        cidade,
+                        bairro,
+                        logradouro,
+                        numero,
+                        complemento,
+                        telefone_1,
+                        telefone_2,
+                        status
+                    ) VALUES (
+                        :nome,
+                        :cpf,
+                        :data_nascimento,
+                        :cep,
+                        :estado,
+                        :cidade,
+                        :bairro,
+                        :logradouro,
+                        :numero,
+                        :complemento,
+                        :telefone_1,
+                        :telefone_2,
+                        :status
+                    )";
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue(':nome', $nome);
@@ -69,10 +72,15 @@ class AdotanteDAO extends DAO
             $stmt->bindValue(':telefone_1', $telefone_1);
             $stmt->bindValue(':telefone_2', $telefone_2);
             $stmt->bindValue(':status', $status);
-            $stmt->execute();
-        } catch (\PDOException $ex) {
-            // Repassa a exceção de banco para ser tratada e exibida na View com segurança
-            throw new \Exception("Erro ao inserir adotante: " . $ex->getMessage());
+            
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            // Captura o erro de violação de integridade por chave única (Duplicate entry)
+            if ($e->getCode() == '23000' || strpos($e->getMessage(), '1062') !== false) {
+                throw new \Exception("Este CPF já está cadastrado no sistema.");
+            }
+            
+            throw new \Exception("Erro ao inserir adotante: " . $e->getMessage());
         }
     }
 
@@ -83,7 +91,7 @@ class AdotanteDAO extends DAO
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue(":id", $id);
-            $stmt->execute();
+            return $stmt->execute();
         } catch (\PDOException $ex) {
             throw new \Exception("Erro ao excluir adotante: " . $ex->getMessage());
         }
@@ -139,7 +147,7 @@ class AdotanteDAO extends DAO
             $stmt->bindValue(':telefone_1', $telefone_1);
             $stmt->bindValue(':telefone_2', $telefone_2);
             $stmt->bindValue(':status', $status);
-            $stmt->execute();
+            return $stmt->execute();
         } catch (\PDOException $ex) {
             throw new \Exception("Erro ao alterar adotante: " . $ex->getMessage());
         }

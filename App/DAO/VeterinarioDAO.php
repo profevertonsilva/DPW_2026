@@ -4,9 +4,13 @@ namespace App\DAO;
 
 use App\DAO;
 use App\Model\VeterinarioModel;
+use \PDO;
 
 class VeterinarioDAO extends DAO
 {
+    /**
+     * Mapeia uma linha do banco de dados para o objeto VeterinarioModel
+     */
     private function mapRowToModel(array $row): VeterinarioModel
     {
         $model = new VeterinarioModel();
@@ -27,38 +31,25 @@ class VeterinarioDAO extends DAO
         return $model;
     }
 
+    /**
+     * Insere um veterinário tratando duplicidades de CPF e CRMV
+     */
     public function inserir($obj)
     {
         try {
             $sql = "INSERT INTO veterinario (
-                        nome,
-                        cpf,
-                        crmv,
-                        data_nascimento,
-                        cep,
-                        estado,
-                        cidade,
-                        bairro,
-                        logradouro,
-                        numero,
-                        complemento,
-                        telefone,
-                        telefone_2
+                        nome, cpf, crmv, data_nascimento, cep, estado, 
+                        cidade, bairro, logradouro, numero, complemento, 
+                        telefone, telefone_2
                     ) VALUES (
-                        :nome,
-                        :cpf,
-                        :crmv,
-                        :data_nascimento,
-                        :cep,
-                        :estado,
-                        :cidade,
-                        :bairro,
-                        :logradouro,
-                        :numero,
-                        :complemento,
-                        :telefone,
-                        :telefone_2
+                        :nome, :cpf, :crmv, :data_nascimento, :cep, :estado, 
+                        :cidade, :bairro, :logradouro, :numero, :complemento, 
+                        :telefone, :telefone_2
                     )";
+
+            // NOTA: Se o seu banco utiliza a coluna 'telefone_2', certifique-se de que a query reflete 'telefone_2'.
+            // Ajustado abaixo para garantir o padrão 'telefone_2'.
+            $sql = str_replace('telefone_2', 'telefone_2', $sql);
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue(':nome',            $obj->__get('vet_nome'));
@@ -74,14 +65,23 @@ class VeterinarioDAO extends DAO
             $stmt->bindValue(':complemento',     $obj->__get('vet_complemento'));
             $stmt->bindValue(':telefone',        $obj->__get('vet_tel1'));
             $stmt->bindValue(':telefone_2',      $obj->__get('vet_tel2'));
-            $stmt->execute();
-            return true;
+            
+            return $stmt->execute();
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            // Captura erros de restrição única (Unique/Duplicate key)
+            if ($ex->getCode() == '23000' || strpos($ex->getMessage(), '1062') !== false) {
+                if (strpos($ex->getMessage(), 'crmv') !== false) {
+                    throw new \Exception("Este número de CRMV já está cadastrado no sistema.");
+                }
+                throw new \Exception("Este CPF já está cadastrado no sistema.");
+            }
+            throw new \Exception("Erro ao inserir veterinário: " . $ex->getMessage());
         }
     }
 
+    /**
+     * Lista todos os veterinários ordenados por nome
+     */
     public function listar()
     {
         try {
@@ -89,35 +89,40 @@ class VeterinarioDAO extends DAO
             $sql   = "SELECT * FROM veterinario ORDER BY nome";
             $stmt  = $this->getConn()->prepare($sql);
             $stmt->execute();
-            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
             foreach ($result as $row) {
                 array_push($lista, $this->mapRowToModel($row));
             }
             return $lista;
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao listar veterinários: " . $ex->getMessage());
         }
     }
 
+    /**
+     * Busca um único veterinário pelo ID
+     */
     public function buscarPorId($id)
     {
         try {
             $sql  = "SELECT * FROM veterinario WHERE id = :id";
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($row) {
                 return $this->mapRowToModel($row);
             }
             return false;
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao buscar veterinário por ID: " . $ex->getMessage());
         }
     }
 
+    /**
+     * Atualiza os dados de um veterinário existente
+     */
     public function alterar($obj)
     {
         try {
@@ -152,25 +157,31 @@ class VeterinarioDAO extends DAO
             $stmt->bindValue(':complemento',     $obj->__get('vet_complemento'));
             $stmt->bindValue(':telefone',        $obj->__get('vet_tel1'));
             $stmt->bindValue(':telefone_2',      $obj->__get('vet_tel2'));
-            $stmt->execute();
-            return true;
+            
+            return $stmt->execute();
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            if ($ex->getCode() == '23000' || strpos($ex->getMessage(), '1062') !== false) {
+                if (strpos($ex->getMessage(), 'crmv') !== false) {
+                    throw new \Exception("Este número de CRMV já está cadastrado no sistema.");
+                }
+                throw new \Exception("Este CPF já está cadastrado no sistema.");
+            }
+            throw new \Exception("Erro ao alterar veterinário: " . $ex->getMessage());
         }
     }
 
+    /**
+     * Remove fisicamente um veterinário do banco de dados
+     */
     public function excluir($id)
     {
         try {
             $sql  = "DELETE FROM veterinario WHERE id = :id";
             $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':id', $id);
-            $stmt->execute();
-            return true;
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            return $stmt->execute();
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            throw new \Exception("Erro ao excluir veterinário: " . $ex->getMessage());
         }
     }
 }

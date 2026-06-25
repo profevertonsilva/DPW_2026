@@ -54,6 +54,21 @@ $adotante = $this->getView()->adotante ?? null;
         </a>
     </div>
 
+    <!-- COMPONENTE DE ALERTA DE ERRO INTEGRADO -->
+    <?php 
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
+    if (isset($_SESSION['erro_cadastro_adotante'])): 
+    ?>
+        <div class="alert alert-danger alert-dismissible fade show mb-4 border-0 shadow-sm" role="alert" style="border-radius: 8px;">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            <strong>Atenção:</strong> <?= $_SESSION['erro_cadastro_adotante']; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php 
+        unset($_SESSION['erro_cadastro_adotante']); // Limpa a mensagem após exibir
+    endif; 
+    ?>
+
     <div class="card shadow-sm border-0 p-4" style="border-radius: 12px; background-color: #ffffff;">
         <div class="card-body p-0">
             <form method="POST" action="/dashboard/adotante/cadastrar">
