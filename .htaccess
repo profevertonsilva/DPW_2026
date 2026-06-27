@@ -1,5 +1,9 @@
 RewriteEngine On
 
+# Preserva o header Authorization (Bearer) para a API quando rodando no Apache.
+RewriteCond %{HTTP:Authorization} .
+RewriteRule ^ - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
 
