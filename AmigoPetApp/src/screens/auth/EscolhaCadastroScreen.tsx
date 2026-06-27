@@ -9,6 +9,9 @@ import { spacing } from '../../theme/spacing';
 
 type Nav = NativeStackNavigationProp<AuthStackParamList>;
 
+// Anel colorido por opção (verde / laranja / azul do theme), na ordem de OPCOES
+const ICONE_CORES = [colors.primary, colors.accent, colors.info];
+
 const OPCOES = [
   {
     rota: 'CadastroAdotante' as const,
@@ -43,14 +46,16 @@ export function EscolhaCadastroScreen() {
         <Text style={styles.heading}>Criar conta</Text>
         <Text style={styles.sub}>Qual é o seu perfil?</Text>
 
-        {OPCOES.map(op => (
+        {OPCOES.map((op, i) => (
           <TouchableOpacity
             key={op.rota}
             style={styles.card}
             onPress={() => navigation.navigate(op.rota)}
             activeOpacity={0.8}
           >
-            <Text style={styles.icone}>{op.icone}</Text>
+            <View style={[styles.iconeBadge, { borderColor: ICONE_CORES[i] }]}>
+              <Text style={styles.icone}>{op.icone}</Text>
+            </View>
             <View style={styles.cardTexto}>
               <Text style={styles.cardTitulo}>{op.titulo}</Text>
               <Text style={styles.cardDesc}>{op.descricao}</Text>
@@ -83,9 +88,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  icone: { fontSize: 32, marginRight: spacing.md },
+  iconeBadge: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    borderWidth: 2,
+    backgroundColor: colors.bgMuted,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: spacing.md,
+  },
+  icone: { fontSize: 26 },
   cardTexto: { flex: 1 },
   cardTitulo: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.text, marginBottom: 2 },
   cardDesc: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.secondary },
-  chevron: { fontSize: 24, color: colors.border, marginLeft: spacing.sm },
+  chevron: { fontSize: 24, color: colors.secondary, marginLeft: spacing.sm },
 });

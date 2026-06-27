@@ -5,6 +5,7 @@ import {
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { HomeStackParamList } from '../../navigation/stacks/HomeStack';
 import { Avatar } from '../../components/ui/Avatar';
+import { Card } from '../../components/ui/Card';
 import { Section } from '../../components/ui/Section';
 import { PermissionGate } from '../../components/ui/PermissionGate';
 import { usePermissions } from '../../permissions/usePermissions';
@@ -25,6 +26,10 @@ const PORTE_LABEL: Record<string, string> = { pequeno: 'Pequeno', medio: 'Médio
 const SEXO_LABEL: Record<string, string> = { m: 'Macho', f: 'Fêmea' };
 const STATUS_LABEL: Record<string, string> = {
   disponivel: 'Disponível', adotado: 'Adotado', em_tratamento: 'Em Tratamento', reservado: 'Reservado',
+};
+// Cor semântica por status (tokens do theme)
+const STATUS_COR: Record<string, string> = {
+  disponivel: colors.primary, adotado: colors.info, em_tratamento: colors.accent, reservado: colors.secondary,
 };
 const TIPO_PROC_LABEL: Record<string, string> = {
   consulta: 'Consulta', cirurgia: 'Cirurgia', exame: 'Exame', castracao: 'Castração', outro: 'Outro',
@@ -109,8 +114,8 @@ export function AnimalDetalheScreen({ route, navigation }: Props) {
           <Text style={styles.nome}>{animal.nome}</Text>
           {animal.raca ? <Text style={styles.raca}>{animal.raca}</Text>
             : animal.especie ? <Text style={styles.raca}>{animal.especie}</Text> : null}
-          <View style={[styles.statusBadge, { backgroundColor: disponivel ? colors.primary : colors.border }]}>
-            <Text style={[styles.statusLabel, { color: disponivel ? colors.white : colors.secondary }]}>
+          <View style={[styles.statusBadge, { backgroundColor: STATUS_COR[animal.status] ?? colors.secondary }]}>
+            <Text style={[styles.statusLabel, { color: colors.white }]}>
               {STATUS_LABEL[animal.status] ?? animal.status}
             </Text>
           </View>
@@ -118,43 +123,48 @@ export function AnimalDetalheScreen({ route, navigation }: Props) {
 
         {/* Informações básicas */}
         <Section titulo="Informações">
-          <View style={styles.infoGrid}>
-            <InfoItem label="Espécie" value={animal.especie ?? '—'} />
-            <InfoItem label="Porte" value={animal.porte ? PORTE_LABEL[animal.porte] ?? animal.porte : '—'} />
-            <InfoItem label="Sexo" value={animal.sexo ? SEXO_LABEL[animal.sexo] ?? animal.sexo : '—'} />
-            <InfoItem label="Localização" value={animal.localizacao ?? '—'} />
-            {animal.ong && <InfoItem label="ONG" value={animal.ong.nome} />}
-          </View>
+          <Card>
+            <View style={styles.infoGrid}>
+              <InfoItem label="Espécie" value={animal.especie ?? '—'} />
+              <InfoItem label="Porte" value={animal.porte ? PORTE_LABEL[animal.porte] ?? animal.porte : '—'} />
+              <InfoItem label="Sexo" value={animal.sexo ? SEXO_LABEL[animal.sexo] ?? animal.sexo : '—'} />
+              <InfoItem label="Localização" value={animal.localizacao ?? '—'} />
+              {animal.ong && <InfoItem label="ONG" value={animal.ong.nome} />}
+            </View>
+          </Card>
         </Section>
 
         {/* Saúde Geral (RF#09) */}
         <Section titulo="Saúde Geral">
-          {saude ? (
-            <View>
-              <View style={styles.aptidaoRow}>
-                <Text style={styles.aptidaoLabel}>Apto para adoção:</Text>
-                <View style={[styles.aptidaoBadge, { backgroundColor: saude.apto_para_adocao ? colors.success : colors.error }]}>
-                  <Text style={styles.aptidaoBadgeLabel}>{saude.apto_para_adocao ? 'Sim' : 'Não'}</Text>
+          <Card>
+            {saude ? (
+              <View>
+                <View style={styles.aptidaoRow}>
+                  <Text style={styles.aptidaoLabel}>Apto para adoção:</Text>
+                  <View style={[styles.aptidaoBadge, { backgroundColor: saude.apto_para_adocao ? colors.success : colors.error }]}>
+                    <Text style={styles.aptidaoBadgeLabel}>{saude.apto_para_adocao ? 'Sim' : 'Não'}</Text>
+                  </View>
                 </View>
+                {saude.temperamento && <InfoItem label="Temperamento" value={saude.temperamento} />}
+                {saude.necessidades_especiais && <InfoItem label="Necessidades especiais" value={saude.necessidades_especiais} />}
               </View>
-              {saude.temperamento && <InfoItem label="Temperamento" value={saude.temperamento} />}
-              {saude.necessidades_especiais && <InfoItem label="Necessidades especiais" value={saude.necessidades_especiais} />}
-            </View>
-          ) : (
-            <Text style={styles.semDados}>Sem informações de saúde registradas.</Text>
-          )}
-          {(has('podeCadastrarAnimal') || has('podeRegistrarProcedimento')) && (
-            <TouchableOpacity style={styles.btnEditar}
-              onPress={() => navigation.navigate('EditarSaudeAnimal', { animalId: id })}>
-              <Text style={styles.btnEditarLabel}>✏️ Editar condição geral</Text>
-            </TouchableOpacity>
-          )}
+            ) : (
+              <SemDados texto="Sem informações de saúde registradas." />
+            )}
+            {(has('podeCadastrarAnimal') || has('podeRegistrarProcedimento')) && (
+              <TouchableOpacity style={styles.btnEditar}
+                onPress={() => navigation.navigate('EditarSaudeAnimal', { animalId: id })}>
+                <Text style={styles.btnEditarLabel}>✏️ Editar condição geral</Text>
+              </TouchableOpacity>
+            )}
+          </Card>
         </Section>
 
         {/* Vacinas (RF#15) */}
         <Section titulo="Vacinas">
+          <Card>
           {vacinas.length === 0 ? (
-            <Text style={styles.semDados}>Nenhuma vacina registrada.</Text>
+            <SemDados texto="Nenhuma vacina registrada." />
           ) : (
             vacinas.map(v => {
               const nivel = alertaReforco(v.data_reforco);
@@ -193,12 +203,14 @@ export function AnimalDetalheScreen({ route, navigation }: Props) {
               <Text style={styles.btnAdicionarLabel}>+ Adicionar vacina</Text>
             </TouchableOpacity>
           </PermissionGate>
+          </Card>
         </Section>
 
         {/* Procedimentos (RF#16) */}
         <Section titulo="Procedimentos Médicos">
+          <Card>
           {procedimentos.length === 0 ? (
-            <Text style={styles.semDados}>Nenhum procedimento registrado.</Text>
+            <SemDados texto="Nenhum procedimento registrado." />
           ) : (
             procedimentos.map(p => (
               <View key={p.id} style={styles.procCard}>
@@ -228,6 +240,7 @@ export function AnimalDetalheScreen({ route, navigation }: Props) {
               <Text style={styles.btnAdicionarLabel}>+ Adicionar procedimento</Text>
             </TouchableOpacity>
           </PermissionGate>
+          </Card>
         </Section>
 
         {/* Compartilhar perfil (RF#21) */}
@@ -259,11 +272,12 @@ export function AnimalDetalheScreen({ route, navigation }: Props) {
 
         {/* Log de Auditoria (RF#10) */}
         <Section titulo="Histórico (imutável)">
+          <Card>
           <View style={styles.imutavelAviso}>
             <Text style={styles.imutavelAvisoTexto}>🔒 Registro de auditoria — somente leitura</Text>
           </View>
           {auditoria.length === 0 ? (
-            <Text style={styles.semDados}>Sem registros de auditoria.</Text>
+            <SemDados texto="Sem registros de auditoria." />
           ) : (
             auditoria.map(e => (
               <View key={e.id} style={styles.auditoriaItem}>
@@ -278,6 +292,7 @@ export function AnimalDetalheScreen({ route, navigation }: Props) {
               </View>
             ))
           )}
+          </Card>
         </Section>
       </ScrollView>
 
@@ -307,6 +322,15 @@ function InfoItem({ label, value }: { label: string; value: string }) {
   );
 }
 
+function SemDados({ texto }: { texto: string }) {
+  return (
+    <View style={styles.semDadosBox}>
+      <Text style={styles.semDadosIcon}>🐾</Text>
+      <Text style={styles.semDados}>{texto}</Text>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bgMuted },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -328,11 +352,13 @@ const styles = StyleSheet.create({
   aptidaoBadgeLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.xs, color: colors.white },
   btnEditar: { marginTop: spacing.sm },
   btnEditarLabel: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.primary },
-  semDados: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.secondary, fontStyle: 'italic', marginBottom: spacing.xs },
+  semDados: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.secondary, fontStyle: 'italic', textAlign: 'center' },
+  semDadosBox: { alignItems: 'center', paddingVertical: spacing.md },
+  semDadosIcon: { fontSize: 28, marginBottom: spacing.xs, opacity: 0.5 },
   // Vacinas
   vacinaCard: {
-    backgroundColor: colors.bgMuted, borderRadius: 8, padding: spacing.sm,
-    marginBottom: spacing.sm, borderLeftWidth: 1, borderLeftColor: colors.border,
+    backgroundColor: colors.bgMuted, borderRadius: 10, padding: spacing.sm,
+    marginBottom: spacing.sm, borderLeftWidth: 3, borderLeftColor: colors.border,
   },
   vacinaHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 },
   vacinaNome: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.sm, color: colors.text, flex: 1 },
@@ -342,7 +368,7 @@ const styles = StyleSheet.create({
   vacinaAutor: { fontFamily: typography.fontFamily.body, fontSize: 10, color: colors.border, marginTop: 4, fontStyle: 'italic' },
   // Procedimentos
   procCard: {
-    backgroundColor: colors.bgMuted, borderRadius: 8, padding: spacing.sm, marginBottom: spacing.sm,
+    backgroundColor: colors.bgMuted, borderRadius: 10, padding: spacing.sm, marginBottom: spacing.sm,
     borderLeftWidth: 3, borderLeftColor: colors.info,
   },
   procHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 },
@@ -357,20 +383,20 @@ const styles = StyleSheet.create({
   btnAdicionar: { marginTop: spacing.xs, paddingVertical: spacing.xs },
   btnAdicionarLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.sm, color: colors.primary },
   btnCompartilhar: {
-    backgroundColor: colors.bg, borderRadius: 10, paddingVertical: spacing.sm,
+    backgroundColor: colors.bg, borderRadius: 10, paddingVertical: spacing.md,
     alignItems: 'center', marginBottom: spacing.md,
     borderWidth: 1, borderColor: colors.info,
   },
   btnCompartilharLabel: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.info },
   btnCarteira: {
-    backgroundColor: colors.bg, borderRadius: 10, paddingVertical: spacing.sm,
+    backgroundColor: colors.bg, borderRadius: 10, paddingVertical: spacing.md,
     alignItems: 'center', marginBottom: spacing.md,
     borderWidth: 1, borderColor: colors.primary,
     elevation: 1,
   },
   btnCarteiraLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.primary },
   btnTransferencia: {
-    backgroundColor: colors.bg, borderRadius: 10, paddingVertical: spacing.sm,
+    backgroundColor: colors.bg, borderRadius: 10, paddingVertical: spacing.md,
     alignItems: 'center', marginBottom: spacing.md,
     borderWidth: 1, borderColor: colors.secondary,
   },
