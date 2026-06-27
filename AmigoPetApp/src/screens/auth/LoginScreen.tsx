@@ -154,10 +154,12 @@ export function LoginScreen() {
         </View>
 
         {/* Hint de mock */}
-        <Text style={styles.hint}>
-          [Mock] joao@exemplo.com · adotante@teste.com · ong@teste.com · vet@teste.com{'\n'}
-          Senha: 12345678
-        </Text>
+        <View style={styles.hintBox}>
+          <Text style={styles.hint}>
+            [Mock] joao@exemplo.com · adotante@teste.com · ong@teste.com · vet@teste.com{'\n'}
+            Senha: 12345678
+          </Text>
+        </View>
       </ScrollView>
 
       <Snackbar
@@ -235,11 +237,18 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: typography.fontSize.md,
   },
+  hintBox: {
+    marginTop: spacing.xl,
+    backgroundColor: colors.bgMuted,
+    borderRadius: 10,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.md,
+  },
   hint: {
     fontFamily: typography.fontFamily.body,
     fontSize: typography.fontSize.xs,
-    color: '#BDBDBD',
+    color: colors.secondary,
     textAlign: 'center',
-    marginTop: spacing.xl,
+    lineHeight: 18,
   },
 });

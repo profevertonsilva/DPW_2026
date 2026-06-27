@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   View,
+  Text,
   StyleSheet,
   TextInput,
   ScrollView,
@@ -62,15 +63,18 @@ export function FeedAnimaisScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.searchBar}>
-        <TextInput
-          style={styles.input}
-          placeholder="Buscar por nome..."
-          placeholderTextColor={colors.secondary}
-          value={busca}
-          onChangeText={setBusca}
-          onSubmitEditing={() => carregar()}
-          returnKeyType="search"
-        />
+        <View style={styles.searchInputWrap}>
+          <Text style={styles.searchIcon}>🔍</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Buscar por nome..."
+            placeholderTextColor={colors.secondary}
+            value={busca}
+            onChangeText={setBusca}
+            onSubmitEditing={() => carregar()}
+            returnKeyType="search"
+          />
+        </View>
       </View>
 
       <ScrollView
@@ -121,10 +125,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
-  input: {
+  searchInputWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: colors.bgMuted,
     borderRadius: 8,
     paddingHorizontal: spacing.md,
+  },
+  searchIcon: {
+    fontSize: typography.fontSize.md,
+    marginRight: spacing.sm,
+  },
+  input: {
+    flex: 1,
     paddingVertical: spacing.sm,
     fontFamily: typography.fontFamily.body,
     fontSize: typography.fontSize.md,
