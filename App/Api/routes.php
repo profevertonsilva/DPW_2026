@@ -43,6 +43,36 @@ $router->adicionar('GET', '/ongs',                'OngController', 'listar');
 $router->adicionar('GET', '/ongs/{id}',           'OngController', 'detalhe');
 $router->adicionar('GET', '/ongs/{id}/animais',   'OngController', 'animais');
 
+// --- Solicitações de Adoção + Termo + Avaliação (seções C.4 / C.7) ---
+// ATENÇÃO: rotas estáticas (minhas/recebidas) antes de /solicitacoes/{id}.
+$router->adicionar('GET',   '/solicitacoes/minhas',          'SolicitacaoController', 'minhas',         true);
+$router->adicionar('GET',   '/solicitacoes/recebidas',       'SolicitacaoController', 'recebidas',      true);
+$router->adicionar('POST',  '/solicitacoes',                 'SolicitacaoController', 'criar',          true);
+$router->adicionar('GET',   '/solicitacoes/{id}',            'SolicitacaoController', 'detalhe',        true);
+$router->adicionar('PATCH', '/solicitacoes/{id}/status',     'SolicitacaoController', 'atualizarStatus', true);
+$router->adicionar('POST',  '/solicitacoes/{id}/avaliacao',  'SolicitacaoController', 'avaliar',        true);
+$router->adicionar('GET',   '/solicitacoes/{id}/termo',      'SolicitacaoController', 'termo',          true);
+$router->adicionar('POST',  '/solicitacoes/{id}/termo/assinar', 'SolicitacaoController', 'assinarTermo', true);
+
+// --- Saúde do Animal (seção C.5) — tudo protegido (JWT) ---
+$router->adicionar('GET',  '/animais/{id}/vacinas',       'SaudeController', 'vacinas',             true);
+$router->adicionar('POST', '/animais/{id}/vacinas',       'SaudeController', 'adicionarVacina',     true);
+$router->adicionar('GET',  '/animais/{id}/procedimentos', 'SaudeController', 'procedimentos',       true);
+$router->adicionar('POST', '/animais/{id}/procedimentos', 'SaudeController', 'adicionarProcedimento', true);
+$router->adicionar('GET',  '/animais/{id}/saude',         'SaudeController', 'saude',               true);
+$router->adicionar('PUT',  '/animais/{id}/saude',         'SaudeController', 'atualizarSaude',      true);
+$router->adicionar('GET',  '/animais/{id}/carteira',      'SaudeController', 'carteira',            true);
+// Auditoria (append-only): mesmo dado de historico_animal, porém protegido (reusa o handler).
+$router->adicionar('GET',  '/animais/{id}/auditoria',     'AnimalController', 'historico',          true);
+$router->adicionar('GET',  '/vet/atendimentos',           'SaudeController', 'atendimentos',        true);
+
+// --- Avistamentos + Ranking (seção C.6) — protegido ---
+$router->adicionar('POST',  '/avistamentos',           'AvistamentoController', 'criar',          true);
+$router->adicionar('GET',   '/avistamentos',           'AvistamentoController', 'listar',         true);
+$router->adicionar('GET',   '/ranking/rastreadores',   'AvistamentoController', 'ranking',        true);
+$router->adicionar('GET',   '/avistamentos/{id}',      'AvistamentoController', 'detalhe',        true);
+$router->adicionar('PATCH', '/avistamentos/{id}/status','AvistamentoController', 'atualizarStatus', true);
+
 // --- Taxonomia (seção C.2) ---
 $router->adicionar('GET', '/especies', 'AnimalController', 'especies');
 $router->adicionar('GET', '/racas',    'AnimalController', 'racas');

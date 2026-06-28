@@ -112,41 +112,45 @@
 - de-para: `foto` ← `ong.avatar`, `descricao` ← `ong.bio`, `email`/`status` ← `login` (via `ong.fk_login_id`).
 - `quantidade_animais` é **contado ao vivo** em `ong_animal` (não usa a coluna `ong.quantidade_animais`, que pode estar defasada).
 
-### C.4 Solicitações de Adoção — 🔜 PRÓXIMO
-- **GET /solicitacoes/minhas** 🔒 (adotante) — 200 array de Solicitacao (com `animal`).
-- **POST /solicitacoes** 🔒 — Body `{ fk_animal_id, motivo, aceite_termo:true, timestamp_aceite }`. 201 · 400 já existe ativa · 422 animal indisponível / perfil incompleto (RF#08).
-- **GET /solicitacoes/{id}** 🔒 — 200 · 403 · 404.
-- **GET /solicitacoes/recebidas** 🔒 (ong) — 200 array (com `adotante_nome, adotante_email, animal, termo_assinado, pdf_termo_url`).
-- **PATCH /solicitacoes/{id}/status** 🔒 (ong dona) — Body `{ status, motivo_recusa? }`. 200 · 403. Ao `Concluído` → `animal.status='adotado'`.
-- **POST /solicitacoes/{id}/avaliacao** 🔒 (ong) — Body do checklist (ver C.7). 201.
-- **GET /solicitacoes/{id}/termo** 🔒 (adotante) — 200 `{ solicitacao_id, pdf_url, pdf_assinado_url, conteudo_texto, assinado, data_assinatura }`.
-- **POST /solicitacoes/{id}/termo/assinar** 🔒 (adotante) — Body `{ aceite:true, timestamp }`. IP capturado server-side. 200 · 400 já assinado · 422 status != Aprovado.
+### C.4 Solicitações de Adoção — ✅ MÓDULO COMPLETO
+- **✅ GET /solicitacoes/minhas** 🔒 (adotante) — 200 array de Solicitacao (com `animal`).
+- **✅ POST /solicitacoes** 🔒 (adotante) — Body `{ fk_animal_id, motivo, aceite_termo:true, timestamp_aceite? }`. 201 · 400 já existe ativa · 422 animal indisponível / perfil incompleto (RF#08) / sem aceite.
+- **✅ GET /solicitacoes/{id}** 🔒 — 200 · 403 · 404. (Acesso: adotante dono OU ONG dona do animal; a ONG recebe `adotante_nome/email`.)
+- **✅ GET /solicitacoes/recebidas** 🔒 (ong) — 200 array (com `adotante_nome, adotante_email, animal, termo_assinado, pdf_termo_url`).
+- **✅ PATCH /solicitacoes/{id}/status** 🔒 (ong dona) — Body `{ status, motivo_recusa? }`. 200 · 403 · 422 (status inválido / recusa sem motivo). Ao `Concluído` → `animal.status='adotado'`.
+- **✅ POST /solicitacoes/{id}/avaliacao** 🔒 (ong dona) — Body do checklist (ver C.7). 201 · 409 se já avaliada (append-only).
+- **✅ GET /solicitacoes/{id}/termo** 🔒 (adotante dono) — 200 `{ solicitacao_id, pdf_url, pdf_assinado_url, conteudo_texto, assinado, data_assinatura }`. (Cria a linha de termo + `conteudo_texto` na 1ª chamada.)
+- **✅ POST /solicitacoes/{id}/termo/assinar** 🔒 (adotante dono) — Body `{ aceite:true, timestamp? }`. **IP e user_agent capturados server-side** (Lei 14.063/2020). 200 · 400 já assinado · 422 status != Aprovado / sem aceite. Conclui a adoção (status → Concluído, `animal → adotado`).
+- > ⚠️ **PDF é STUB:** `pdf_url`/`pdf_assinado_url` retornam `null` (igual ao stub de e-mail). O `conteudo_texto`
+  > do termo é gerado e a assinatura é registrada de verdade; falta só plugar a geração via TCPDF. Ver H.3.
 
 **Status canônicos:** `Pendente`, `Em Análise`, `Aprovado`, `Concluído`, `Recusado` (com acento exato).
 
-### C.5 Saúde do Animal — 🔜
-- **GET /animais/{id}/vacinas** 🔒 — 200 array de Vacina.
-- **POST /animais/{id}/vacinas** 🔒 (vet/ong) — **append-only**. Body `{ nome, data_aplicacao, data_reforco?, veterinario_nome?, clinica_nome? }`. 201.
-- **GET /animais/{id}/procedimentos** 🔒 — 200 array de Procedimento.
-- **POST /animais/{id}/procedimentos** 🔒 (vet/ong) — **append-only**. Body `{ nome, tipo, data, veterinario_nome?, observacoes?, anexo_url? }`. 201.
-- **GET /animais/{id}/saude** 🔒 — 200 `{ fk_animal_id, apto_para_adocao, temperamento, necessidades_especiais, condicao_geral }`.
-- **PUT /animais/{id}/saude** 🔒 (vet/ong) — upsert da saúde. 200.
-- **GET /animais/{id}/carteira** 🔒 — 200 `{ animal_id, nome, especie, raca, data_nascimento, castrado, alergias, foto, qr_code_url, pdf_url }`. **QR e PDF gerados pela API**.
-- **GET /animais/{id}/auditoria** 🔒 — **append-only/imutável**. 200 array `{ id, tipo, descricao, data, autor_nome, fk_animal_id }`. (Já entregue como `GET /animais/{id}/historico` em C.2.)
-- **GET /vet/atendimentos** 🔒 (vet) — 200 array `{ animal_id, animal_nome, animal_especie, animal_foto, ultima_vacina, ultimo_procedimento }`.
+### C.5 Saúde do Animal — ✅ MÓDULO COMPLETO (carteira QR/PDF = stub)
+- **✅ GET /animais/{id}/vacinas** 🔒 — 200 array de Vacina (mais recentes primeiro). 404 se animal não existe.
+- **✅ POST /animais/{id}/vacinas** 🔒 (vet/ong) — **append-only**. Body `{ nome, data_aplicacao, data_reforco?, veterinario_nome?, clinica_nome? }`. 201 · 403 · 404. Registra automaticamente na auditoria (tipo `vacinacao`).
+- **✅ GET /animais/{id}/procedimentos** 🔒 — 200 array de Procedimento.
+- **✅ POST /animais/{id}/procedimentos** 🔒 (vet/ong) — **append-only**. Body `{ nome, tipo, data, veterinario_nome?, observacoes?, anexo_url? }`. `tipo` ∈ `consulta|cirurgia|exame|castracao|outro`. 201 · 422 tipo inválido. Registra na auditoria (tipo `procedimento`).
+- **✅ GET /animais/{id}/saude** 🔒 — 200 `{ fk_animal_id, apto_para_adocao, temperamento, necessidades_especiais, condicao_geral }`. Sem registro → defaults (`apto_para_adocao=true`, demais null).
+- **✅ PUT /animais/{id}/saude** 🔒 (vet/ong) — upsert (atualiza só os campos enviados). 200.
+- **✅ GET /animais/{id}/carteira** 🔒 — 200 `{ animal_id, nome, especie, raca, data_nascimento, castrado, alergias, foto, qr_code_url, pdf_url }`. ⚠️ **`qr_code_url`/`pdf_url` são STUB (null)** — geração via API pendente (ver H.3).
+- **✅ GET /animais/{id}/auditoria** 🔒 — **append-only/imutável**. 200 array `{ id, tipo, descricao, data, autor_nome, fk_animal_id }`. Mesmo dado de `historico_animal`; alimentado pelos POSTs de vacina/procedimento. (Também exposto como `GET /animais/{id}/historico`, porém público.)
+- **✅ GET /vet/atendimentos** 🔒 (vet) — 200 array `{ animal_id, animal_nome, animal_especie, animal_foto, ultima_vacina, ultimo_procedimento }`. Liga os animais pelo `fk_login_id` em vacina/procedimento.
 
-### C.6 Avistamentos (animal de rua / rastreador) + Ranking — 🔜
-- **POST /avistamentos** 🔒 (qualquer) — Body `{ fotos[], data, especie, condicao, acoes_tomadas, lat?, lng?, endereco_texto?, local_cep?, local_logradouro?, local_numero?, local_bairro?, local_cidade?, local_estado? }`. Localização = GPS OU endereço. 201 Avistamento · 422 sem localização.
-- **GET /avistamentos** 🔒 — query `status?, especie?`. 200 array.
-- **GET /avistamentos/{id}** 🔒 — 200 · 404.
-- **PATCH /avistamentos/{id}/status** 🔒 (ong/admin) — Body `{ status }`. 200 · 403.
-- **GET /ranking/rastreadores** 🔒 — 200 array `{ posicao, usuario_id, nome, foto, total_reports, pontos }`. Sugestão: 10 pts por avistamento.
+### C.6 Avistamentos (animal de rua / rastreador) + Ranking — ✅ MÓDULO COMPLETO
+- **✅ POST /avistamentos** 🔒 (qualquer logado) — Body `{ fotos[], data, especie, condicao, acoes_tomadas, lat?, lng?, endereco_texto?, local_cep?, local_logradouro?, local_numero?, local_bairro?, local_cidade?, local_estado? }`. Localização = GPS (lat+lng) OU endereço (endereco_texto/local_cidade). 201 Avistamento · 422 sem localização. Grava `pontos=10`.
+- **✅ GET /avistamentos** 🔒 — query `status?, especie?`. 200 array (status no filtro aceita o formato do app).
+- **✅ GET /avistamentos/{id}** 🔒 — 200 · 404.
+- **✅ PATCH /avistamentos/{id}/status** 🔒 (ong/admin) — Body `{ status }`. 200 · 403 · 404 · 422 status inválido.
+- **✅ GET /ranking/rastreadores** 🔒 — 200 array `{ posicao, usuario_id, nome, foto, total_reports, pontos }`. 10 pts/avistamento; `nome`/`foto` resolvidos pelo perfil do reporter.
+- > 🔧 **Schema:** `publicacao_encontrado.fk_animal_id` foi tornado **NULL** (era NOT NULL) — avistamento é standalone (sem animal). **Replicar no remoto.** Ver H.3.
+- > ℹ️ Simplificação: a regra E#10 ("ONG que assume acolhimento não pontua") não é aplicada — o ranking conta por reporter (`fk_login_id`); ONG só pontua se ela mesma reportou.
 
-**Status avistamento (app):** `aguardando_acolhimento`, `em_acolhimento`, `resgatado`, `encerrado`.
+**Status avistamento (app):** `aguardando_acolhimento`, `em_acolhimento`, `resgatado`, `encerrado`. ⚠️ No banco ficam com **espaço** (`aguardando acolhimento`); a API converte underscore↔espaço nos dois sentidos.
 
-### C.7 Adoção — Termo e Avaliação — 🔜
-- **POST /solicitacoes/{id}/avaliacao** 🔒 (ong) — Body `{ tipo_moradia, experiencia_previa:bool, tem_criancas:bool, tem_outros_animais:bool, parecer, resultado }`. `resultado` ∈ `aprovado|reprovado|pendente_informacoes`. 201.
-- **Termo:** ver C.4 (`/termo` e `/termo/assinar`).
+### C.7 Adoção — Termo e Avaliação — ✅ (junto com C.4)
+- **✅ POST /solicitacoes/{id}/avaliacao** 🔒 (ong) — Body `{ tipo_moradia, experiencia_previa:bool, tem_criancas:bool, tem_outros_animais:bool, parecer, resultado }`. `tipo_moradia` ∈ `casa_com_quintal|casa_sem_quintal|apartamento|outro`; `resultado` ∈ `aprovado|reprovado|pendente_informacoes`. 201 · 409 se já avaliada.
+- **✅ Termo:** ver C.4 (`/termo` e `/termo/assinar`). (Geração de PDF pendente — stub.)
 
 ### C.8 Transferência de Responsabilidade — 🔜
 - **POST /animais/{id}/transferencias** 🔒 (responsável atual) — **append-only**. Body `{ para_usuario_id, para_usuario_nome, motivo? }`. 201.
@@ -285,9 +289,9 @@
 1. **Auth** (login, cadastros adotante/ong/vet, alterar/recuperar senha) — destrava todo o resto. — ✅ **CONCLUÍDO**
 2. **Animais** (GET listar/detalhe, especies/racas, animal_imagens) — tela principal do app. — ✅ **CONCLUÍDO**
    - *(+ ONGs / C.3, feito junto — leitura de ONGs e seus animais.)* — ✅ **CONCLUÍDO**
-3. **Solicitações + Termo** (criar, status, recebidas, termo/assinar) — fluxo central de adoção. — 🔜 **PRÓXIMO**
-4. **Saúde** (vacinas, procedimentos, saude, carteira, auditoria) + **Perfis** (adotante/ong/vet).
-5. **Avistamentos + Ranking**, **Notificações**, **Transferência**, **Clínicas**, **Busca**, **Upload**.
+3. **Solicitações + Termo** (criar, status, recebidas, termo/assinar) — fluxo central de adoção. — ✅ **CONCLUÍDO** (PDF do termo é stub)
+4. **Saúde** (vacinas, procedimentos, saude, carteira, auditoria) — ✅ **CONCLUÍDO** (carteira QR/PDF stub) · **Perfis** (adotante/ong/vet) — 🔜 (C.11).
+5. **Avistamentos + Ranking** (C.6) — ✅ **CONCLUÍDO** · 🔜 **PRÓXIMO: C.11 Perfis** · depois **Notificações**, **Transferência**, **Clínicas**, **Busca**, **Upload**.
 
 ---
 
@@ -303,6 +307,9 @@
 | C.1 Auth | login, logout, cadastrar/{adotante,ong,veterinario}, alterar-senha, recuperar-senha | ✅ (recuperar-senha sem envio real de e-mail) |
 | C.2 Animais | listar, {id}, meus, POST, PUT, {id}/historico | ✅ |
 | C.3 ONGs | listar, {id}, {id}/animais | ✅ |
+| C.4 Solicitações + C.7 Termo/Avaliação | minhas, recebidas, POST, {id}, status (PATCH), avaliacao, termo, termo/assinar | ✅ (PDF stub) |
+| C.5 Saúde | vacinas, procedimentos, saude, carteira, auditoria, /vet/atendimentos | ✅ (carteira QR/PDF stub) |
+| C.6 Avistamentos + Ranking | POST/GET avistamentos, {id}, status (PATCH), /ranking/rastreadores | ✅ |
 | C.14 Auxiliares | especies, racas | ✅ |
 
 ### H.2 Arquitetura efetiva
@@ -339,6 +346,15 @@
    **relativos** (`/resources/...`) no banco — a API os devolve como estão. Se o app precisar de URL absoluta,
    definimos um `APP_URL` base e prefixamos. **Confirmar com o mobile.**
 7. **Throttle de login:** estado em arquivo (`storage/throttle/`, gitignored) — não cria tabela nova.
+9. **`publicacao_encontrado.fk_animal_id` → NULL** (era NOT NULL; decisão 2026-06-28): o avistamento do app é um
+   report standalone (sem animal cadastrado). `ALTER TABLE publicacao_encontrado MODIFY fk_animal_id INT NULL;`
+   aplicado no LOCAL — **replicar no remoto** (compatível com os inserts atuais do web, que sempre mandam animal).
+   Status de avistamento ficam com **espaço** no banco; a API converte underscore↔espaço.
+8. **PDF do termo (C.4) = STUB** (decisão de 2026-06-27): todo o lifecycle de adoção está implementado e
+   testado (criar → status → avaliação → assinatura com IP/user_agent server-side → status Concluído →
+   `animal=adotado`), e o `termo_adocao.conteudo_texto` é gerado de verdade. Falta apenas **gerar o arquivo PDF
+   via TCPDF** e preencher `pdf_url`/`pdf_assinado_url` (hoje `null`). TCPDF já está no vendor e versionado.
+   **Pendência de infra junto:** definir diretório público p/ os PDFs (ex.: `resources/termos/`) e a URL.
 
 ### H.4 Como rodar/testar (dev)
 - Banco local em Docker (MySQL 5.7, espelho do remoto). App PHP: `php -S 127.0.0.1:8090 index.php`.
@@ -347,9 +363,13 @@
   `php -r 'require "vendor/autoload.php"; Dotenv\Dotenv::createImmutable(__DIR__)->load(); echo App\Api\Jwt::emitir(["sub"=>1,"tipo_usuario"=>"ong","status"=>"a"]);'`
 
 ### H.5 Pendências priorizadas
-- **C.4 Solicitações + Termo** (próximo). Depois: **C.5 Saúde + C.11 Perfis**, e o restante (C.6–C.10, C.12, C.13).
-- Itens de infra a resolver com o grupo: replicar `ong.fk_login_id` no remoto + backfill; configurar SMTP;
-  decidir auth pública vs protegida dos GET; padronizar URLs de foto.
+- **C.11 Perfis** (próximo). Depois: o restante (C.8 Transferência, C.9 Notificações, C.10 Upload,
+  C.12 Clínicas, C.13 Busca).
+- Itens de infra a resolver com o grupo: replicar no remoto `ong.fk_login_id` (+ backfill) e
+  `publicacao_encontrado.fk_animal_id` NULL; configurar SMTP; **gerar PDFs/QR via API** — termo (C.4) e
+  carteira (C.5) via TCPDF + definir dir/URL; decidir auth pública vs protegida dos GET; padronizar URLs de foto.
+- **Perfis vazios no banco:** `veterinario` e `ong` não têm linhas para vários logins (precisam backfill/cadastro),
+  o que afeta `/vet/atendimentos`, `/animais/meus`, autoria de saúde, etc.
 
 ---
 
