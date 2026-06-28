@@ -473,6 +473,16 @@ class Route extends Boostrap
         );
         file_put_contents($logFile, "[$timestamp] Added route: migrate-create-procedimentos-table\n", FILE_APPEND);
 
+        // Add route for comunicacao
+        $routes['comunicacao'] = array(
+            'route' => '/comunicacao',
+            'controller' => 'ComunicacaoController',
+            'action' => 'index',
+            'is_dynamic' => 0,
+            'pattern' => null
+        );
+        file_put_contents($logFile, "[$timestamp] Added route: comunicacao\n", FILE_APPEND);
+
         // Add route for chamados
         $routes['chamados'] = array(
             'route' => '/chamados',

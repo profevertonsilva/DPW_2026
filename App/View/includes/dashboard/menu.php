@@ -227,7 +227,7 @@ $isPerfil = ($currentPage === 'perfil.php' || $normalized === 'perfil');
             <!-- <a href="localizacao.php" class="nav-item-amigopet">
                 <i data-lucide="navigation"></i> <span>Registrar Localização</span>
             </a> -->
-            <a href="comunicacao.php" class="nav-item-amigopet">
+            <a href="/comunicacao" class="nav-item-amigopet">
                 <i data-lucide="messages-square"></i> <span>Comunicação Interna</span>
             </a>
             <!-- <a href="campo-relatorios.php" class="nav-item-amigopet">
