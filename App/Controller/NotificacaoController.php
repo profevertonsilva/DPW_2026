@@ -9,11 +9,11 @@ class NotificacaoController extends Action
 {
     public function listar()
     {
-        $this->validaAutenticacao();
 
-        $_SESSION['id'] = 1; 
+     $_SESSION['id'] = 1; 
         //1. Salvando temporariamente o id do usuário na sessão para teste. Remover depois. 
         $dao = new NotificacaoDAO();
+        $this->validaAutenticacao();
 
         $this->getView()->notificacoes =
             $dao->listarPorUsuario($_SESSION['id']);
