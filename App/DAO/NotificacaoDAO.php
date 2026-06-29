@@ -132,5 +132,26 @@ class NotificacaoDAO extends DAO
             header('Location:/error103');
             die();
         }
+    
+    
     }
+    public function excluir($id)
+{
+    // não usado no módulo de notificações
+}
+
+public function alterar($obj)
+{
+    // não usado
+}
+
+public function buscarPorId($id)
+{
+    // opcional
+    return null;
+}
+public function listar()
+{
+    return $this->listarPorUsuario($_SESSION['id']);
+}
 }
