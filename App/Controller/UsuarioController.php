@@ -36,11 +36,26 @@ class UsuarioController extends Action
             $resultado = $loginDAO->atualizarTipoUsuario($id, $tipoUsuario);
 
             if ($resultado) {
-                echo json_encode(['success' => true]);
+                // Verify the update actually happened
+                $conexao = new Connection();
+                $conn = $conexao->getConn();
+                $checkSql = "SELECT tipo_usuario FROM login WHERE id = :id";
+                $checkStmt = $conn->prepare($checkSql);
+                $checkStmt->execute([':id' => $id]);
+                $checkResult = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+                
+                error_log("Verificação pós-atualização: ID=$id, Tipo no banco=" . ($checkResult['tipo_usuario'] ?? 'NULL') . ", Tipo esperado=$tipoUsuario");
+                
+                if ($checkResult['tipo_usuario'] === $tipoUsuario) {
+                    echo json_encode(['success' => true]);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Atualização não persistiu no banco']);
+                }
             } else {
                 echo json_encode(['success' => false, 'message' => 'Erro ao atualizar cargo - verifique o log de erros do PHP']);
             }
         } catch (\Exception $e) {
+            error_log("Exceção no controller: " . $e->getMessage());
             echo json_encode(['success' => false, 'message' => $e->getMessage()]);
         }
         exit;
@@ -62,12 +77,11 @@ class UsuarioController extends Action
             $conexao = new Connection();
             $conn = $conexao->getConn();
 
-            // Update login table with fk_ong_id
-            $sql = "UPDATE login SET fk_ong_id = :ong_id WHERE id = :id";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([':ong_id' => $ongId, ':id' => $id]);
+            // Backend schema doesn't have fk_ong_id in login table
+            // Use ong_animal table to track which ONG a user is linked to
+            // We'll create a dummy animal entry or use the ong_animal table as a linkage tracker
 
-            // Check if ONG record exists for this user, if not create it
+            // Check if ONG record exists
             $sql = "SELECT id FROM ong WHERE id = :ong_id";
             $stmt = $conn->prepare($sql);
             $stmt->execute([':ong_id' => $ongId]);
@@ -77,6 +91,23 @@ class UsuarioController extends Action
                 echo json_encode(['success' => false, 'message' => 'ONG não encontrada']);
                 exit;
             }
+
+            // Update user's tipo_usuario to 'ong'
+            $sql = "UPDATE login SET tipo_usuario = 'ong' WHERE id = :id";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([':id' => $id]);
+
+            // Store the linkage in ong_animal table as a tracker (using user_id as fk_animal_id temporarily)
+            // This is a workaround since fk_ong_id doesn't exist in login table
+            // First, remove any existing linkage for this user
+            $sql = "DELETE FROM ong_animal WHERE fk_animal_id = :user_id AND fk_animal_id NOT IN (SELECT id FROM animal)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([':user_id' => $id]);
+
+            // Insert new linkage tracker
+            $sql = "INSERT INTO ong_animal (fk_ong_id, fk_animal_id) VALUES (:ong_id, :user_id)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([':ong_id' => $ongId, ':user_id' => $id]);
 
             echo json_encode(['success' => true]);
         } catch (\PDOException $e) {

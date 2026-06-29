@@ -11,6 +11,19 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\DAO\AnimalDAO;
 $animalDao = new AnimalDAO();
 $animalsForLink = $animalDao->listar();
+
+// Converter modelos para arrays para compatibilidade com o código existente
+$animaisSimulados = [];
+foreach ($animalsForLink as $animalModel) {
+    $animaisSimulados[] = [
+        'id' => $animalModel->__get('id'),
+        'nome' => $animalModel->__get('nome'),
+        'especie' => $animalModel->__get('especie_nome'),
+        'raca' => $animalModel->__get('racas'),
+        'imagem' => $animalModel->__get('foto')
+    ];
+}
+
 $mockFile = __DIR__ . '/../../../Data/configuracoes_mock.php';
 
 // Inicialização padrão

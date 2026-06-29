@@ -19,7 +19,7 @@ class VerificarDenunciasController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 
@@ -51,7 +51,7 @@ class VerificarDenunciasController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 

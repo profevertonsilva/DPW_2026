@@ -25,7 +25,7 @@ class ProcedimentosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 
@@ -75,7 +75,10 @@ class ProcedimentosController extends Action
             $conexao = new Connection();
             $conn = $conexao->getConn();
 
-            $sql = "SELECT id, nome, foto, especie FROM animal ORDER BY nome ASC";
+            $sql = "SELECT a.id, a.nome, a.foto, e.nome as especie 
+                    FROM animal a 
+                    LEFT JOIN especie e ON a.fk_especie_id = e.id 
+                    ORDER BY a.nome ASC";
             
             $stmt = $conn->prepare($sql);
             $stmt->execute();
@@ -109,7 +112,7 @@ class ProcedimentosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 
@@ -183,7 +186,7 @@ class ProcedimentosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 
@@ -262,7 +265,7 @@ class ProcedimentosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 
@@ -323,7 +326,7 @@ class ProcedimentosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 

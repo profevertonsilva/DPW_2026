@@ -7,14 +7,12 @@ use FW\Controller\Action;
 class SiteController extends Action {
 
     public function index() {
-        // Redirect to dashboard if logged in, otherwise to login
-        if (isset($_SESSION['id']) && $_SESSION['id'] != '') {
-            header('Location: /dashboard');
-            die();
-        } else {
-            header('Location: /login');
-            die();
-        }
+        // Show landing page as the main index
+        $this->getView()->title = 'Landing Page';
+        $this->getView()->title_pagina = 'AmigoPet - Cuidado Animal';
+
+        // Landing page is a standalone HTML file, include it directly
+        include __DIR__ . '/../View/site/landing_page.php';
     }
 
     public function login() {
@@ -36,6 +34,14 @@ class SiteController extends Action {
         $this->getView()->title_pagina = 'Cadastro de Usuário';
 
         $this->render('cadastro', 'site');
+    }
+
+    public function landing() {
+        $this->getView()->title = 'Landing Page';
+        $this->getView()->title_pagina = 'AmigoPet - Cuidado Animal';
+
+        // Landing page is a standalone HTML file, include it directly
+        include __DIR__ . '/../View/site/landing_page.php';
     }
 
     public function validaAutenticacao() {

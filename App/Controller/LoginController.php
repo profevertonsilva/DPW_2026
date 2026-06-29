@@ -130,7 +130,7 @@ class LoginController extends Action
                             error_log("No administrador found via join for login_id: $loginId, using email as name: $nomeUsuario");
                         }
                         break;
-                    case 'rastreador':
+                    case 'moderador':
                         $stmt = $conn->prepare("SELECT r.nome FROM rastreador r JOIN login l ON r.id = l.id WHERE l.id = :login_id");
                         $stmt->bindValue(':login_id', $loginId);
                         $stmt->execute();

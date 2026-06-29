@@ -179,8 +179,7 @@ class LoginDAO extends DAO
                 status,
                 tipo_usuario,
                 data_cadastro,
-                data_atualizacao,
-                fk_ong_id
+                data_atualizacao
             FROM
                 login
             ";
@@ -199,8 +198,8 @@ class LoginDAO extends DAO
 
             return $logins;
         } catch (\PDOException $ex) {
-            header('Location:/error103');
-            die();
+            error_log("Error in LoginDAO::listar: " . $ex->getMessage());
+            throw $ex;
         }
     }
 
@@ -223,6 +222,13 @@ class LoginDAO extends DAO
                 return false;
             }
 
+            // Check current enum values in the database
+            $enumCheckSql = "SHOW COLUMNS FROM login LIKE 'tipo_usuario'";
+            $enumStmt = $conn->prepare($enumCheckSql);
+            $enumStmt->execute();
+            $enumResult = $enumStmt->fetch(\PDO::FETCH_ASSOC);
+            error_log("Enum definition: " . ($enumResult['Type'] ?? 'NULL'));
+
             $sql = "UPDATE login SET tipo_usuario = :tipoUsuario WHERE id = :id";
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(':id', $id);
@@ -230,6 +236,7 @@ class LoginDAO extends DAO
 
             // Log antes da execução
             error_log("Antes da execução: ID=$id, Tipo=$tipoUsuario, SQL=$sql");
+            error_log("TipoUsuario length=" . strlen($tipoUsuario) . ", bytes=" . bin2hex($tipoUsuario));
 
             $result = $stmt->execute();
 
@@ -248,8 +255,7 @@ class LoginDAO extends DAO
             return true;
         } catch (\PDOException $ex) {
             error_log("PDOException na atualização: " . $ex->getMessage());
-            header('Location:/error103');
-            die();
+            throw $ex;
         }
     }
 }

@@ -21,7 +21,7 @@ class VoluntariosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 
@@ -54,7 +54,7 @@ class VoluntariosController extends Action
             'administrador' => 'admin',
             'ong' => 'ong',
             'veterinario' => 'vet',
-            'rastreador' => 'campo',
+            'moderador' => 'campo',
             'adotante' => 'usuario'
         ];
 

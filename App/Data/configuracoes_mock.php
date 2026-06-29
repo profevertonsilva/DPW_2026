@@ -19,6 +19,11 @@ $publicacoesMock = array (
     'autor' => 'ONG Vida Animal',
     'data' => '15/05/2026',
     'status' => 'Ativo',
+    'descricao' => 'sei lah',
+    'animal_id' => '20',
+    'animal_nome' => 'Gato Preguiça',
+    'animal_especie' => 'Gato',
+    'animal_imagem' => '/resources/dashboard/images/animais/animal_20_gato_preguica_20260629_89e9b1.jpg',
   ),
   1 => 
   array (
@@ -62,6 +67,38 @@ $carrosselMock = array (
     'nome' => 'Bolinha',
     'especie' => 'Cachorro',
     'imagem' => 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=100',
+  ),
+  3 => 
+  array (
+    'id' => 1782762816,
+    'animal_id' => '28',
+    'nome' => 'bola',
+    'especie' => 'Cachorro',
+    'imagem' => '/resources/dashboard/images/animais/animal_bola_20260629_0bd1a7.jpg',
+  ),
+  4 => 
+  array (
+    'id' => 1782762827,
+    'animal_id' => '25',
+    'nome' => 'Toquinho',
+    'especie' => 'Cachorro',
+    'imagem' => '/resources/dashboard/images/animais/animal_25_toquinho_20260629_1694a8.jpg',
+  ),
+  5 => 
+  array (
+    'id' => 1782762836,
+    'animal_id' => '19',
+    'nome' => 'Zorro',
+    'especie' => 'Gato',
+    'imagem' => '/resources/dashboard/images/animais/animal_19_zorro_20260629_9759ad.jpg',
+  ),
+  6 => 
+  array (
+    'id' => 1782763724,
+    'animal_id' => '15',
+    'nome' => 'Zézinho',
+    'especie' => 'Cachorro',
+    'imagem' => '/resources/dashboard/images/animais/animal_15_z_ezinho_20260613_731255.jpg',
   ),
 );
 

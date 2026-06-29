@@ -620,6 +620,123 @@ class MigrationController extends Action
         }
     }
 
+    public function adaptToBackendSchema()
+    {
+        // Adapt current database to backend schema
+        
+        $migrationFile = __DIR__ . '/../../DB/migrations/20260629_adapt_to_backend_schema.sql';
+        
+        if (!file_exists($migrationFile)) {
+            echo "Migration file not found: $migrationFile";
+            return;
+        }
+        
+        $sql = file_get_contents($migrationFile);
+        
+        try {
+            $conexao = new Connection();
+            $conn = $conexao->getConn();
+            
+            if ($conn === null) {
+                echo "Database connection failed";
+                return;
+            }
+            
+            // Execute the SQL statements one by one
+            $statements = explode(';', $sql);
+            
+            foreach ($statements as $statement) {
+                $statement = trim($statement);
+                if (!empty($statement) && !str_starts_with($statement, '--')) {
+                    try {
+                        $conn->exec($statement);
+                    } catch (\PDOException $e) {
+                        // Continue on error (some statements may fail if already exists)
+                        echo "Warning: " . $e->getMessage() . "<br>";
+                    }
+                }
+            }
+            
+            echo "Database adapted to backend schema successfully!";
+        } catch (\PDOException $e) {
+            echo "Error adapting database: " . $e->getMessage();
+        }
+    }
+
+    public function removeBackendSchemaColumns()
+    {
+        // Remove columns not in backend schema
+        
+        $migrationFile = __DIR__ . '/../../DB/migrations/20260629_remove_backend_schema_columns.sql';
+        
+        if (!file_exists($migrationFile)) {
+            echo "Migration file not found: $migrationFile";
+            return;
+        }
+        
+        $sql = file_get_contents($migrationFile);
+        
+        try {
+            $conexao = new Connection();
+            $conn = $conexao->getConn();
+            
+            if ($conn === null) {
+                echo "Database connection failed";
+                return;
+            }
+            
+            // Execute the SQL statements one by one
+            $statements = explode(';', $sql);
+            
+            foreach ($statements as $statement) {
+                $statement = trim($statement);
+                if (!empty($statement) && !str_starts_with($statement, '--')) {
+                    try {
+                        $conn->exec($statement);
+                    } catch (\PDOException $e) {
+                        // Continue on error (column may not exist)
+                        echo "Warning: " . $e->getMessage() . "<br>";
+                    }
+                }
+            }
+            
+            echo "Columns not in backend schema removed successfully!";
+        } catch (\PDOException $e) {
+            echo "Error removing columns: " . $e->getMessage();
+        }
+    }
+
+    public function fixTipoUsuarioEnum()
+    {
+        // Fix tipo_usuario enum to match backend schema
+        
+        $migrationFile = __DIR__ . '/../../DB/migrations/20260629_fix_tipo_usuario_enum.sql';
+        
+        if (!file_exists($migrationFile)) {
+            echo "Migration file not found: $migrationFile";
+            return;
+        }
+        
+        $sql = file_get_contents($migrationFile);
+        
+        try {
+            $conexao = new Connection();
+            $conn = $conexao->getConn();
+            
+            if ($conn === null) {
+                echo "Database connection failed";
+                return;
+            }
+            
+            // Execute the SQL
+            $conn->exec($sql);
+            
+            echo "tipo_usuario enum fixed successfully!";
+        } catch (\PDOException $e) {
+            echo "Error fixing tipo_usuario enum: " . $e->getMessage();
+        }
+    }
+
     public function validaAutenticacao()
     {
         // Migration controller doesn't require authentication

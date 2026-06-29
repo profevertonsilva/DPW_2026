@@ -17,6 +17,11 @@ if (empty($notificacoes) && isset($notificacoesMock)) {
 ?>
 
 <style>
+    .main-content {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
     .notif-card {
         background: white;
         border-radius: 15px;

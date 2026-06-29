@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                     'administrador' => 'admin',
                     'ong' => 'ong',
                     'veterinario' => 'vet',
-                    'rastreador' => 'campo',
+                    'moderador' => 'campo',
                     'adotante' => 'usuario'
                 ];
                 $role = $roleMap[$tipoUsuario] ?? 'usuario';

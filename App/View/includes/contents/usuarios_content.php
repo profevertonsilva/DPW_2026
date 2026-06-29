@@ -19,6 +19,7 @@ $usuariosLista = $loginDAO->listar();
 $ongs = [];
 $clinicas = [];
 $vetClinicas = []; // Mapeamento de veterinário -> clínica
+$userOngLinks = []; // Mapeamento de user_id -> ong_id
 try {
     $conexao = new Connection();
     $conn = $conexao->getConn();
@@ -43,6 +44,15 @@ try {
     foreach ($vetClinicaLinks as $link) {
         $vetClinicas[$link['fk_veterinario_id']] = $link['fk_clinica_id'];
     }
+
+    // Buscar vínculos de usuários com ONGs (usando ong_animal como workaround)
+    $sql = "SELECT fk_animal_id as user_id, fk_ong_id FROM ong_animal WHERE fk_animal_id NOT IN (SELECT id FROM animal)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $ongLinks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    foreach ($ongLinks as $link) {
+        $userOngLinks[$link['user_id']] = $link['fk_ong_id'];
+    }
 } catch (\PDOException $e) {
     error_log("Error loading ONGs/Clinicas: " . $e->getMessage());
 }
@@ -53,7 +63,7 @@ $tiposUsuario = [
     'adotante' => 'Usuário',
     'administrador' => 'Administrador',
     'ong' => 'ONG',
-    'rastreador' => 'Rastreador',
+    'moderador' => 'Rastreador',
     'veterinario' => 'Veterinário'
 ];
 
@@ -201,10 +211,12 @@ foreach ($usuariosLista as $login) {
                                     <select class="form-select form-select-sm" style="font-size: 0.85rem; padding: 4px 8px;" onchange="vincularONG(<?php echo $u->__get('id'); ?>, this.value)">
                                         <option value="">Selecione uma ONG...</option>
                                         <?php 
-                                        $fkOngId = $u->__get('fk_ong_id');
+                                        // Backend schema doesn't have fk_ong_id in login table
+                                        // Using ong_animal table as workaround to track linkage
+                                        $linkedOngId = $userOngLinks[$u->__get('id')] ?? null;
                                         foreach ($ongs as $ong): 
                                         ?>
-                                            <option value="<?php echo $ong['id']; ?>" <?php echo ($tipoUsuario == 'ong' && $fkOngId && $fkOngId == $ong['id']) ? 'selected' : ''; ?>>
+                                            <option value="<?php echo $ong['id']; ?>" <?php echo ($tipoUsuario == 'ong' && $linkedOngId && $linkedOngId == $ong['id']) ? 'selected' : ''; ?>>
                                                 <?php echo htmlspecialchars($ong['nome']); ?>
                                             </option>
                                         <?php endforeach; ?>
@@ -265,6 +277,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function atualizarCargo(userId, novoTipo, selectElement) {
+    // Store original value for revert
+    if (!selectElement.dataset.originalValue) {
+        selectElement.dataset.originalValue = selectElement.value;
+    }
+
     // Hide all dropdowns first
     document.getElementById('ong-select-' + userId).style.display = 'none';
     document.getElementById('clinica-select-' + userId).style.display = 'none';
@@ -289,20 +306,22 @@ function atualizarCargo(userId, novoTipo, selectElement) {
         .then(data => {
             if (data.success) {
                 alert('Cargo atualizado com sucesso!');
-                location.reload();
+                // Don't reload - let the select stay on the selected value
             } else {
                 alert('Erro ao atualizar cargo: ' + data.message);
-                location.reload();
+                // Revert select on error
+                selectElement.value = selectElement.dataset.originalValue || '';
             }
         })
         .catch(error => {
             console.error('Erro:', error);
             alert('Erro ao atualizar cargo');
-            location.reload();
+            // Revert select on error
+            selectElement.value = selectElement.dataset.originalValue || '';
         });
     } else {
         // Reverter seleção se cancelado
-        location.reload();
+        selectElement.value = selectElement.dataset.originalValue || '';
     }
 }
 

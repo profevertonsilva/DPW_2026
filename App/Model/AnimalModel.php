@@ -36,6 +36,17 @@ class AnimalModel
     private $racas;         // GROUP_CONCAT via animal_raca → raca
     private $idade_meses;   // TIMESTAMPDIFF calculado no SELECT
 
+    // Campos adicionais para evitar warnings de propriedades dinâmicas
+    private $data_castracao;
+    private $historico_resgate;
+    private $alergias;
+    private $local_cep;
+    private $local_logradouro;
+    private $local_numero;
+    private $local_bairro;
+    private $local_cidade;
+    private $local_estado;
+
     public function __get($nome)
     {
         return $this->$nome;

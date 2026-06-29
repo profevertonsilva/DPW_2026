@@ -121,7 +121,7 @@ class PerfilController extends Action
                     $model->__set('avatar', $avatarPath);
                     $dao->alterar($model);
                 }
-            } elseif ($tipoUsuario === 'rastreador') {
+            } elseif ($tipoUsuario === 'moderador') {
                 $dao = new \App\DAO\RastreadorDAO();
                 $model = $dao->buscarPorId($userId);
                 if ($model) {

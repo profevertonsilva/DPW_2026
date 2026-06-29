@@ -87,8 +87,8 @@ if (isset($_SESSION['id']) && !empty($_SESSION['id'])) {
                 $usuario['foto'] = $model->__get('avatar') ?: 'https://via.placeholder.com/200';
                 $usuario['data_cadastro'] = date('d/m/Y', strtotime($model->__get('data_cadastro') ?? 'now'));
             }
-        } elseif ($tipoUsuario === 'rastreador') {
-            // RastreadorDAO buscarPorId is not implemented, use login table
+        } elseif ($tipoUsuario === 'moderador') {
+            // ModeradorDAO buscarPorId is not implemented, use login table
             $dao = new \App\DAO\LoginDAO();
             $model = $dao->buscarPorId($userId);
             if ($model) {

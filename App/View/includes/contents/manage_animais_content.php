@@ -15,7 +15,7 @@ $roleMap = [
     'administrador' => 'admin',
     'ong' => 'ong',
     'veterinario' => 'vet',
-    'rastreador' => 'campo',
+    'moderador' => 'campo',
     'adotante' => 'usuario'
 ];
 
@@ -162,16 +162,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ma_action'])) {
 
             // Processar as 5 imagens
             $imagens = [];
-            $uploadDir = __DIR__ . '/../../../resources/dashboard/images/animais/';
+            $uploadDir = realpath(__DIR__ . '/../../../../resources/dashboard/images/animais/');
+            if (!$uploadDir) {
+                $uploadDir = __DIR__ . '/../../../../resources/dashboard/images/animais/';
+            }
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+            $uploadDir = rtrim($uploadDir, '\\/') . DIRECTORY_SEPARATOR;
+
+            // Helper para gerar nome de arquivo descritivo (igual ao AnimalController)
+            $gerarNomeArquivo = function($animalNome, $animalId, $extensao) {
+                $slug = strtolower(preg_replace('/[^a-zA-Z0-9]+/', '_', iconv('UTF-8', 'ASCII//TRANSLIT', $animalNome ?: 'animal')));
+                $slug = preg_replace('/_+/', '_', trim($slug, '_'));
+                $date = date('Ymd');
+                $random = substr(bin2hex(random_bytes(3)), 0, 6);
+                $idPart = $animalId ? $animalId . '_' : '';
+                return sprintf('animal_%s%s_%s.%s', $idPart, $slug, $date . '_' . $random, $extensao);
+            };
 
             for ($i = 0; $i < 5; $i++) {
                 // Verificar se há imagem recortada (base64)
                 if (!empty($_POST['cropped_imagem_' . $i])) {
                     $base64Image = $_POST['cropped_imagem_' . $i];
+                    
+                    // Remove prefixo data:image/...;base64, se presente
+                    if (strpos($base64Image, ',') !== false) {
+                        $base64Image = explode(',', $base64Image)[1];
+                    }
+                    
                     $imageData = base64_decode($base64Image);
                     if ($imageData) {
-                        $filename = bin2hex(random_bytes(8)) . '.jpg';
+                        $filename = $gerarNomeArquivo($nome, null, 'jpg');
                         $target = $uploadDir . $filename;
                         if (file_put_contents($target, $imageData)) {
                             $imagens[$i] = '/resources/dashboard/images/animais/' . $filename;
@@ -181,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ma_action'])) {
                 // Se não houver imagem recortada, verificar upload normal
                 elseif (!empty($_FILES['imagem_' . $i]) && is_uploaded_file($_FILES['imagem_' . $i]['tmp_name'])) {
                     $ext = pathinfo($_FILES['imagem_' . $i]['name'], PATHINFO_EXTENSION);
-                    $filename = bin2hex(random_bytes(8)) . '.' . ($ext ?: 'jpg');
+                    $filename = $gerarNomeArquivo($nome, null, ($ext ?: 'jpg'));
                     $target = $uploadDir . $filename;
                     if (move_uploaded_file($_FILES['imagem_' . $i]['tmp_name'], $target)) {
                         $imagens[$i] = '/resources/dashboard/images/animais/' . $filename;

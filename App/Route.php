@@ -473,6 +473,36 @@ class Route extends Boostrap
         );
         file_put_contents($logFile, "[$timestamp] Added route: migrate-create-procedimentos-table\n", FILE_APPEND);
 
+        // Add route for adapt to backend schema migration
+        $routes['migrate-adapt-backend-schema'] = array(
+            'route' => '/migrate-adapt-backend-schema',
+            'controller' => 'MigrationController',
+            'action' => 'adaptToBackendSchema',
+            'is_dynamic' => 0,
+            'pattern' => null
+        );
+        file_put_contents($logFile, "[$timestamp] Added route: migrate-adapt-backend-schema\n", FILE_APPEND);
+
+        // Add route for remove backend schema columns migration
+        $routes['migrate-remove-backend-columns'] = array(
+            'route' => '/migrate-remove-backend-columns',
+            'controller' => 'MigrationController',
+            'action' => 'removeBackendSchemaColumns',
+            'is_dynamic' => 0,
+            'pattern' => null
+        );
+        file_put_contents($logFile, "[$timestamp] Added route: migrate-remove-backend-columns\n", FILE_APPEND);
+
+        // Add route for fix tipo_usuario enum migration
+        $routes['migrate-fix-tipo-usuario-enum'] = array(
+            'route' => '/migrate-fix-tipo-usuario-enum',
+            'controller' => 'MigrationController',
+            'action' => 'fixTipoUsuarioEnum',
+            'is_dynamic' => 0,
+            'pattern' => null
+        );
+        file_put_contents($logFile, "[$timestamp] Added route: migrate-fix-tipo-usuario-enum\n", FILE_APPEND);
+
         // Add route for comunicacao
         $routes['comunicacao'] = array(
             'route' => '/comunicacao',
@@ -753,6 +783,28 @@ class Route extends Boostrap
                 'pattern' => null
             );
             file_put_contents($logFile, "[$timestamp] Added fallback route: migrate\n", FILE_APPEND);
+        }
+
+        if (!isset($routes['notificacoes'])) {
+            $routes['notificacoes'] = array(
+                'route' => '/notificacoes',
+                'controller' => 'NotificacoesController',
+                'action' => 'index',
+                'is_dynamic' => 0,
+                'pattern' => null
+            );
+            file_put_contents($logFile, "[$timestamp] Added fallback route: notificacoes\n", FILE_APPEND);
+        }
+
+        if (!isset($routes['landing'])) {
+            $routes['landing'] = array(
+                'route' => '/landing',
+                'controller' => 'SiteController',
+                'action' => 'landing',
+                'is_dynamic' => 0,
+                'pattern' => null
+            );
+            file_put_contents($logFile, "[$timestamp] Added fallback route: landing\n", FILE_APPEND);
         }
 
         file_put_contents($logFile, "[$timestamp] Total routes registered: " . count($routes) . "\n", FILE_APPEND);
