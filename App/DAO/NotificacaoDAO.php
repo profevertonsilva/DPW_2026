@@ -3,7 +3,7 @@
 namespace App\DAO;
 
 use App\DAO;
-use App\Model\Notificacao;
+use App\Model\NotificacaoModel;
 use FW\Controller\FuncoesGlobais;
 
 class NotificacaoDAO extends DAO
@@ -76,7 +76,7 @@ class NotificacaoDAO extends DAO
             $resultado = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
             foreach ($resultado as $row) {
-                $model = new Notificacao();
+                $model = new NotificacaoModel();
                 $global = new FuncoesGlobais();
                 $global->popularModel($model, $row);
 
