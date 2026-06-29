@@ -20,7 +20,7 @@ class Connection
         $this->pass = $_ENV['DB_PASS'];
         try {
             $this->conn = new \PDO(
-                "mysql:dbname=" . $this->dbname . ";host=" . $this->host . ";charset=utf8",
+                "mysql:dbname=" . $this->dbname . ";host=" . $this->host . ";charset=utf8mb4",
                 $this->user,
                 $this->pass
             );
