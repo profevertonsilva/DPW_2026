@@ -75,7 +75,7 @@ export function CarteiraIdentificacaoScreen() {
         {carteira.foto ? (
           <Image source={{ uri: carteira.foto }} style={styles.foto} />
         ) : (
-          <View style={styles.fotoPlaceholder}><Text style={{ fontSize: 40 }}>🐾</Text></View>
+          <View style={styles.fotoPlaceholder}><Text style={styles.fotoPlaceholderIcon}>🐾</Text></View>
         )}
 
         <Text style={styles.nome}>{carteira.nome}</Text>
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     width: 100, height: 100, borderRadius: 50, backgroundColor: colors.bgMuted,
     alignItems: 'center', justifyContent: 'center', marginBottom: spacing.sm,
   },
+  fotoPlaceholderIcon: { fontSize: 40 },
   nome: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.xl, color: colors.text },
   raca: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary, marginTop: 2, marginBottom: spacing.md },
   grid: { width: '100%', gap: spacing.xs },

@@ -7,6 +7,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { CompositeNavigationProp } from '@react-navigation/native';
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { avistamentoService } from '../../api/services/avistamentoService';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -137,9 +138,11 @@ export function FeedResgatesScreen() {
           </View>
         }
         ListEmptyComponent={
-          <View style={styles.vazio}>
-            <Text style={styles.vazioTexto}>Nenhum avistamento registrado.</Text>
-          </View>
+          <EmptyState
+            icon="🐾"
+            title="Nenhum avistamento registrado"
+            message="Quando alguém reportar um animal de rua, aparecerá aqui."
+          />
         }
       />
     </View>
@@ -164,7 +167,7 @@ const styles = StyleSheet.create({
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 },
   especie: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.text, flex: 1, marginRight: 4 },
   statusBadge: { borderRadius: 8, paddingVertical: 2, paddingHorizontal: 6 },
-  statusLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: 9, color: colors.white },
+  statusLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.xs, color: colors.white },
   local: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.xs, color: colors.secondary, marginBottom: 2 },
   condicao: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.text, marginBottom: spacing.xs },
   cardFooter: { flexDirection: 'row', justifyContent: 'space-between' },
@@ -174,6 +177,4 @@ const styles = StyleSheet.create({
   erroTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.error, textAlign: 'center', marginBottom: spacing.md },
   btnRetry: { backgroundColor: colors.primary, borderRadius: 8, paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
   btnRetryLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
-  vazio: { alignItems: 'center', paddingTop: spacing.xxl },
-  vazioTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary },
 });

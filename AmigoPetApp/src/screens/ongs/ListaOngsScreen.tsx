@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, TextInput, RefreshControl, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TextInput, RefreshControl, ActivityIndicator } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { OngsStackParamList } from '../../navigation/stacks/OngsStack';
 import { OngCard } from '../../components/domain/OngCard';
@@ -37,13 +37,16 @@ export function ListaOngsScreen({ navigation }: Props) {
   return (
     <View style={styles.root}>
       <View style={styles.searchBar}>
-        <TextInput
-          style={styles.input}
-          placeholder="Buscar ONG..."
-          placeholderTextColor={colors.secondary}
-          value={busca}
-          onChangeText={setBusca}
-        />
+        <View style={styles.searchInputWrap}>
+          <Text style={styles.searchIcon}>🔍</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Buscar ONG..."
+            placeholderTextColor={colors.secondary}
+            value={busca}
+            onChangeText={setBusca}
+          />
+        </View>
       </View>
       <FlatList
         data={dados}
@@ -67,10 +70,10 @@ const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.bgMuted },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   searchBar: { backgroundColor: colors.bg, paddingHorizontal: spacing.md, paddingVertical: spacing.sm, borderBottomWidth: 1, borderBottomColor: colors.border },
+  searchInputWrap: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.bgMuted, borderRadius: 8, paddingHorizontal: spacing.md },
+  searchIcon: { fontSize: typography.fontSize.md, marginRight: spacing.xs },
   input: {
-    backgroundColor: colors.bgMuted,
-    borderRadius: 8,
-    paddingHorizontal: spacing.md,
+    flex: 1,
     paddingVertical: spacing.sm,
     fontFamily: typography.fontFamily.body,
     fontSize: typography.fontSize.md,

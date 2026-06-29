@@ -11,6 +11,7 @@ import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { saudeService } from '../../api/services/saudeService';
 import { usePermissions } from '../../permissions/usePermissions';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -62,8 +63,12 @@ export function EditarSaudeAnimalScreen() {
 
   if (!podeEditar) {
     return (
-      <View style={styles.semPermissao}>
-        <Text style={styles.semPermissaoTexto}>Apenas ONGs e veterinários podem editar a condição de saúde.</Text>
+      <View style={styles.centered}>
+        <EmptyState
+          icon="🔒"
+          title="Sem permissão"
+          message="Apenas ONGs e veterinários podem editar a condição de saúde."
+        />
       </View>
     );
   }
@@ -88,6 +93,7 @@ export function EditarSaudeAnimalScreen() {
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+        <Secao titulo="Condição de Saúde">
         <Campo label="Apto para adoção?">
           <Controller control={control} name="apto_para_adocao"
             render={({ field: { onChange, value } }) => (
@@ -131,6 +137,7 @@ export function EditarSaudeAnimalScreen() {
                 style={styles.inputMultiline} contentStyle={styles.inputContent} />
             )} />
         </Campo>
+        </Secao>
 
         <TouchableOpacity
           style={[styles.btnSalvar, salvando && styles.btnDisabled]}
@@ -147,6 +154,15 @@ export function EditarSaudeAnimalScreen() {
         duration={4000} style={{ backgroundColor: colors.error }}>
         {snack.msg}
       </Snackbar>
+    </View>
+  );
+}
+
+function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.secao}>
+      <Text style={styles.secaoTitulo}>{titulo}</Text>
+      {children}
     </View>
   );
 }
@@ -177,7 +193,11 @@ const styles = StyleSheet.create({
   btnSalvar: { backgroundColor: colors.primary, borderRadius: 10, paddingVertical: spacing.md, alignItems: 'center', marginTop: spacing.sm },
   btnDisabled: { backgroundColor: colors.border },
   btnLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
-  semPermissao: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: spacing.lg },
-  semPermissaoTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary, textAlign: 'center' },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  secao: { backgroundColor: colors.bg, borderRadius: 12, padding: spacing.md, marginBottom: spacing.md },
+  secaoTitulo: {
+    fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md,
+    color: colors.text, marginBottom: spacing.sm,
+    borderLeftWidth: 3, borderLeftColor: colors.primary, paddingLeft: spacing.sm,
+  },
 });

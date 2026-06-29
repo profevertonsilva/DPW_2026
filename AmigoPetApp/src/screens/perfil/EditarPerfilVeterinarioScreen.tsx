@@ -108,62 +108,68 @@ export function EditarPerfilVeterinarioScreen() {
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
-        <View style={styles.crmvBox}>
-          <Text style={styles.crmvLabel}>CRMV (não editável)</Text>
-          <Text style={styles.crmvValue}>{crmv}</Text>
-        </View>
+        <Secao titulo="Dados do Profissional">
+          <View style={styles.crmvBox}>
+            <Text style={styles.crmvLabel}>CRMV (não editável)</Text>
+            <Text style={styles.crmvValue}>{crmv}</Text>
+          </View>
 
-        <Campo label="Nome *" error={errors.nome?.message}>
-          <Controller control={control} name="nome"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput mode="outlined" value={value} onChangeText={onChange} onBlur={onBlur}
-                outlineColor={colors.border} activeOutlineColor={colors.primary} style={styles.input} contentStyle={styles.inputContent} />
-            )} />
-        </Campo>
-
-        <Campo label="Telefone 1 *" error={errors.telefone_1?.message}>
-          <Controller control={control} name="telefone_1"
-            render={({ field: { onChange, value } }) => (
-              <MaskInput value={value} onChangeText={onChange} mask={PHONE_MASK} style={styles.maskInput} keyboardType="phone-pad" />
-            )} />
-        </Campo>
-
-        <Campo label="Telefone 2 (opcional)">
-          <Controller control={control} name="telefone_2"
-            render={({ field: { onChange, value } }) => (
-              <MaskInput value={value ?? ''} onChangeText={onChange} mask={PHONE_MASK} style={styles.maskInput} keyboardType="phone-pad" />
-            )} />
-        </Campo>
-
-        <Campo label="CEP *" error={errors.cep?.message}>
-          <Controller control={control} name="cep"
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <MaskInput value={value} onChangeText={(m) => { onChange(m); buscarCep(m); }} mask={CEP_MASK} style={styles.maskInput} keyboardType="numeric" />
-                {buscandoCep && <Text style={styles.hint}>Buscando endereço...</Text>}
-              </View>
-            )} />
-        </Campo>
-
-        {(['logradouro', 'numero', 'bairro', 'complemento', 'cidade'] as const).map(field => (
-          <Campo key={field} label={field.charAt(0).toUpperCase() + field.slice(1)} error={(errors as any)[field]?.message}>
-            <Controller control={control} name={field}
+          <Campo label="Nome *" error={errors.nome?.message}>
+            <Controller control={control} name="nome"
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput mode="outlined" value={value ?? ''} onChangeText={onChange} onBlur={onBlur}
-                  keyboardType={field === 'numero' ? 'numeric' : 'default'}
+                <TextInput mode="outlined" value={value} onChangeText={onChange} onBlur={onBlur}
                   outlineColor={colors.border} activeOutlineColor={colors.primary} style={styles.input} contentStyle={styles.inputContent} />
               )} />
           </Campo>
-        ))}
+        </Secao>
 
-        <Campo label="Estado (UF) *" error={errors.estado?.message}>
-          <Controller control={control} name="estado"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput mode="outlined" value={value} onChangeText={onChange} onBlur={onBlur}
-                maxLength={2} autoCapitalize="characters"
-                outlineColor={colors.border} activeOutlineColor={colors.primary} style={styles.input} contentStyle={styles.inputContent} />
-            )} />
-        </Campo>
+        <Secao titulo="Contato">
+          <Campo label="Telefone 1 *" error={errors.telefone_1?.message}>
+            <Controller control={control} name="telefone_1"
+              render={({ field: { onChange, value } }) => (
+                <MaskInput value={value} onChangeText={onChange} mask={PHONE_MASK} style={styles.maskInput} keyboardType="phone-pad" />
+              )} />
+          </Campo>
+
+          <Campo label="Telefone 2 (opcional)">
+            <Controller control={control} name="telefone_2"
+              render={({ field: { onChange, value } }) => (
+                <MaskInput value={value ?? ''} onChangeText={onChange} mask={PHONE_MASK} style={styles.maskInput} keyboardType="phone-pad" />
+              )} />
+          </Campo>
+        </Secao>
+
+        <Secao titulo="Endereço">
+          <Campo label="CEP *" error={errors.cep?.message}>
+            <Controller control={control} name="cep"
+              render={({ field: { onChange, value } }) => (
+                <View>
+                  <MaskInput value={value} onChangeText={(m) => { onChange(m); buscarCep(m); }} mask={CEP_MASK} style={styles.maskInput} keyboardType="numeric" />
+                  {buscandoCep && <Text style={styles.hint}>Buscando endereço...</Text>}
+                </View>
+              )} />
+          </Campo>
+
+          {(['logradouro', 'numero', 'bairro', 'complemento', 'cidade'] as const).map(field => (
+            <Campo key={field} label={field.charAt(0).toUpperCase() + field.slice(1)} error={(errors as any)[field]?.message}>
+              <Controller control={control} name={field}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput mode="outlined" value={value ?? ''} onChangeText={onChange} onBlur={onBlur}
+                    keyboardType={field === 'numero' ? 'numeric' : 'default'}
+                    outlineColor={colors.border} activeOutlineColor={colors.primary} style={styles.input} contentStyle={styles.inputContent} />
+                )} />
+            </Campo>
+          ))}
+
+          <Campo label="Estado (UF) *" error={errors.estado?.message}>
+            <Controller control={control} name="estado"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput mode="outlined" value={value} onChangeText={onChange} onBlur={onBlur}
+                  maxLength={2} autoCapitalize="characters"
+                  outlineColor={colors.border} activeOutlineColor={colors.primary} style={styles.input} contentStyle={styles.inputContent} />
+              )} />
+          </Campo>
+        </Secao>
 
         {/* Clínicas associadas */}
         <View style={styles.clinicasSecao}>
@@ -195,6 +201,15 @@ export function EditarPerfilVeterinarioScreen() {
         duration={3000} style={{ backgroundColor: snack.err ? colors.error : colors.success }}>
         {snack.msg}
       </Snackbar>
+    </View>
+  );
+}
+
+function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.secao}>
+      <Text style={styles.secaoTitulo}>{titulo}</Text>
+      {children}
     </View>
   );
 }
@@ -234,4 +249,10 @@ const styles = StyleSheet.create({
   btnSalvar: { backgroundColor: colors.primary, borderRadius: 10, paddingVertical: spacing.md, alignItems: 'center', marginTop: spacing.sm },
   btnDisabled: { backgroundColor: colors.border },
   btnLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
+  secao: { backgroundColor: colors.bg, borderRadius: 12, padding: spacing.md, marginBottom: spacing.md },
+  secaoTitulo: {
+    fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md,
+    color: colors.text, marginBottom: spacing.sm,
+    borderLeftWidth: 3, borderLeftColor: colors.primary, paddingLeft: spacing.sm,
+  },
 });

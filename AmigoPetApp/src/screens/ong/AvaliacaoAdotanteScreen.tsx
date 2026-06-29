@@ -92,60 +92,64 @@ export function AvaliacaoAdotanteScreen() {
         <Text style={styles.heading}>Avaliação de Adotante</Text>
         <Text style={styles.sub}>Adotante: {adotanteNome}</Text>
 
-        <Campo label="Tipo de moradia *" error={errors.tipo_moradia?.message}>
-          <Controller control={control} name="tipo_moradia"
-            render={({ field: { onChange, value } }) => (
-              <View style={styles.chips}>
-                {TIPOS_MORADIA.map(t => (
-                  <TouchableOpacity key={t.value}
-                    style={[styles.chip, value === t.value && styles.chipAtivo]}
-                    onPress={() => onChange(t.value)}>
-                    <Text style={[styles.chipLabel, value === t.value && styles.chipLabelAtivo]}>{t.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            )} />
-        </Campo>
+        <Secao titulo="Perfil do Lar">
+          <Campo label="Tipo de moradia *" error={errors.tipo_moradia?.message}>
+            <Controller control={control} name="tipo_moradia"
+              render={({ field: { onChange, value } }) => (
+                <View style={styles.chips}>
+                  {TIPOS_MORADIA.map(t => (
+                    <TouchableOpacity key={t.value}
+                      style={[styles.chip, value === t.value && styles.chipAtivo]}
+                      onPress={() => onChange(t.value)}>
+                      <Text style={[styles.chipLabel, value === t.value && styles.chipLabelAtivo]}>{t.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )} />
+          </Campo>
 
-        <Campo label="Critérios do lar">
-          <Controller control={control} name="experiencia_previa"
-            render={({ field: { onChange, value } }) => (
-              <BoolChip label="Tem experiência prévia com animais" value={value} onChange={onChange} />
-            )} />
-          <Controller control={control} name="tem_criancas"
-            render={({ field: { onChange, value } }) => (
-              <BoolChip label="Há crianças no lar" value={value} onChange={onChange} />
-            )} />
-          <Controller control={control} name="tem_outros_animais"
-            render={({ field: { onChange, value } }) => (
-              <BoolChip label="Há outros animais no lar" value={value} onChange={onChange} />
-            )} />
-        </Campo>
+          <Campo label="Critérios do lar">
+            <Controller control={control} name="experiencia_previa"
+              render={({ field: { onChange, value } }) => (
+                <BoolChip label="Tem experiência prévia com animais" value={value} onChange={onChange} />
+              )} />
+            <Controller control={control} name="tem_criancas"
+              render={({ field: { onChange, value } }) => (
+                <BoolChip label="Há crianças no lar" value={value} onChange={onChange} />
+              )} />
+            <Controller control={control} name="tem_outros_animais"
+              render={({ field: { onChange, value } }) => (
+                <BoolChip label="Há outros animais no lar" value={value} onChange={onChange} />
+              )} />
+          </Campo>
+        </Secao>
 
-        <Campo label="Parecer *" error={errors.parecer?.message}>
-          <Controller control={control} name="parecer"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput mode="outlined" value={value} onChangeText={onChange} onBlur={onBlur}
-                multiline numberOfLines={4} placeholder="Descreva a análise do perfil do adotante..."
-                outlineColor={colors.border} activeOutlineColor={colors.primary}
-                style={styles.inputMultiline} contentStyle={styles.inputContent} />
-            )} />
-        </Campo>
+        <Secao titulo="Parecer e Resultado">
+          <Campo label="Parecer *" error={errors.parecer?.message}>
+            <Controller control={control} name="parecer"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput mode="outlined" value={value} onChangeText={onChange} onBlur={onBlur}
+                  multiline numberOfLines={4} placeholder="Descreva a análise do perfil do adotante..."
+                  outlineColor={colors.border} activeOutlineColor={colors.primary}
+                  style={styles.inputMultiline} contentStyle={styles.inputContent} />
+              )} />
+          </Campo>
 
-        <Campo label="Resultado *" error={errors.resultado?.message}>
-          <Controller control={control} name="resultado"
-            render={({ field: { onChange, value } }) => (
-              <View style={styles.chips}>
-                {RESULTADOS.map(r => (
-                  <TouchableOpacity key={r.value}
-                    style={[styles.chip, value === r.value && { ...styles.chipAtivo, backgroundColor: r.cor, borderColor: r.cor }]}
-                    onPress={() => onChange(r.value)}>
-                    <Text style={[styles.chipLabel, value === r.value && styles.chipLabelAtivo]}>{r.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            )} />
-        </Campo>
+          <Campo label="Resultado *" error={errors.resultado?.message}>
+            <Controller control={control} name="resultado"
+              render={({ field: { onChange, value } }) => (
+                <View style={styles.chips}>
+                  {RESULTADOS.map(r => (
+                    <TouchableOpacity key={r.value}
+                      style={[styles.chip, value === r.value && { ...styles.chipAtivo, backgroundColor: r.cor, borderColor: r.cor }]}
+                      onPress={() => onChange(r.value)}>
+                      <Text style={[styles.chipLabel, value === r.value && styles.chipLabelAtivo]}>{r.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              )} />
+          </Campo>
+        </Secao>
 
         <View style={styles.aviso}>
           <Text style={styles.avisoTexto}>
@@ -183,6 +187,15 @@ function BoolChip({ label, value, onChange }: { label: string; value: boolean; o
   );
 }
 
+function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.secao}>
+      <Text style={styles.secaoTitulo}>{titulo}</Text>
+      {children}
+    </View>
+  );
+}
+
 function Campo({ label, children, error }: { label: string; children: React.ReactNode; error?: string }) {
   return (
     <View style={styles.campo}>
@@ -213,7 +226,13 @@ const styles = StyleSheet.create({
   boolBoxAtivo: { backgroundColor: colors.primary, borderColor: colors.primary },
   boolCheck: { color: colors.white, fontSize: 12 },
   boolLabel: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.text },
-  aviso: { backgroundColor: '#FFF8E7', borderRadius: 8, padding: spacing.sm, marginVertical: spacing.sm, borderLeftWidth: 3, borderLeftColor: colors.accent },
+  secao: { backgroundColor: colors.bg, borderRadius: 12, padding: spacing.md, marginBottom: spacing.md },
+  secaoTitulo: {
+    fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md,
+    color: colors.text, marginBottom: spacing.sm,
+    borderLeftWidth: 3, borderLeftColor: colors.primary, paddingLeft: spacing.sm,
+  },
+  aviso: { backgroundColor: '#FFF8E7', borderRadius: 10, padding: spacing.sm, marginVertical: spacing.sm, borderLeftWidth: 3, borderLeftColor: colors.accent },
   avisoTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.text, lineHeight: 20 },
   btnSalvar: { backgroundColor: colors.primary, borderRadius: 10, paddingVertical: spacing.md, alignItems: 'center', marginTop: spacing.sm },
   btnDisabled: { backgroundColor: colors.border },

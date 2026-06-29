@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   btnLabel: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md },
   linkVoltar: { alignItems: 'center', marginTop: spacing.lg },
   linkVoltarLabel: { fontFamily: typography.fontFamily.body, color: colors.primary, fontSize: typography.fontSize.md },
-  successCard: { alignItems: 'center', backgroundColor: colors.bg, borderRadius: 12, padding: spacing.xl },
+  successCard: { alignItems: 'center', backgroundColor: colors.bg, borderRadius: 12, padding: spacing.xl, elevation: 2, shadowColor: colors.black, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 6 },
   successIcon: { fontSize: 48, marginBottom: spacing.md },
   successTitulo: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.xl, color: colors.text, marginBottom: spacing.sm, textAlign: 'center' },
   successMsg: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary, textAlign: 'center', lineHeight: 22, marginBottom: spacing.xl },

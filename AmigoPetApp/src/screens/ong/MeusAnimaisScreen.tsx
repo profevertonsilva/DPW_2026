@@ -5,6 +5,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { animalService } from '../../api/services/animalService';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -95,9 +96,11 @@ export function MeusAnimaisScreen() {
         contentContainerStyle={styles.lista}
         refreshControl={<RefreshControl refreshing={atualizando} onRefresh={() => carregar(true)} colors={[colors.primary]} />}
         ListEmptyComponent={
-          <View style={styles.vazio}>
-            <Text style={styles.vazioTexto}>Nenhum animal cadastrado ainda.</Text>
-          </View>
+          <EmptyState
+            icon="🐾"
+            title="Nenhum animal cadastrado"
+            message="Cadastre seu primeiro pet para começar."
+          />
         }
       />
 
@@ -117,8 +120,8 @@ const styles = StyleSheet.create({
   lista: { padding: spacing.md, paddingBottom: 90 },
   card: {
     backgroundColor: colors.bg, borderRadius: 12, padding: spacing.md,
-    marginBottom: spacing.sm, elevation: 1,
-    shadowColor: colors.black, shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.06, shadowRadius: 3,
+    marginBottom: spacing.sm, elevation: 2,
+    shadowColor: colors.black, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 6,
   },
   cardInfo: { flex: 1 },
   cardNome: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md, color: colors.text },
@@ -136,6 +139,4 @@ const styles = StyleSheet.create({
   erroTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.error, textAlign: 'center', marginBottom: spacing.md },
   btnRetry: { backgroundColor: colors.primary, borderRadius: 8, paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
   btnRetryLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
-  vazio: { alignItems: 'center', paddingTop: spacing.xxl },
-  vazioTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary },
 });

@@ -5,6 +5,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { solicitacaoAdocaoService } from '../../api/services/solicitacaoAdocaoService';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -141,9 +142,11 @@ export function AdocoesOngScreen() {
         contentContainerStyle={styles.lista}
         refreshControl={<RefreshControl refreshing={atualizando} onRefresh={() => carregar(true)} colors={[colors.primary]} />}
         ListEmptyComponent={
-          <View style={styles.vazio}>
-            <Text style={styles.vazioTexto}>Nenhuma solicitação recebida.</Text>
-          </View>
+          <EmptyState
+            icon="📋"
+            title="Nenhuma solicitação recebida"
+            message="Quando adotantes solicitarem adoção, aparecerá aqui."
+          />
         }
       />
     </View>
@@ -161,7 +164,7 @@ const styles = StyleSheet.create({
   adotanteNome: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md, color: colors.text },
   adotanteEmail: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.xs, color: colors.secondary },
   statusBadge: { borderRadius: 10, paddingVertical: 3, paddingHorizontal: 8 },
-  statusLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: 10, color: colors.white },
+  statusLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.xs, color: colors.white },
   animalNome: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.sm, color: colors.text, marginBottom: 2 },
   motivo: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.secondary, marginBottom: 4 },
   data: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.xs, color: colors.secondary },
@@ -176,6 +179,4 @@ const styles = StyleSheet.create({
   erroTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.error, textAlign: 'center', marginBottom: spacing.md },
   btnRetry: { backgroundColor: colors.primary, borderRadius: 8, paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
   btnRetryLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
-  vazio: { alignItems: 'center', paddingTop: spacing.xxl },
-  vazioTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary },
 });

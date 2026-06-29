@@ -108,6 +108,7 @@ export function AdicionarProcedimentoScreen() {
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.scroll} keyboardShouldPersistTaps="handled">
+        <Secao titulo="Registro de Procedimento">
         <Campo label="Nome do procedimento *" error={errors.nome?.message}>
           <Controller control={control} name="nome"
             render={({ field: { onChange, onBlur, value } }) => (
@@ -171,6 +172,7 @@ export function AdicionarProcedimentoScreen() {
           </TouchableOpacity>
           {anexoUrl && <Text style={styles.anexoOk}>✓ Arquivo enviado</Text>}
         </Campo>
+        </Secao>
 
         <View style={styles.aviso}>
           <Text style={styles.avisoTexto}>🔒 Registros são permanentes e não podem ser editados ou excluídos.</Text>
@@ -191,6 +193,15 @@ export function AdicionarProcedimentoScreen() {
         duration={4000} style={{ backgroundColor: colors.error }}>
         {snack.msg}
       </Snackbar>
+    </View>
+  );
+}
+
+function Secao({ titulo, children }: { titulo: string; children: React.ReactNode }) {
+  return (
+    <View style={styles.secao}>
+      <Text style={styles.secaoTitulo}>{titulo}</Text>
+      {children}
     </View>
   );
 }
@@ -230,9 +241,15 @@ const styles = StyleSheet.create({
   },
   btnAnexoLabel: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.primary },
   anexoOk: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.xs, color: colors.success, marginTop: 4 },
-  aviso: { backgroundColor: '#FFF8E7', borderRadius: 8, padding: spacing.sm, marginVertical: spacing.sm, borderLeftWidth: 3, borderLeftColor: colors.accent },
+  aviso: { backgroundColor: '#FFF8E7', borderRadius: 10, padding: spacing.sm, marginVertical: spacing.sm, borderLeftWidth: 3, borderLeftColor: colors.accent },
   avisoTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.text },
   btnSalvar: { backgroundColor: colors.primary, borderRadius: 10, paddingVertical: spacing.md, alignItems: 'center', marginTop: spacing.sm },
   btnDisabled: { backgroundColor: colors.border },
   btnLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
+  secao: { backgroundColor: colors.bg, borderRadius: 12, padding: spacing.md, marginBottom: spacing.md },
+  secaoTitulo: {
+    fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.md,
+    color: colors.text, marginBottom: spacing.sm,
+    borderLeftWidth: 3, borderLeftColor: colors.primary, paddingLeft: spacing.sm,
+  },
 });

@@ -196,7 +196,7 @@ export function AvistamentoDetalheScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.bg },
+  root: { flex: 1, backgroundColor: colors.bgMuted },
   scroll: { paddingBottom: spacing.xxl },
   foto: { width: '100%', height: 240 },
   fotoPlaceholder: {
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   fotoPlaceholderIcon: { fontSize: 48, marginBottom: 4 },
   fotoPlaceholderText: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.sm, color: colors.secondary },
-  content: { padding: spacing.md },
+  content: { padding: spacing.md, backgroundColor: colors.bg, borderRadius: 12, margin: spacing.md, elevation: 2, shadowColor: colors.black, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 6 },
   headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.md },
   especie: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.xl, color: colors.text },
   statusBadge: { borderRadius: 12, paddingVertical: 4, paddingHorizontal: 10 },

@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   scroll: { padding: spacing.md },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   erroText: { fontFamily: typography.fontFamily.body, color: colors.secondary, fontSize: typography.fontSize.md },
-  hero: { alignItems: 'center', backgroundColor: colors.bg, borderRadius: 12, padding: spacing.lg, marginBottom: spacing.md },
+  hero: { alignItems: 'center', backgroundColor: colors.bg, borderRadius: 12, padding: spacing.lg, marginBottom: spacing.md, elevation: 2, shadowColor: colors.black, shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 6 },
   nome: { fontFamily: typography.fontFamily.titleBold, fontSize: typography.fontSize.xl, color: colors.text, marginTop: spacing.sm, textAlign: 'center' },
   cnpj: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.xs, color: colors.secondary, marginTop: 4 },
   infoRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: spacing.xs, borderBottomWidth: 1, borderBottomColor: colors.border },

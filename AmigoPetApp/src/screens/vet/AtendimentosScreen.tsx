@@ -5,6 +5,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { vetService } from '../../api/services/vetService';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -98,9 +99,11 @@ export function AtendimentosScreen() {
         contentContainerStyle={styles.lista}
         refreshControl={<RefreshControl refreshing={atualizando} onRefresh={() => carregar(true)} colors={[colors.primary]} />}
         ListEmptyComponent={
-          <View style={styles.vazio}>
-            <Text style={styles.vazioTexto}>Nenhum animal sob seus cuidados.</Text>
-          </View>
+          <EmptyState
+            icon="🩺"
+            title="Nenhum animal sob seus cuidados"
+            message="Animais que você atender aparecerão aqui."
+          />
         }
       />
     </View>
@@ -132,6 +135,4 @@ const styles = StyleSheet.create({
   erroTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.error, textAlign: 'center', marginBottom: spacing.md },
   btnRetry: { backgroundColor: colors.primary, borderRadius: 8, paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
   btnRetryLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
-  vazio: { alignItems: 'center', paddingTop: spacing.xxl },
-  vazioTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary },
 });

@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { rankingService } from '../../api/services/rankingService';
 import { useAuth } from '../../hooks/useAuth';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -87,9 +88,11 @@ export function RankingScreen() {
           </View>
         }
         ListEmptyComponent={
-          <View style={styles.vazio}>
-            <Text style={styles.vazioTexto}>Sem dados de ranking ainda.</Text>
-          </View>
+          <EmptyState
+            icon="🏆"
+            title="Sem dados de ranking"
+            message="Reporte animais de rua para aparecer aqui!"
+          />
         }
       />
     </View>
@@ -124,6 +127,4 @@ const styles = StyleSheet.create({
   erroTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.error, textAlign: 'center', marginBottom: spacing.md },
   btnRetry: { backgroundColor: colors.primary, borderRadius: 8, paddingVertical: spacing.sm, paddingHorizontal: spacing.lg },
   btnRetryLabel: { fontFamily: typography.fontFamily.bodyBold, fontSize: typography.fontSize.md, color: colors.white },
-  vazio: { alignItems: 'center', paddingTop: spacing.xxl },
-  vazioTexto: { fontFamily: typography.fontFamily.body, fontSize: typography.fontSize.md, color: colors.secondary },
 });
