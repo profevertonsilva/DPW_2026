@@ -1,7 +1,13 @@
 <?php
 /*
- * Autor: Vagner de Oliveira Lunes
- * Modelo de RF#16 - Sistema de Gerenciamento de Procedimentos Médicos
+ * Modelo para RF#16 - Sistema de Gerenciamento de Procedimentos Médicos
+ *
+ * Tabela: procedimento
+ * Schema:
+ *   id | nome | tipo | data | veterinario_nome | observacoes
+ *   anexo_url | fk_animal_id | fk_login_id | criado_em | criado_por
+ *
+ * Política: append-only (RNF#08) — registros não podem ser excluídos
  */
 
 namespace App\Model;
@@ -13,13 +19,25 @@ class ProcedimentoModel
     // Enum (consulta, cirurgia, exame, castracao, outro)
     private $tipo;
     private $data;
-    private $veterinario;
-    private $obs;
-    private $anexo;
+    private $veterinario_nome;
+    private $observacoes;
+    private $anexo_url;
 
-    private $fk_animal;
+    // FK para tabela animal
+    private $fk_animal_id;
 
-    public function __get($nome) {
+    // FK para login (usuário que registrou)
+    private $fk_login_id;
+
+    // Metadados de auditoria (populados pelo banco)
+    private $criado_em;
+    private $criado_por;
+
+    // Campos extras vindos de JOINs (populados pelo FuncoesGlobais->popularModel)
+    private $animal_nome; // JOIN com tabela animal
+
+    public function __get($nome)
+    {
         return $this->$nome;
     }
 
@@ -28,4 +46,3 @@ class ProcedimentoModel
         $this->$nome = $valor;
     }
 }
-?>
