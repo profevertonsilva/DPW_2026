@@ -7,23 +7,24 @@ use App\DAO\NotificacaoDAO;
 
 class NotificacaoController extends Action
 {
+   
     public function listar()
     {
+        $_SESSION['id'] = 17; // Apenas para teste
 
-     $_SESSION['id'] = 1; 
-        //1. Salvando temporariamente o id do usuário na sessão para teste. Remover depois. 
-        $dao = new NotificacaoDAO();
         $this->validaAutenticacao();
 
-        $this->getView()->notificacoes =
-            $dao->listarPorUsuario($_SESSION['id']);
+        $dao = new NotificacaoDAO();
+
+        $notificacoes = $dao->listarPorUsuario($_SESSION['id']);
+
+        $this->getView()->notificacoes = $notificacoes;
 
         $this->getView()->title = "Notificações";
         $this->getView()->title_pagina = "Notificações";
 
         $this->render('../dashboard/notificacao_listar', 'dashboard');
     }
-
     public function marcarComoLida()
     {
         $this->validaAutenticacao();
