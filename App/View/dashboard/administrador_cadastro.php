@@ -1,14 +1,14 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Cadastro de Veterinário</h1>
-        <a href="/dashboard/veterinario/listar" class="btn btn-secondary">
+        <h1 class="h3 mb-0">Cadastro de Administrador</h1>
+        <a href="/dashboard/administrador/listar" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Voltar
         </a>
     </div>
 
     <div class="card shadow">
         <div class="card-body">
-            <form method="POST" action="/dashboard/veterinario/cadastrar">
+            <form method="POST" action="/dashboard/administrador/cadastrar">
 
                 <!-- Dados Pessoais -->
                 <h5 class="mb-3 text-primary">Dados Pessoais</h5>
@@ -20,10 +20,6 @@
                     <div class="col-md-3">
                         <label for="cpf" class="form-label">CPF</label>
                         <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="crmv" class="form-label">CRMV</label>
-                        <input type="text" class="form-control" id="crmv" name="crmv" placeholder="00000/UF">
                     </div>
                     <div class="col-md-3">
                         <label for="data_nascimento" class="form-label">Data de Nascimento</label>
@@ -77,7 +73,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Salvar
                     </button>
-                    <a href="/dashboard/veterinario/listar" class="btn btn-secondary">
+                    <a href="/dashboard/administrador/listar" class="btn btn-secondary">
                         <i class="fas fa-times"></i> Cancelar
                     </a>
                 </div>
@@ -100,15 +96,6 @@ document.getElementById('cpf').addEventListener('input', function(e) {
         v = v.replace(/^(\d{3})(\d{0,3})/, '$1.$2');
     }
     e.target.value = v;
-});
-
-// Máscara CRMV: 00000/UF
-document.getElementById('crmv').addEventListener('input', function(e) {
-    var v = e.target.value.replace(/[^0-9A-Za-z/]/g, '');
-    if (v.length > 5) {
-        v = v.replace(/^(\d{5})(.*)$/, '$1/$2');
-    }
-    e.target.value = v.toUpperCase();
 });
 
 // Máscara CEP: 00000-000
