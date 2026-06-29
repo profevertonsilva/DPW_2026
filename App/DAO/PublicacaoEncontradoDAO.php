@@ -135,13 +135,17 @@ class PublicacaoEncontradoDAO extends DAO
           
             $sql = "SELECT
             p.*,
-            l.email,
-            a.nome AS animal_nome
+            an.nome AS animal_nome,
+            ad.nome AS usuario_nome
             FROM publicacao_encontrado p
-            JOIN login l ON p.fk_login_id = l.id
-            JOIN animal a ON p.fk_animal_id = a.id
+            JOIN animal an
+            ON an.id = p.fk_animal_id
+            JOIN login l
+            ON l.id = p.fk_login_id
+            JOIN adotante ad
+            ON ad.fk_login_id = l.id
             ORDER BY p.id DESC";
-
+            
             $stmt = $this->getConn()->prepare($sql);
             $stmt->execute();
             $resultado = $stmt->fetchAll(\PDO::FETCH_ASSOC);

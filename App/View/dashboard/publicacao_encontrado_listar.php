@@ -31,7 +31,7 @@
                             <tr>
                                 <td><?= htmlspecialchars($publicacao->__get('id')) ?></td>
                                 <td><?= htmlspecialchars($publicacao->__get('animal_nome')) ?></td>
-                                <td><?= htmlspecialchars($publicacao->__get('email')) ?></td>
+                                <td><?= htmlspecialchars($publicacao->__get('usuario_nome')) ?></td>
                                 <td><?= htmlspecialchars($publicacao->__get('data_encontro')) ?></td>
                                 <td><?= htmlspecialchars($publicacao->__get('condicao_fisica')) ?></td>
                                 <td><?= htmlspecialchars($publicacao->__get('acoes_realizadas')) ?></td>
