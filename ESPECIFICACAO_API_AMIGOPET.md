@@ -1,5 +1,5 @@
 # Especificação da API REST — AmigoPet
-**Documento definitivo para construção do back-end** · Versão 1.1 · 2026-06-23 (atualizado em 2026-06-27)
+:**Documento definitivo para construção do back-end** · Versão 1.2 · 2026-06-23 (atualizado em 2026-06-29)
 **Para:** Lucas e Adryel (back-end) · **Banco:** `eswdev14_dsw_2026` (MySQL, 34 tabelas)
 **Complementos:** `D:\API_CONTRATO_ESPERADO.md` (contrato detalhado), `D:\SOBREPOSICOES_BANCO.md` (decisões pendentes do grupo)
 
@@ -9,6 +9,9 @@
 > **🆕 v1.1 (2026-06-27):** seção **H. STATUS DE IMPLEMENTAÇÃO** adicionada pelo back-end,
 > documentando o que já foi construído (Auth, Animais, ONGs), a convenção de resposta efetiva
 > e os desvios/decisões em relação a este contrato. Marcadores **✅** indicam endpoints prontos.
+> **🆕 v1.2 (2026-06-29):** módulos restantes implementados — **C.8 Transferência**, **C.9 Notificações**,
+> **C.10 Upload**, **C.11 Perfis**, **C.12 Clínicas**, **C.13 Busca**. Migration `DB/Migracao_API_v1.2.sql`
+> cria as tabelas/colunas novas (idempotente — executar no remoto). Ver H.1/H.3 atualizados.
 
 ---
 
@@ -152,31 +155,31 @@
 - **✅ POST /solicitacoes/{id}/avaliacao** 🔒 (ong) — Body `{ tipo_moradia, experiencia_previa:bool, tem_criancas:bool, tem_outros_animais:bool, parecer, resultado }`. `tipo_moradia` ∈ `casa_com_quintal|casa_sem_quintal|apartamento|outro`; `resultado` ∈ `aprovado|reprovado|pendente_informacoes`. 201 · 409 se já avaliada.
 - **✅ Termo:** ver C.4 (`/termo` e `/termo/assinar`). (Geração de PDF pendente — stub.)
 
-### C.8 Transferência de Responsabilidade — 🔜
-- **POST /animais/{id}/transferencias** 🔒 (responsável atual) — **append-only**. Body `{ para_usuario_id, para_usuario_nome, motivo? }`. 201.
-- **GET /animais/{id}/transferencias** 🔒 — 200 array (histórico imutável de tutores).
+### C.8 Transferência de Responsabilidade — ✅ MÓDULO COMPLETO
+- **✅ POST /animais/{id}/transferencias** 🔒 (ONG dona do animal) — **append-only**. Body `{ para_usuario_id, para_usuario_nome?, motivo? }`. 201. `de_usuario` = ONG logada; valida existência do login destino.
+- **✅ GET /animais/{id}/transferencias** 🔒 (ONG dona do animal) — 200 array (histórico imutável de tutores).
 
-### C.9 Notificações — 🔜
-- **GET /notificacoes** 🔒 — 200 array `{ id, titulo, mensagem, data, lida, tipo, destino? }`.
-- **PATCH /notificacoes/{id}/marcar-lida** 🔒 — 200 · 404.
+### C.9 Notificações — ✅ MÓDULO COMPLETO
+- **✅ GET /notificacoes** 🔒 — 200 array `{ id, titulo, mensagem, data, lida, tipo, destino? }`.
+- **✅ PATCH /notificacoes/{id}/marcar-lida** 🔒 — 200 · 404.
 - **Tipos:** `solicitacao, sistema, adocao_concluida, status_adocao, avistamento_atualizado, alerta_vacina, promocao_papel`.
-- **`destino`** (opcional): `{ tab, tela, params }` para deep-link no app.
+- **`destino`** (opcional): `{ tab, tela, params }` para deep-link no app — só montado se `destino_tab`/`destino_tela` preenchidos.
 
-### C.10 Upload — 🔜
-- **POST /upload** 🔒 — `multipart/form-data` campo `arquivo`. Imagem JPG/PNG ≤5MB **ou** PDF ≤10MB. 200 `{ url }` (URL absoluta). 400.
+### C.10 Upload — ✅ MÓDULO COMPLETO
+- **✅ POST /upload** 🔒 — `multipart/form-data` campo `arquivo`. Imagem JPG/PNG/GIF/WebP ≤5MB **ou** PDF ≤10MB. MIME real via `finfo`. 200 `{ url }` (URL absoluta). 400. Armazena em `resources/uploads/`.
 
-### C.11 Perfis — 🔜
-- **GET /adotante/perfil** 🔒 · **PUT /adotante/perfil** 🔒 — inclui `ranking` e `status` SEPARADOS (ver E).
-- **GET /ong/perfil** 🔒 · **PUT /ong/perfil** 🔒 — `email` vem do login; `descricao` → `ong.bio`.
-- **GET /veterinario/perfil** 🔒 · **PUT /veterinario/perfil** 🔒 — `telefone_1` → `veterinario.telefone`.
+### C.11 Perfis — ✅ MÓDULO COMPLETO
+- **✅ GET /adotante/perfil** 🔒 · **✅ PUT /adotante/perfil** 🔒 — inclui `ranking` e `status` SEPARADOS (`status` ← login). PUT é PATCH semântico; **não** altera `ranking` nem `login.status`.
+- **✅ GET /ong/perfil** 🔒 · **✅ PUT /ong/perfil** 🔒 — `email` vem do login; `descricao` → `ong.bio`.
+- **✅ GET /veterinario/perfil** 🔒 · **✅ PUT /veterinario/perfil** 🔒 — `telefone_1` → `veterinario.telefone`.
 
-### C.12 Clínicas (RF#13) — 🔜
-- **GET /clinicas** 🔒 · **GET /clinicas/{id}** 🔒 · **POST /clinicas** 🔒 (vet).
-- **GET /veterinario/clinicas** 🔒 (vet) — clínicas associadas (via `vet_clinica`).
-- **POST /veterinario/clinicas/{clinicaId}** 🔒 (vet) — associa · **DELETE** idem — desassocia.
+### C.12 Clínicas (RF#13) — ✅ MÓDULO COMPLETO
+- **✅ GET /clinicas** 🔒 · **✅ GET /clinicas/{id}** 🔒 · **✅ POST /clinicas** 🔒 (vet).
+- **✅ GET /veterinario/clinicas** 🔒 (vet) — clínicas associadas (via `vet_clinica`).
+- **✅ POST /veterinario/clinicas/{clinicaId}** 🔒 (vet) — associa (idempotente) · **✅ DELETE** idem — desassocia.
 
-### C.13 Busca de usuários (para transferência) — 🔜
-- **GET /usuarios/busca?q={query}** 🔒 — q ≥ 2 chars. 200 array `{ id, nome, tipo_usuario, email }`. Não retorna admin/moderador. LIKE %q%, limite ~10.
+### C.13 Busca de usuários (para transferência) — ✅ MÓDULO COMPLETO
+- **✅ GET /usuarios/busca?q={query}** 🔒 — q ≥ 2 chars (422 se curto). 200 array `{ id, nome, tipo_usuario, email }`. Não retorna admin/moderador. LIKE %q%, limite 10.
 
 ### C.14 Auxiliares — ✅
 - **✅ GET /especies** — 200 `[{ id, nome }]`. (Implementado público — ver C.2 / H.3.)
@@ -290,12 +293,12 @@
 2. **Animais** (GET listar/detalhe, especies/racas, animal_imagens) — tela principal do app. — ✅ **CONCLUÍDO**
    - *(+ ONGs / C.3, feito junto — leitura de ONGs e seus animais.)* — ✅ **CONCLUÍDO**
 3. **Solicitações + Termo** (criar, status, recebidas, termo/assinar) — fluxo central de adoção. — ✅ **CONCLUÍDO** (PDF do termo é stub)
-4. **Saúde** (vacinas, procedimentos, saude, carteira, auditoria) — ✅ **CONCLUÍDO** (carteira QR/PDF stub) · **Perfis** (adotante/ong/vet) — 🔜 (C.11).
-5. **Avistamentos + Ranking** (C.6) — ✅ **CONCLUÍDO** · 🔜 **PRÓXIMO: C.11 Perfis** · depois **Notificações**, **Transferência**, **Clínicas**, **Busca**, **Upload**.
+4. **Saúde** (vacinas, procedimentos, saude, carteira, auditoria) — ✅ **CONCLUÍDO** (carteira QR/PDF stub) · **Perfis** (adotante/ong/vet) — ✅ **CONCLUÍDO** (C.11).
+5. **Avistamentos + Ranking** (C.6) — ✅ **CONCLUÍDO**. **Módulos finais (C.8–C.13) — ✅ CONCLUÍDO**: Transferência, Notificações, Upload, Clínicas, Busca.
 
 ---
 
-## H. STATUS DE IMPLEMENTAÇÃO (back-end) — atualizado 2026-06-27
+## H. STATUS DE IMPLEMENTAÇÃO (back-end) — atualizado 2026-06-29
 
 > Seção mantida pelo back-end (Lucas/Adryel). Resume o que está pronto, a arquitetura efetiva
 > e os **desvios/decisões** em relação ao contrato v1.0, com justificativa.
@@ -311,6 +314,12 @@
 | C.5 Saúde | vacinas, procedimentos, saude, carteira, auditoria, /vet/atendimentos | ✅ (carteira QR/PDF stub) |
 | C.6 Avistamentos + Ranking | POST/GET avistamentos, {id}, status (PATCH), /ranking/rastreadores | ✅ |
 | C.14 Auxiliares | especies, racas | ✅ |
+| C.11 Perfis | GET/PUT adotante/ong/veterinario | ✅ |
+| C.8 Transferência | POST/GET /animais/{id}/transferencias (append-only) | ✅ |
+| C.9 Notificações | GET /notificacoes, PATCH marcar-lida | ✅ (gatilhos de emissão pendentes) |
+| C.10 Upload | POST /upload (imagem/PDF) | ✅ |
+| C.12 Clínicas | GET/POST /clinicas, /veterinario/clinicas (+associa/desassocia) | ✅ |
+| C.13 Busca | GET /usuarios/busca | ✅ |
 
 ### H.2 Arquitetura efetiva
 - Camada de API **isolada** da stack web (sessão/HTML via `FW\Controller\Action` + tabela `routes`).
@@ -355,16 +364,23 @@
    `animal=adotado`), e o `termo_adocao.conteudo_texto` é gerado de verdade. Falta apenas **gerar o arquivo PDF
    via TCPDF** e preencher `pdf_url`/`pdf_assinado_url` (hoje `null`). TCPDF já está no vendor e versionado.
    **Pendência de infra junto:** definir diretório público p/ os PDFs (ex.: `resources/termos/`) e a URL.
+10. **C.8 Transferência (2026-06-29):** append-only em `transferencia`. Autorização = **ONG dona do animal** (o "responsável atual" é a ONG via `ong_animal`); `de_usuario` = ONG logada. Valida existência do login destino (`para_usuario_id`) antes de inserir (sem FK física — F#6). Resolve `para_usuario_nome` via COALESCE dos perfis se o app não enviar.
+11. **C.9 Notificações (2026-06-29):** tabela `notificacao`. `destino` (`{tab,tela,params}`) só é montado se `destino_tab`/`destino_tela` preenchidos (senão `null`). O repositório expõe `criar()` para outros módulos dispararem in-app (ex.: mudança de status de adoção) — **ligar nos gatilhos é pendência**.
+12. **C.10 Upload (2026-06-29):** armazena em `resources/uploads/`, nome seguro (`bin2hex(random_bytes(16))`), valida **MIME real via `finfo`** (não extensão); JPG/PNG/GIF/WebP ≤5MB, PDF ≤10MB. `.htaccess` do diretório bloqueia execução de PHP. URL absoluta via `BASE_URL` (.env) ou montada de `HTTP_HOST`.
+13. **C.11 Perfis (2026-06-29):** GET+PUT para adotante/ong/veterinario. PUT é **PATCH semântico** (só campos enviados); **não** altera `ranking` (definido pela avaliação da ONG) nem `login.status`. `email` validado (formato + unicidade) quando alterado. `ranking` lido com fallback para o legado `adotante.status`.
+14. **C.12 Clínicas (2026-06-29):** leitura protegida (qualquer autenticado); criação/associação restritas a **vet**. Associação (`vet_clinica`) é **idempotente**. De-para `foto`↔`clinica.avatar`, `email`↔`clinica.email` (colunas adicionadas na migration, tratadas defensivamente).
+15. **C.13 Busca (2026-06-29):** `q` ≥ 2 chars (422 se curto); exclui `administrador`/`moderador`; `LIKE %q%` em nome (COALESCE dos perfis) ou e-mail; limite 10.
+16. **Migration v1.2:** `DB/Migracao_API_v1.2.sql` cria `transferencia` e `notificacao` e adiciona (idempotente) `clinica.avatar`/`clinica.email` e `adotante.ranking`. **Executar no remoto** (e em qualquer ambiente que ainda não tem).
 
 ### H.4 Como rodar/testar (dev)
 - Banco local em Docker (MySQL 5.7, espelho do remoto). App PHP: `php -S 127.0.0.1:8090 index.php`.
+- **Aplicar a migration** `DB/Migracao_API_v1.2.sql` (idempotente) antes de testar os módulos C.8/C.9 e os perfis de Clínicas/Adotante.
 - Healthcheck: `GET http://127.0.0.1:8090/api/health` (deve acusar banco conectado).
 - Gerar token de teste:
   `php -r 'require "vendor/autoload.php"; Dotenv\Dotenv::createImmutable(__DIR__)->load(); echo App\Api\Jwt::emitir(["sub"=>1,"tipo_usuario"=>"ong","status"=>"a"]);'`
 
 ### H.5 Pendências priorizadas
-- **C.11 Perfis** (próximo). Depois: o restante (C.8 Transferência, C.9 Notificações, C.10 Upload,
-  C.12 Clínicas, C.13 Busca).
+- **Módulos de API: 100% implementados** (C.1–C.14). Restam apenas pendências de **infra/integração** (abaixo).
 - Itens de infra a resolver com o grupo: replicar no remoto `ong.fk_login_id` (+ backfill) e
   `publicacao_encontrado.fk_animal_id` NULL; configurar SMTP; **gerar PDFs/QR via API** — termo (C.4) e
   carteira (C.5) via TCPDF + definir dir/URL; decidir auth pública vs protegida dos GET; padronizar URLs de foto.
@@ -374,4 +390,4 @@
 ---
 
 _Contrato gerado por Claude Code (claude-opus-4-8) em 2026-06-23. Seção H e marcadores de status
-adicionados pelo back-end em 2026-06-27, alinhados ao banco real e à implementação atual da API._
+adicionados pelo back-end em 2026-06-27 (v1.1) e 2026-06-29 (v1.2 — módulos C.8–C.13), alinhados ao banco real e à implementação atual da API._

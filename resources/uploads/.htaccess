@@ -1,0 +1,20 @@
+# Negar execução de scripts PHP no diretório de uploads.
+# Segurança: impede que arquivos .php disfarçados sejam executados.
+
+# Desabilita motor PHP do Apache
+php_flag engine off
+
+# Recusa qualquer script handler
+RemoveHandler .phtml .php .php3 .php4 .php5 .php7 .phps .cgi .pl .asp .aspx .shtml .shtm .fcgi .fpl .pht
+
+# Força download em vez de execução para qualquer extensão suspeita
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|cgi|pl|asp|aspx|shtml|shtm|fcgi|fpl|pht)$">
+    ForceType application/octet-stream
+    Header set Content-Disposition attachment
+    Require all denied
+</FilesMatch>
+
+# Bloqueia acesso a arquivos ocultos (.htaccess, .env, etc.)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

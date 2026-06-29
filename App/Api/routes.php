@@ -71,8 +71,38 @@ $router->adicionar('POST',  '/avistamentos',           'AvistamentoController', 
 $router->adicionar('GET',   '/avistamentos',           'AvistamentoController', 'listar',         true);
 $router->adicionar('GET',   '/ranking/rastreadores',   'AvistamentoController', 'ranking',        true);
 $router->adicionar('GET',   '/avistamentos/{id}',      'AvistamentoController', 'detalhe',        true);
-$router->adicionar('PATCH', '/avistamentos/{id}/status','AvistamentoController', 'atualizarStatus', true);
+$router->adicionar('PATCH', '/avistamentos/{id}/status', 'AvistamentoController', 'atualizarStatus', true);
 
 // --- Taxonomia (seção C.2) ---
 $router->adicionar('GET', '/especies', 'AnimalController', 'especies');
 $router->adicionar('GET', '/racas',    'AnimalController', 'racas');
+
+// --- Perfis (seção C.11) — protegido ---
+$router->adicionar('GET', '/adotante/perfil',     'PerfilController', 'perfilAdotante',      true);
+$router->adicionar('PUT', '/adotante/perfil',     'PerfilController', 'atualizarAdotante',   true);
+$router->adicionar('GET', '/ong/perfil',          'PerfilController', 'perfilOng',           true);
+$router->adicionar('PUT', '/ong/perfil',          'PerfilController', 'atualizarOng',        true);
+$router->adicionar('GET', '/veterinario/perfil',  'PerfilController', 'perfilVeterinario',   true);
+$router->adicionar('PUT', '/veterinario/perfil',  'PerfilController', 'atualizarVeterinario', true);
+
+// --- Transferência de Responsabilidade (seção C.8) — append-only, protegido ---
+$router->adicionar('POST', '/animais/{id}/transferencias', 'TransferenciaController', 'criar',  true);
+$router->adicionar('GET',  '/animais/{id}/transferencias', 'TransferenciaController', 'listar', true);
+
+// --- Notificações (seção C.9) — protegido ---
+$router->adicionar('GET',   '/notificacoes',                    'NotificacaoController', 'listar',     true);
+$router->adicionar('PATCH', '/notificacoes/{id}/marcar-lida',   'NotificacaoController', 'marcarLida', true);
+
+// --- Upload (seção C.10) — multipart, protegido ---
+$router->adicionar('POST', '/upload', 'UploadController', 'upload', true);
+
+// --- Clínicas (seção C.12 / RF#13) — protegido ---
+$router->adicionar('GET',     '/clinicas',                          'ClinicaController', 'listar',             true);
+$router->adicionar('GET',     '/clinicas/{id}',                     'ClinicaController', 'detalhe',            true);
+$router->adicionar('POST',    '/clinicas',                          'ClinicaController', 'criar',              true);
+$router->adicionar('GET',     '/veterinario/clinicas',              'ClinicaController', 'minhasClinicas',     true);
+$router->adicionar('POST',    '/veterinario/clinicas/{clinicaId}',  'ClinicaController', 'associarClinica',    true);
+$router->adicionar('DELETE',  '/veterinario/clinicas/{clinicaId}',  'ClinicaController', 'desassociarClinica', true);
+
+// --- Busca de usuários (seção C.13) — protegido ---
+$router->adicionar('GET', '/usuarios/busca', 'UsuarioController', 'buscar', true);
