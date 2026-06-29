@@ -53,7 +53,7 @@
                                     </span>
                                 </td>
 
-                                <td><?= htmlspecialchars($notificacao->__get('data_criacao')) ?></td>
+                                <td><?= htmlspecialchars($notificacao->__get('data')) ?></td>
 
                                 <td>
                                     <?php if (!$lida): ?>
