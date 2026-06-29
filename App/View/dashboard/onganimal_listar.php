@@ -4,10 +4,10 @@
 
     <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h1 class="h3 mb-0">Listar Clínicas</h1>
+        <h1 class="h3 mb-0">Relacionamento ONG x Animal</h1>
 
-        <a href="/dashboard/clinica/cadastro" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Nova Clínica
+        <a href="/dashboard/onganimal/cadastro" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Novo Relacionamento
         </a>
 
     </div>
@@ -18,7 +18,7 @@
 
             <div class="table-responsive">
 
-                <table id="tabela-clinicas"
+                <table id="tabela-onganimal"
                     class="table table-striped table-hover"
                     width="100%">
 
@@ -26,10 +26,8 @@
 
                         <tr>
                             <th>ID</th>
-                            <th>Nome</th>
-                            <th>CNPJ</th>
-                            <th>Cidade</th>
-                            <th>Telefone</th>
+                            <th>ID ONG</th>
+                            <th>ID Animal</th>
                             <th>Ações</th>
                         </tr>
 
@@ -37,35 +35,27 @@
 
                     <tbody>
 
-                        <?php if (!empty($this->getView()->clinicas)): ?>
+                        <?php if (!empty($this->getView()->ongAnimais)): ?>
 
-                            <?php foreach ($this->getView()->clinicas as $clinica): ?>
+                            <?php foreach ($this->getView()->ongAnimais as $ongAnimal): ?>
 
                                 <tr>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_id')) ?>
+                                        <?= htmlspecialchars($ongAnimal->__get('onganl_id')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_nome')) ?>
+                                        <?= htmlspecialchars($ongAnimal->__get('fk_ong_id')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_cnpj')) ?>
-                                    </td>
-
-                                    <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_cidade')) ?>
-                                    </td>
-
-                                    <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_tel1')) ?>
+                                        <?= htmlspecialchars($ongAnimal->__get('fk_animal_id')) ?>
                                     </td>
 
                                     <td>
 
-                                        <a href="/dashboard/clinica/editar/<?= $clinica->__get('cln_id') ?>"
+                                        <a href="/dashboard/onganimal/editar/<?= $ongAnimal->__get('onganl_id') ?>"
                                             class="btn btn-warning btn-sm me-1">
 
                                             <i class="fas fa-edit"></i> Editar
@@ -73,13 +63,13 @@
                                         </a>
 
                                         <form method="POST"
-                                            action="/dashboard/clinica/excluir"
+                                            action="/dashboard/onganimal/excluir"
                                             style="display:inline-block;"
-                                            onsubmit="return confirm('Tem certeza que deseja excluir esta clínica?');">
+                                            onsubmit="return confirm('Tem certeza que deseja excluir este relacionamento?');">
 
                                             <input type="hidden"
                                                 name="id"
-                                                value="<?= $clinica->__get('cln_id') ?>">
+                                                value="<?= $ongAnimal->__get('onganl_id') ?>">
 
                                             <button type="submit"
                                                 class="btn btn-danger btn-sm">
@@ -119,7 +109,7 @@
 <script>
     $(document).ready(function() {
 
-        $('#tabela-clinicas').DataTable({
+        $('#tabela-onganimal').DataTable({
 
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.13.7/i18n/pt-BR.json"

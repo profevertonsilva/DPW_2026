@@ -3,6 +3,7 @@
 namespace App\Model;
 
 class OngModel {
+
     private $ong_id;
     private $ong_nome;
     private $ong_cnpj;
@@ -25,5 +26,4 @@ class OngModel {
     public function __get($nome) {
         return $this->$nome;
     }
-
 }
