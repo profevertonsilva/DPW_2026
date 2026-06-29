@@ -1,6 +1,6 @@
 use eswdev14_dsw_2026;
 
-create table login (
+create table if not exists login (
     id int(11) AUTO_INCREMENT primary key ,
     data_cadastro datetime,
     tipo_usuario enum('administrador', 'ong', 'rastreador', 'adotante', 'veterinario'),
@@ -9,7 +9,7 @@ create table login (
     status enum('a', 'i')
 );
 
-create table administrador (
+create table if not exists administrador (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(150),
     cpf varchar(14),
@@ -24,7 +24,7 @@ create table administrador (
     telefone_2 varchar(20)
 );
 
-create table veterinario (
+create table if not exists veterinario (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     crvm varchar(8),
@@ -41,7 +41,7 @@ create table veterinario (
     estado varchar(100)
 );
 
-create table adotante (
+create table if not exists adotante (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     cpf varchar(14),
@@ -58,7 +58,7 @@ create table adotante (
     logradouro varchar(150)
 );
 
-create table ong (
+create table if not exists ong (
     id int(11) AUTO_INCREMENT primary key ,
     cep varchar(9),
     cnpj varchar(18),
@@ -74,7 +74,7 @@ create table ong (
     cidade varchar(100)
 );
 
-create table rastreador (
+create table if not exists rastreador (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     cpf varchar(14),
@@ -88,7 +88,7 @@ create table rastreador (
     complemento text
 );
 
-create table clinica (
+create table if not exists clinica (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     cnpj varchar(18),
@@ -103,13 +103,13 @@ create table clinica (
     telefone_2 varchar(20)
 );
 
-create table vet_clinica (
+create table if not exists vet_clinica (
     id int(11) AUTO_INCREMENT primary key ,
     fk_clinica_id int(11),
     fk_veterinario_id int(11)
 );
 
-create table historico_animal (
+create table if not exists historico_animal (
     id int(11) AUTO_INCREMENT primary key ,
     descricao text,
     data datetime,
@@ -119,14 +119,14 @@ create table historico_animal (
     fk_veterinario_id int(11)
 );
 
-create table animal (
+create table if not exists animal (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     data_nascimento date,
     sexo enum('m', 'f')
 );
 
-create table procedimento (
+create table if not exists procedimento (
     id int(11) AUTO_INCREMENT primary key,
     nome varchar(100),
     tipo enum('consulta', 'cirurgia', 'exame', 'castracao', 'outro'),
@@ -134,30 +134,30 @@ create table procedimento (
     veterinario_nome varchar(100),
     observacoes text,
     anexo_url varchar(255),
-    fk_animal_id int(11)
+    fk_animal_id int(11),
     fk_login_id int(11),
     criado_em datetime,
-    criado_por varchar(150),
+    criado_por varchar(150)
 );
 
-create table animal_raca (
+create table if not exists animal_raca (
     id int(11) AUTO_INCREMENT primary key ,
     fk_raca_id int(11),
     fk_animal_id int(11)
 );
 
-create table raca (
+create table if not exists raca (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     fk_especie_id int(11)
 );
 
-create table especie (
+create table if not exists especie (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100)
 );
 
-create table solicitacao_adocao (
+create table if not exists solicitacao_adocao (
     id int(11) AUTO_INCREMENT primary key ,
     data datetime,
     status enum('a', 'i', 'p'),
@@ -166,7 +166,7 @@ create table solicitacao_adocao (
     fk_animal_id int(11)
 );
 
-create table ong_animal (
+create table if not exists ong_animal (
     id int(11) AUTO_INCREMENT primary key ,
     fk_ong_id int(11),
     fk_animal_id int(11)
