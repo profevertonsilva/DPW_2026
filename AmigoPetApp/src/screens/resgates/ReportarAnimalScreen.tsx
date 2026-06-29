@@ -99,7 +99,7 @@ export function ReportarAnimalScreen() {
         setModoLocal('manual');
         return;
       }
-      const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+      const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High });
       setLat(loc.coords.latitude);
       setLng(loc.coords.longitude);
 

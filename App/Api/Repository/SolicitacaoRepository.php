@@ -382,6 +382,8 @@ class SolicitacaoRepository
             'status'           => $s['status'],
             'motivo'           => $s['motivo'],
             'motivo_recusa'    => $s['motivo_recusa'],
+            'fk_adotante_id'   => (int) $s['fk_adotante_id'],
+            'fk_animal_id'     => (int) $s['fk_animal_id'],
             'termo_assinado'   => (bool) $s['termo_assinado'],
             'pdf_termo_url'    => $s['pdf_termo_url'],
             'aceite_termo'     => (bool) $s['aceite_termo'],

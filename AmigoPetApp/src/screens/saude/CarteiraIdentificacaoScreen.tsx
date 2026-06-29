@@ -92,11 +92,15 @@ export function CarteiraIdentificacaoScreen() {
 
       <View style={styles.qrCard}>
         <Text style={styles.qrTitulo}>QR Code de Identificação</Text>
-        <Image
-          source={{ uri: carteira.qr_code_url }}
-          style={styles.qr}
-          resizeMode="contain"
-        />
+        {carteira.qr_code_url ? (
+          <Image
+            source={{ uri: carteira.qr_code_url }}
+            style={styles.qr}
+            resizeMode="contain"
+          />
+        ) : (
+          <Text style={styles.qrSub}>QR Code não disponível</Text>
+        )}
         <Text style={styles.qrSub}>Escaneie para ver o perfil completo do animal</Text>
       </View>
 

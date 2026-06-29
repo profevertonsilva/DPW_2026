@@ -1,5 +1,5 @@
 export type AnimalPorte = 'pequeno' | 'medio' | 'grande' | 'gigante';
-export type AnimalSexo = 'm' | 'f';
+export type AnimalSexo = 'm' | 'f' | 'n/a';
 export type AnimalStatus = 'disponivel' | 'adotado' | 'em_tratamento' | 'reservado';
 
 export interface Animal {
@@ -39,10 +39,11 @@ export interface HistoricoAnimal {
   id: number;
   descricao: string;
   data: string;
-  tipo: 'vacinacao' | 'procedimento' | 'ocorrencia';
+  tipo: string;
   fk_animal_id: number;
-  fk_ong_id: number | null;
-  fk_veterinario_id: number | null;
+  autor_nome?: string;
+  fk_ong_id?: number | null;
+  fk_veterinario_id?: number | null;
 }
 
 export interface FiltrosAnimal {
@@ -53,9 +54,14 @@ export interface FiltrosAnimal {
   busca?: string;
 }
 
+export interface Especie {
+  id: number;
+  nome: string;
+}
+
 export interface CadastrarAnimalRequest {
   nome: string;
-  especie: string;
+  fk_especie_id: number;
   raca?: string;
   cor?: string;
   sexo: AnimalSexo;

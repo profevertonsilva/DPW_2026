@@ -2,7 +2,7 @@ import { client } from '../client';
 import { ENDPOINTS } from '../endpoints';
 import { USE_MOCKS } from '../../config';
 import * as mock from '../../mocks/handlers/animal';
-import type { Animal, FiltrosAnimal, HistoricoAnimal, CadastrarAnimalRequest } from '../../types/Animal';
+import type { Animal, Especie, FiltrosAnimal, HistoricoAnimal, CadastrarAnimalRequest } from '../../types/Animal';
 
 export const animalService = {
   async listar(filtros?: FiltrosAnimal): Promise<Animal[]> {
@@ -26,6 +26,15 @@ export const animalService = {
   async cadastrar(req: CadastrarAnimalRequest): Promise<Animal> {
     if (USE_MOCKS) return mock.cadastrar(req);
     const { data } = await client.post<Animal>(ENDPOINTS.animais.cadastrar, req);
+    return data;
+  },
+
+  async especies(): Promise<Especie[]> {
+    if (USE_MOCKS) return [
+      { id: 1, nome: 'Cachorro' }, { id: 2, nome: 'Gato' }, { id: 3, nome: 'Ave' },
+      { id: 4, nome: 'Coelho' }, { id: 5, nome: 'Hamster' }, { id: 6, nome: 'Outro' },
+    ];
+    const { data } = await client.get<Especie[]>(ENDPOINTS.especies.listar);
     return data;
   },
 

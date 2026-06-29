@@ -45,7 +45,7 @@ export async function cadastrar(req: CadastrarAnimalRequest): Promise<Animal> {
     nome: req.nome,
     data_nascimento: req.data_nascimento ?? null,
     sexo: req.sexo,
-    especie: req.especie,
+    especie: null,
     porte: req.porte,
     localizacao: req.local_cidade ? `${req.local_cidade}, ${req.local_estado ?? ''}`.trim() : null,
     foto: req.fotos?.[0] ?? null,

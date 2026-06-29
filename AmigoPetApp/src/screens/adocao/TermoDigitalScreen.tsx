@@ -6,7 +6,6 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RouteProp } from '@react-navigation/native';
 import { termoService } from '../../api/services/termoService';
-import { solicitacaoAdocaoService } from '../../api/services/solicitacaoAdocaoService';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
@@ -51,7 +50,7 @@ export function TermoDigitalScreen() {
                 aceite: true,
                 timestamp: new Date().toISOString(),
               });
-              await solicitacaoAdocaoService.avancarStatus(solicitacaoId, { status: 'Concluído' });
+              // A API já move o status para "Concluído" ao assinar o termo
               Alert.alert('Adoção Concluída! 🎉', 'Parabéns! O termo foi assinado e a adoção foi concluída.', [
                 { text: 'OK', onPress: () => navigation.popToTop() },
               ]);

@@ -96,10 +96,9 @@ class SaudeController extends ApiController
         $this->json($repo->salvarSaude($id, $this->body()));
     }
 
-    /** GET /api/animais/{id}/carteira — 200. (QR/PDF são stub.) */
+    /** GET /api/animais/{id}/carteira — 200. Público (QR code). */
     public function carteira()
     {
-        $this->exigirAutenticacao();
         $repo     = new SaudeRepository();
         $id       = (int) $this->param('id');
         $carteira = $repo->carteira($id);

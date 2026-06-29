@@ -150,9 +150,16 @@ class AvistamentoRepository
             }
         }
 
+        $usuario = $this->resolverUsuario((int) $r['fk_login_id']);
+
         return [
             'id'               => (int) $r['id'],
             'usuario_id'       => (int) $r['fk_login_id'],
+            'usuario'          => [
+                'id'   => (int) $r['fk_login_id'],
+                'nome' => $usuario['nome'],
+                'foto' => $usuario['foto'],
+            ],
             'fk_animal_id'     => $r['fk_animal_id'] !== null ? (int) $r['fk_animal_id'] : null,
             'data'             => $r['data_encontro'],
             'especie'          => $r['especie'],

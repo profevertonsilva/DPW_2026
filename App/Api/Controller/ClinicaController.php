@@ -16,18 +16,16 @@ use App\Api\Repository\ClinicaRepository;
  */
 class ClinicaController extends ApiController
 {
- /** GET /clinicas — qualquer autenticado. 200 array de Clinica. */
+ /** GET /clinicas — público. 200 array de Clinica. */
  public function listar()
  {
-  $this->exigirAutenticacao();
   $repo = new ClinicaRepository();
   $this->json($repo->listar());
  }
 
- /** GET /clinicas/{id} — 200 Clinica · 404. */
+ /** GET /clinicas/{id} — público. 200 Clinica · 404. */
  public function detalhe()
  {
-  $this->exigirAutenticacao();
   $repo = new ClinicaRepository();
   $clinica = $repo->buscarPorId((int) $this->param('id'));
 

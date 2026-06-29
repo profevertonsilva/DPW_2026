@@ -49,7 +49,14 @@ export function LoginScreen() {
       await login({ email: data.email, senha: data.senha });
       // RootNavigator detecta user != null e muda para AppTabs automaticamente
     } catch (err: any) {
-      const msg = err?.response?.data?.erro ?? 'Credenciais inválidas. Tente novamente.';
+      let msg: string;
+      if (err?.response?.data?.erro) {
+        msg = err.response.data.erro;
+      } else if (err?.code === 'ERR_NETWORK' || err?.message === 'Network Error') {
+        msg = 'Sem conexão com o servidor. Verifique a URL da API e sua rede.';
+      } else {
+        msg = 'Erro ao tentar login. Tente novamente.';
+      }
       setSnackMsg(msg);
       setSnackVisible(true);
     } finally {
@@ -153,11 +160,11 @@ export function LoginScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* Hint de mock */}
+        {/* Credenciais de teste */}
         <View style={styles.hintBox}>
           <Text style={styles.hint}>
-            [Mock] joao@exemplo.com · adotante@teste.com · ong@teste.com · vet@teste.com{'\n'}
-            Senha: 12345678
+            [Teste] adotante.teste@amigopet.com · ong.teste@amigopet.com · vet.teste@amigopet.com{'\n'}
+            Senha: Teste123!
           </Text>
         </View>
       </ScrollView>

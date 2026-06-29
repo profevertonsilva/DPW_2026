@@ -32,11 +32,9 @@ class AvistamentoController extends ApiController
         $this->json($repo->buscarPorId($id), 201);
     }
 
-    /** GET /api/avistamentos — query status?, especie?. 200 array. */
+    /** GET /api/avistamentos — query status?, especie?. 200 array. Público. */
     public function listar()
     {
-        $this->exigirAutenticacao();
-
         $filtros = [];
         foreach (['status', 'especie'] as $campo) {
             $val = $this->query($campo);
@@ -49,10 +47,9 @@ class AvistamentoController extends ApiController
         $this->json($repo->listar($filtros));
     }
 
-    /** GET /api/avistamentos/{id} — 200 · 404. */
+    /** GET /api/avistamentos/{id} — 200 · 404. Público. */
     public function detalhe()
     {
-        $this->exigirAutenticacao();
         $repo = new AvistamentoRepository();
         $av   = $repo->buscarPorId((int) $this->param('id'));
         if (!$av) {
@@ -85,10 +82,9 @@ class AvistamentoController extends ApiController
         $this->json($repo->atualizarStatus($id, $body['status']));
     }
 
-    /** GET /api/ranking/rastreadores — 200 array. */
+    /** GET /api/ranking/rastreadores — 200 array. Público. */
     public function ranking()
     {
-        $this->exigirAutenticacao();
         $repo = new AvistamentoRepository();
         $this->json($repo->ranking());
     }

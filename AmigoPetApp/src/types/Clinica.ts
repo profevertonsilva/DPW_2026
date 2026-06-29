@@ -12,6 +12,7 @@ export interface Clinica {
   cidade: string;
   estado: string;
   complemento?: string;
+  foto?: string | null;
 }
 
 export interface CadastrarClinicaRequest {

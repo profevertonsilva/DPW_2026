@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Alert,
 } from 'react-native';
@@ -16,14 +16,14 @@ import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
 import { spacing } from '../../theme/spacing';
 import type { MeusAnimaisStackParamList } from '../../navigation/stacks/MeusAnimaisStack';
-import type { AnimalPorte, AnimalSexo } from '../../types/Animal';
+import type { AnimalPorte, AnimalSexo, Especie } from '../../types/Animal';
 
 const CEP_MASK = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
 type Nav = NativeStackNavigationProp<MeusAnimaisStackParamList, 'CadastrarAnimal'>;
 
 const schema = z.object({
   nome: z.string().min(2, 'Nome deve ter ao menos 2 caracteres'),
-  especie: z.string().min(1, 'Selecione a espécie'),
+  fk_especie_id: z.number({ error: 'Selecione a espécie' }).int().positive('Selecione a espécie'),
   raca: z.string().optional(),
   cor: z.string().optional(),
   sexo: z.enum(['m', 'f'], { error: 'Selecione o sexo' }),
@@ -44,7 +44,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const ESPECIES = ['Cachorro', 'Gato', 'Ave', 'Coelho', 'Hamster', 'Outro'];
+// Espécies carregadas dinamicamente da API
 const PORTES: { label: string; value: AnimalPorte }[] = [
   { label: 'Pequeno', value: 'pequeno' },
   { label: 'Médio', value: 'medio' },
@@ -69,11 +69,16 @@ function CadastrarAnimalForm() {
   const [buscandoCep, setBuscandoCep] = useState(false);
   const [fotos, setFotos] = useState<string[]>([]);
   const [snack, setSnack] = useState({ visible: false, msg: '' });
+  const [especies, setEspecies] = useState<Especie[]>([]);
+
+  useEffect(() => {
+    animalService.especies().then(setEspecies).catch(() => {});
+  }, []);
 
   const { control, handleSubmit, setValue, watch, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      nome: '', especie: '', raca: '', cor: '', sexo: undefined as any, data_nascimento: '',
+      nome: '', fk_especie_id: undefined as any, raca: '', cor: '', sexo: undefined as any, data_nascimento: '',
       porte: undefined as any, descricao: '', historico_resgate: '', alergias: '',
       castrado: false, obs_veterinarias: '',
       cep: '', logradouro: '', numero: '', bairro: '', cidade: '', estado: '',
@@ -123,7 +128,7 @@ function CadastrarAnimalForm() {
     try {
       await animalService.cadastrar({
         nome: data.nome,
-        especie: data.especie,
+        fk_especie_id: data.fk_especie_id,
         raca: data.raca,
         cor: data.cor,
         sexo: data.sexo,
@@ -144,7 +149,7 @@ function CadastrarAnimalForm() {
       });
       navigation.goBack();
     } catch (err: any) {
-      const msg = err?.response?.data?.mensagem ?? err?.message ?? 'Erro ao cadastrar animal.';
+      const msg = err?.response?.data?.erro ?? err?.message ?? 'Erro ao cadastrar animal.';
       setSnack({ visible: true, msg });
     } finally { setEnviando(false); }
   }
@@ -163,15 +168,15 @@ function CadastrarAnimalForm() {
               )} />
           </Campo>
 
-          <Campo label="Espécie" error={errors.especie?.message}>
-            <Controller control={control} name="especie"
+          <Campo label="Espécie" error={errors.fk_especie_id?.message}>
+            <Controller control={control} name="fk_especie_id"
               render={({ field: { onChange, value } }) => (
                 <View style={styles.chips}>
-                  {ESPECIES.map(e => (
-                    <TouchableOpacity key={e}
-                      style={[styles.chip, value === e && styles.chipAtivo]}
-                      onPress={() => onChange(e)}>
-                      <Text style={[styles.chipLabel, value === e && styles.chipLabelAtivo]}>{e}</Text>
+                  {especies.map(e => (
+                    <TouchableOpacity key={e.id}
+                      style={[styles.chip, value === e.id && styles.chipAtivo]}
+                      onPress={() => onChange(e.id)}>
+                      <Text style={[styles.chipLabel, value === e.id && styles.chipLabelAtivo]}>{e.nome}</Text>
                     </TouchableOpacity>
                   ))}
                 </View>

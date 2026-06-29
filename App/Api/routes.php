@@ -61,16 +61,16 @@ $router->adicionar('GET',  '/animais/{id}/procedimentos', 'SaudeController', 'pr
 $router->adicionar('POST', '/animais/{id}/procedimentos', 'SaudeController', 'adicionarProcedimento', true);
 $router->adicionar('GET',  '/animais/{id}/saude',         'SaudeController', 'saude',               true);
 $router->adicionar('PUT',  '/animais/{id}/saude',         'SaudeController', 'atualizarSaude',      true);
-$router->adicionar('GET',  '/animais/{id}/carteira',      'SaudeController', 'carteira',            true);
+$router->adicionar('GET',  '/animais/{id}/carteira',      'SaudeController', 'carteira');
 // Auditoria (append-only): mesmo dado de historico_animal, porém protegido (reusa o handler).
 $router->adicionar('GET',  '/animais/{id}/auditoria',     'AnimalController', 'historico',          true);
 $router->adicionar('GET',  '/vet/atendimentos',           'SaudeController', 'atendimentos',        true);
 
 // --- Avistamentos + Ranking (seção C.6) — protegido ---
 $router->adicionar('POST',  '/avistamentos',           'AvistamentoController', 'criar',          true);
-$router->adicionar('GET',   '/avistamentos',           'AvistamentoController', 'listar',         true);
-$router->adicionar('GET',   '/ranking/rastreadores',   'AvistamentoController', 'ranking',        true);
-$router->adicionar('GET',   '/avistamentos/{id}',      'AvistamentoController', 'detalhe',        true);
+$router->adicionar('GET',   '/avistamentos',           'AvistamentoController', 'listar');
+$router->adicionar('GET',   '/ranking/rastreadores',   'AvistamentoController', 'ranking');
+$router->adicionar('GET',   '/avistamentos/{id}',      'AvistamentoController', 'detalhe');
 $router->adicionar('PATCH', '/avistamentos/{id}/status', 'AvistamentoController', 'atualizarStatus', true);
 
 // --- Taxonomia (seção C.2) ---
@@ -97,8 +97,8 @@ $router->adicionar('PATCH', '/notificacoes/{id}/marcar-lida',   'NotificacaoCont
 $router->adicionar('POST', '/upload', 'UploadController', 'upload', true);
 
 // --- Clínicas (seção C.12 / RF#13) — protegido ---
-$router->adicionar('GET',     '/clinicas',                          'ClinicaController', 'listar',             true);
-$router->adicionar('GET',     '/clinicas/{id}',                     'ClinicaController', 'detalhe',            true);
+$router->adicionar('GET',     '/clinicas',                          'ClinicaController', 'listar');
+$router->adicionar('GET',     '/clinicas/{id}',                     'ClinicaController', 'detalhe');
 $router->adicionar('POST',    '/clinicas',                          'ClinicaController', 'criar',              true);
 $router->adicionar('GET',     '/veterinario/clinicas',              'ClinicaController', 'minhasClinicas',     true);
 $router->adicionar('POST',    '/veterinario/clinicas/{clinicaId}',  'ClinicaController', 'associarClinica',    true);

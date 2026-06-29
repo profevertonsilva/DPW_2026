@@ -61,8 +61,8 @@ export interface CarteiraIdentificacao {
   castrado: boolean;
   alergias: string | null;
   foto: string | null;
-  qr_code_url: string;
-  pdf_url: string;
+  qr_code_url: string | null;
+  pdf_url: string | null;
 }
 
 export type TipoAuditoria =
