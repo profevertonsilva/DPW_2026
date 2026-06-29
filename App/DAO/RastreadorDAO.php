@@ -67,7 +67,7 @@ class RastreadorDAO extends DAO
             $stmt->bindValue(':telefone',    $obj->__get('rast_tel1'));
             $stmt->bindValue(':telefone_2',  $obj->__get('rast_tel2'));
             $stmt->execute();
-            return true;
+            return $this->getConn()->lastInsertId();
         } catch (\PDOException $ex) {
             header('Location:/error103');
             die();

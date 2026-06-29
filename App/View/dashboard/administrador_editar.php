@@ -1,41 +1,49 @@
+<?php
+$administrador = $this->getView()->administrador;
+?>
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Cadastro de Veterinário</h1>
-        <a href="/dashboard/veterinario/listar" class="btn btn-secondary">
+        <h1 class="h3 mb-0">Editar Administrador</h1>
+        <a href="/dashboard/administrador/listar" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Voltar
         </a>
     </div>
 
     <div class="card shadow">
         <div class="card-body">
-            <form method="POST" action="/dashboard/veterinario/cadastrar">
+            <form method="POST" action="/dashboard/administrador/alterar">
+                <input type="hidden" name="id" value="<?= htmlspecialchars($administrador->__get('adm_id')) ?>">
 
                 <!-- Dados Pessoais -->
                 <h5 class="mb-3 text-primary">Dados Pessoais</h5>
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                        <input type="text" class="form-control" id="nome" name="nome" required
+                               value="<?= htmlspecialchars($administrador->__get('adm_nome')) ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="cpf" class="form-label">CPF</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14" placeholder="000.000.000-00">
-                    </div>
-                    <div class="col-md-3">
-                        <label for="crmv" class="form-label">CRMV</label>
-                        <input type="text" class="form-control" id="crmv" name="crmv" placeholder="00000/UF">
+                        <input type="text" class="form-control" id="cpf" name="cpf" maxlength="14"
+                               placeholder="000.000.000-00"
+                               value="<?= htmlspecialchars($administrador->__get('adm_cpf')) ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="data_nascimento" class="form-label">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento">
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento"
+                               value="<?= htmlspecialchars($administrador->__get('adm_dn')) ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="telefone" class="form-label">Telefone 1</label>
-                        <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(00) 00000-0000">
+                        <input type="text" class="form-control" id="telefone" name="telefone"
+                               placeholder="(00) 00000-0000"
+                               value="<?= htmlspecialchars($administrador->__get('adm_tel1')) ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="telefone_2" class="form-label">Telefone 2 <small class="text-muted">(opcional)</small></label>
-                        <input type="text" class="form-control" id="telefone_2" name="telefone_2" placeholder="(00) 00000-0000">
+                        <input type="text" class="form-control" id="telefone_2" name="telefone_2"
+                               placeholder="(00) 00000-0000"
+                               value="<?= htmlspecialchars($administrador->__get('adm_tel2')) ?>">
                     </div>
                 </div>
 
@@ -44,31 +52,39 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md-3">
                         <label for="cep" class="form-label">CEP</label>
-                        <input type="text" class="form-control" id="cep" name="cep" maxlength="9" placeholder="00000-000">
+                        <input type="text" class="form-control" id="cep" name="cep" maxlength="9"
+                               placeholder="00000-000"
+                               value="<?= htmlspecialchars($administrador->__get('adm_cep')) ?>">
                     </div>
                     <div class="col-md-6">
                         <label for="logradouro" class="form-label">Logradouro</label>
-                        <input type="text" class="form-control" id="logradouro" name="logradouro" readonly>
+                        <input type="text" class="form-control" id="logradouro" name="logradouro" readonly
+                               value="<?= htmlspecialchars($administrador->__get('adm_logradouro')) ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="numero" class="form-label">Número</label>
-                        <input type="text" class="form-control" id="numero" name="numero">
+                        <input type="text" class="form-control" id="numero" name="numero"
+                               value="<?= htmlspecialchars($administrador->__get('adm_numero')) ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="complemento" class="form-label">Complemento</label>
-                        <input type="text" class="form-control" id="complemento" name="complemento">
+                        <input type="text" class="form-control" id="complemento" name="complemento"
+                               value="<?= htmlspecialchars($administrador->__get('adm_complemento')) ?>">
                     </div>
                     <div class="col-md-4">
                         <label for="bairro" class="form-label">Bairro</label>
-                        <input type="text" class="form-control" id="bairro" name="bairro" readonly>
+                        <input type="text" class="form-control" id="bairro" name="bairro" readonly
+                               value="<?= htmlspecialchars($administrador->__get('adm_bairro')) ?>">
                     </div>
                     <div class="col-md-3">
                         <label for="cidade" class="form-label">Cidade</label>
-                        <input type="text" class="form-control" id="cidade" name="cidade" readonly>
+                        <input type="text" class="form-control" id="cidade" name="cidade" readonly
+                               value="<?= htmlspecialchars($administrador->__get('adm_cidade')) ?>">
                     </div>
                     <div class="col-md-1">
                         <label for="estado" class="form-label">UF</label>
-                        <input type="text" class="form-control" id="estado" name="estado" readonly maxlength="2">
+                        <input type="text" class="form-control" id="estado" name="estado" readonly maxlength="2"
+                               value="<?= htmlspecialchars($administrador->__get('adm_estado')) ?>">
                     </div>
                 </div>
 
@@ -77,7 +93,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Salvar
                     </button>
-                    <a href="/dashboard/veterinario/listar" class="btn btn-secondary">
+                    <a href="/dashboard/administrador/listar" class="btn btn-secondary">
                         <i class="fas fa-times"></i> Cancelar
                     </a>
                 </div>
@@ -100,15 +116,6 @@ document.getElementById('cpf').addEventListener('input', function(e) {
         v = v.replace(/^(\d{3})(\d{0,3})/, '$1.$2');
     }
     e.target.value = v;
-});
-
-// Máscara CRMV: 00000/UF
-document.getElementById('crmv').addEventListener('input', function(e) {
-    var v = e.target.value.replace(/[^0-9A-Za-z/]/g, '');
-    if (v.length > 5) {
-        v = v.replace(/^(\d{5})(.*)$/, '$1/$2');
-    }
-    e.target.value = v.toUpperCase();
 });
 
 // Máscara CEP: 00000-000
@@ -150,10 +157,10 @@ document.getElementById('cep').addEventListener('blur', function() {
         .then(function(response) { return response.json(); })
         .then(function(data) {
             if (data.erro) return;
-            document.getElementById('logradouro').value  = data.logradouro  || '';
-            document.getElementById('bairro').value      = data.bairro      || '';
-            document.getElementById('cidade').value      = data.localidade   || '';
-            document.getElementById('estado').value      = data.uf           || '';
+            document.getElementById('logradouro').value = data.logradouro  || '';
+            document.getElementById('bairro').value     = data.bairro      || '';
+            document.getElementById('cidade').value     = data.localidade   || '';
+            document.getElementById('estado').value     = data.uf           || '';
             document.getElementById('numero').focus();
         })
         .catch(function() {});
