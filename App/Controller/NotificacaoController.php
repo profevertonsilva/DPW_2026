@@ -11,6 +11,8 @@ class NotificacaoController extends Action
     {
         $this->validaAutenticacao();
 
+        $_SESSION['id'] = 1; 
+        //1. Salvando temporariamente o id do usuário na sessão para teste. Remover depois. 
         $dao = new NotificacaoDAO();
 
         $this->getView()->notificacoes =
@@ -47,4 +49,12 @@ class NotificacaoController extends Action
 
         echo $dao->contarNaoLidas($_SESSION['id']);
     }
+
+    public function validaAutenticacao()
+{
+    if (!isset($_SESSION['id'])) {
+        header('Location: /login');
+        die();
+    }
+}
 }
