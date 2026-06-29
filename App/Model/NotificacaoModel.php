@@ -1,5 +1,8 @@
 <?php
-class Notificacao
+
+namespace App\Model;
+
+class NotificacaoModel
 {
     private $id;
     private $fk_login_id;
