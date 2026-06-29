@@ -29,7 +29,7 @@
                             <th>Nome</th>
                             <th>CNPJ</th>
                             <th>Cidade</th>
-                            <th>Telefone</th>
+                            <th>telefone_efone</th>
                             <th>Ações</th>
                         </tr>
 
@@ -44,28 +44,28 @@
                                 <tr>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_id')) ?>
+                                        <?= htmlspecialchars($clinica->__get('id')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_nome')) ?>
+                                        <?= htmlspecialchars($clinica->__get('nome')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_cnpj')) ?>
+                                        <?= htmlspecialchars($clinica->__get('cnpj')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_cidade')) ?>
+                                        <?= htmlspecialchars($clinica->__get('cidade')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($clinica->__get('cln_tel1')) ?>
+                                        <?= htmlspecialchars($clinica->__get('telefone_1')) ?>
                                     </td>
 
                                     <td>
 
-                                        <a href="/dashboard/clinica/editar/<?= $clinica->__get('cln_id') ?>"
+                                        <a href="/dashboard/clinica/editar/<?= $clinica->__get('id') ?>"
                                             class="btn btn-warning btn-sm me-1">
 
                                             <i class="fas fa-edit"></i> Editar
@@ -79,7 +79,7 @@
 
                                             <input type="hidden"
                                                 name="id"
-                                                value="<?= $clinica->__get('cln_id') ?>">
+                                                value="<?= $clinica->__get('id') ?>">
 
                                             <button type="submit"
                                                 class="btn btn-danger btn-sm">

@@ -25,7 +25,7 @@
                             <th>CNPJ</th>
                             <th>Qtd. Animais</th>
                             <th>Cidade</th>
-                            <th>Telefone</th>
+                            <th>telefone_efone</th>
                             <th>Status</th>
                             <th>Ações</th>
                         </tr>
@@ -40,32 +40,32 @@
                                 <tr>
 
                                     <td>
-                                        <?= htmlspecialchars($ong->__get('ong_id')) ?>
+                                        <?= htmlspecialchars($ong->__get('id')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($ong->__get('ong_nome')) ?>
+                                        <?= htmlspecialchars($ong->__get('nome')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($ong->__get('ong_cnpj')) ?>
+                                        <?= htmlspecialchars($ong->__get('cnpj')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($ong->__get('ong_qnt_animais')) ?>
+                                        <?= htmlspecialchars($ong->__get('qnt_animais')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($ong->__get('ong_cidade')) ?>
+                                        <?= htmlspecialchars($ong->__get('cidade')) ?>
                                     </td>
 
                                     <td>
-                                        <?= htmlspecialchars($ong->__get('ong_tel1')) ?>
+                                        <?= htmlspecialchars($ong->__get('telefone_1')) ?>
                                     </td>
 
                                     <td>
 
-                                        <?php if ($ong->__get('ong_status') == 'Ativa'): ?>
+                                        <?php if ($ong->__get('status') == 'Ativa'): ?>
 
                                             <span class="badge bg-success">
                                                 Ativa
@@ -83,7 +83,7 @@
 
                                     <td>
 
-                                        <a href="/dashboard/ong/editar/<?= $ong->__get('ong_id') ?>"
+                                        <a href="/dashboard/ong/editar/<?= $ong->__get('id') ?>"
                                             class="btn btn-warning btn-sm me-1">
 
                                             <i class="fas fa-edit"></i> Editar
@@ -97,7 +97,7 @@
 
                                             <input type="hidden"
                                                 name="id"
-                                                value="<?= $ong->__get('ong_id') ?>">
+                                                value="<?= $ong->__get('id') ?>">
 
                                             <button type="submit"
                                                 class="btn btn-danger btn-sm">

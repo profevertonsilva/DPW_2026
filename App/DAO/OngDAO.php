@@ -15,50 +15,50 @@ class OngDAO extends DAO {
         try {
 
             $sql = "INSERT INTO ong (
-                        ong_nome,
-                        ong_cnpj,
-                        ong_qnt_animais,
-                        ong_cep,
-                        ong_estado,
-                        ong_cidade,
-                        ong_bairro,
-                        ong_logradouro,
-                        ong_numero,
-                        ong_complemento,
-                        ong_tel1,
-                        ong_tel2,
-                        ong_status
+                        nome,
+                        cnpj,
+                        qnt_animais,
+                        cep,
+                        estado,
+                        cidade,
+                        bairro,
+                        logradouro,
+                        numero,
+                        complemento,
+                        telefone_1,
+                        telefone_2,
+                        status
                     ) VALUES (
-                        :ong_nome,
-                        :ong_cnpj,
-                        :ong_qnt_animais,
-                        :ong_cep,
-                        :ong_estado,
-                        :ong_cidade,
-                        :ong_bairro,
-                        :ong_logradouro,
-                        :ong_numero,
-                        :ong_complemento,
-                        :ong_tel1,
-                        :ong_tel2,
-                        :ong_status
+                        :nome,
+                        :cnpj,
+                        :qnt_animais,
+                        :cep,
+                        :estado,
+                        :cidade,
+                        :bairro,
+                        :logradouro,
+                        :numero,
+                        :complemento,
+                        :telefone_1,
+                        :telefone_2,
+                        :status
                     )";
 
             $stmt = $this->getConn()->prepare($sql);
 
-            $stmt->bindValue(':ong_nome', $ong->__get('ong_nome'));
-            $stmt->bindValue(':ong_cnpj', $ong->__get('ong_cnpj'));
-            $stmt->bindValue(':ong_qnt_animais', $ong->__get('ong_qnt_animais'));
-            $stmt->bindValue(':ong_cep', $ong->__get('ong_cep'));
-            $stmt->bindValue(':ong_estado', $ong->__get('ong_estado'));
-            $stmt->bindValue(':ong_cidade', $ong->__get('ong_cidade'));
-            $stmt->bindValue(':ong_bairro', $ong->__get('ong_bairro'));
-            $stmt->bindValue(':ong_logradouro', $ong->__get('ong_logradouro'));
-            $stmt->bindValue(':ong_numero', $ong->__get('ong_numero'));
-            $stmt->bindValue(':ong_complemento', $ong->__get('ong_complemento'));
-            $stmt->bindValue(':ong_tel1', $ong->__get('ong_tel1'));
-            $stmt->bindValue(':ong_tel2', $ong->__get('ong_tel2'));
-            $stmt->bindValue(':ong_status', $ong->__get('ong_status'));
+            $stmt->bindValue(':nome', $ong->__get('nome'));
+            $stmt->bindValue(':cnpj', $ong->__get('cnpj'));
+            $stmt->bindValue(':qnt_animais', $ong->__get('qnt_animais'));
+            $stmt->bindValue(':cep', $ong->__get('cep'));
+            $stmt->bindValue(':estado', $ong->__get('estado'));
+            $stmt->bindValue(':cidade', $ong->__get('cidade'));
+            $stmt->bindValue(':bairro', $ong->__get('bairro'));
+            $stmt->bindValue(':logradouro', $ong->__get('logradouro'));
+            $stmt->bindValue(':numero', $ong->__get('numero'));
+            $stmt->bindValue(':complemento', $ong->__get('complemento'));
+            $stmt->bindValue(':telefone_1', $ong->__get('telefone_1'));
+            $stmt->bindValue(':telefone_2', $ong->__get('telefone_2'));
+            $stmt->bindValue(':status', $ong->__get('status'));
 
             return $stmt->execute();
 
@@ -76,7 +76,7 @@ class OngDAO extends DAO {
 
             $sql = "SELECT * 
                     FROM ong
-                    ORDER BY ong_nome";
+                    ORDER BY nome";
 
             $stmt = $this->getConn()->prepare($sql);
 
@@ -88,20 +88,20 @@ class OngDAO extends DAO {
 
                 $ong = new OngModel();
 
-                $ong->__set('ong_id', $row['ong_id']);
-                $ong->__set('ong_nome', $row['ong_nome']);
-                $ong->__set('ong_cnpj', $row['ong_cnpj']);
-                $ong->__set('ong_qnt_animais', $row['ong_qnt_animais']);
-                $ong->__set('ong_cep', $row['ong_cep']);
-                $ong->__set('ong_estado', $row['ong_estado']);
-                $ong->__set('ong_cidade', $row['ong_cidade']);
-                $ong->__set('ong_bairro', $row['ong_bairro']);
-                $ong->__set('ong_logradouro', $row['ong_logradouro']);
-                $ong->__set('ong_numero', $row['ong_numero']);
-                $ong->__set('ong_complemento', $row['ong_complemento']);
-                $ong->__set('ong_tel1', $row['ong_tel1']);
-                $ong->__set('ong_tel2', $row['ong_tel2']);
-                $ong->__set('ong_status', $row['ong_status']);
+                $ong->__set('id', $row['id']);
+                $ong->__set('nome', $row['nome']);
+                $ong->__set('cnpj', $row['cnpj']);
+                $ong->__set('qnt_animais', $row['qnt_animais']);
+                $ong->__set('cep', $row['cep']);
+                $ong->__set('estado', $row['estado']);
+                $ong->__set('cidade', $row['cidade']);
+                $ong->__set('bairro', $row['bairro']);
+                $ong->__set('logradouro', $row['logradouro']);
+                $ong->__set('numero', $row['numero']);
+                $ong->__set('complemento', $row['complemento']);
+                $ong->__set('telefone_1', $row['telefone_1']);
+                $ong->__set('telefone_2', $row['telefone_2']);
+                $ong->__set('status', $row['status']);
 
                 $ongs[] = $ong;
             }
@@ -120,11 +120,11 @@ class OngDAO extends DAO {
 
             $sql = "SELECT * 
                     FROM ong
-                    WHERE ong_id = :ong_id";
+                    WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
 
-            $stmt->bindValue(':ong_id', $id);
+            $stmt->bindValue(':id', $id);
 
             $stmt->execute();
 
@@ -136,20 +136,20 @@ class OngDAO extends DAO {
 
             $ong = new OngModel();
 
-            $ong->__set('ong_id', $row['ong_id']);
-            $ong->__set('ong_nome', $row['ong_nome']);
-            $ong->__set('ong_cnpj', $row['ong_cnpj']);
-            $ong->__set('ong_qnt_animais', $row['ong_qnt_animais']);
-            $ong->__set('ong_cep', $row['ong_cep']);
-            $ong->__set('ong_estado', $row['ong_estado']);
-            $ong->__set('ong_cidade', $row['ong_cidade']);
-            $ong->__set('ong_bairro', $row['ong_bairro']);
-            $ong->__set('ong_logradouro', $row['ong_logradouro']);
-            $ong->__set('ong_numero', $row['ong_numero']);
-            $ong->__set('ong_complemento', $row['ong_complemento']);
-            $ong->__set('ong_tel1', $row['ong_tel1']);
-            $ong->__set('ong_tel2', $row['ong_tel2']);
-            $ong->__set('ong_status', $row['ong_status']);
+            $ong->__set('id', $row['id']);
+            $ong->__set('nome', $row['nome']);
+            $ong->__set('cnpj', $row['cnpj']);
+            $ong->__set('qnt_animais', $row['qnt_animais']);
+            $ong->__set('cep', $row['cep']);
+            $ong->__set('estado', $row['estado']);
+            $ong->__set('cidade', $row['cidade']);
+            $ong->__set('bairro', $row['bairro']);
+            $ong->__set('logradouro', $row['logradouro']);
+            $ong->__set('numero', $row['numero']);
+            $ong->__set('complemento', $row['complemento']);
+            $ong->__set('telefone_1', $row['telefone_1']);
+            $ong->__set('telefone_2', $row['telefone_2']);
+            $ong->__set('status', $row['status']);
 
             return $ong;
 
@@ -166,37 +166,37 @@ class OngDAO extends DAO {
         try {
 
             $sql = "UPDATE ong SET
-                        ong_nome = :ong_nome,
-                        ong_cnpj = :ong_cnpj,
-                        ong_qnt_animais = :ong_qnt_animais,
-                        ong_cep = :ong_cep,
-                        ong_estado = :ong_estado,
-                        ong_cidade = :ong_cidade,
-                        ong_bairro = :ong_bairro,
-                        ong_logradouro = :ong_logradouro,
-                        ong_numero = :ong_numero,
-                        ong_complemento = :ong_complemento,
-                        ong_tel1 = :ong_tel1,
-                        ong_tel2 = :ong_tel2,
-                        ong_status = :ong_status
-                    WHERE ong_id = :ong_id";
+                        nome = :nome,
+                        cnpj = :cnpj,
+                        qnt_animais = :qnt_animais,
+                        cep = :cep,
+                        estado = :estado,
+                        cidade = :cidade,
+                        bairro = :bairro,
+                        logradouro = :logradouro,
+                        numero = :numero,
+                        complemento = :complemento,
+                        telefone_1 = :telefone_1,
+                        telefone_2 = :telefone_2,
+                        status = :status
+                    WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
 
-            $stmt->bindValue(':ong_id', $ong->__get('ong_id'));
-            $stmt->bindValue(':ong_nome', $ong->__get('ong_nome'));
-            $stmt->bindValue(':ong_cnpj', $ong->__get('ong_cnpj'));
-            $stmt->bindValue(':ong_qnt_animais', $ong->__get('ong_qnt_animais'));
-            $stmt->bindValue(':ong_cep', $ong->__get('ong_cep'));
-            $stmt->bindValue(':ong_estado', $ong->__get('ong_estado'));
-            $stmt->bindValue(':ong_cidade', $ong->__get('ong_cidade'));
-            $stmt->bindValue(':ong_bairro', $ong->__get('ong_bairro'));
-            $stmt->bindValue(':ong_logradouro', $ong->__get('ong_logradouro'));
-            $stmt->bindValue(':ong_numero', $ong->__get('ong_numero'));
-            $stmt->bindValue(':ong_complemento', $ong->__get('ong_complemento'));
-            $stmt->bindValue(':ong_tel1', $ong->__get('ong_tel1'));
-            $stmt->bindValue(':ong_tel2', $ong->__get('ong_tel2'));
-            $stmt->bindValue(':ong_status', $ong->__get('ong_status'));
+            $stmt->bindValue(':id', $ong->__get('id'));
+            $stmt->bindValue(':nome', $ong->__get('nome'));
+            $stmt->bindValue(':cnpj', $ong->__get('cnpj'));
+            $stmt->bindValue(':qnt_animais', $ong->__get('qnt_animais'));
+            $stmt->bindValue(':cep', $ong->__get('cep'));
+            $stmt->bindValue(':estado', $ong->__get('estado'));
+            $stmt->bindValue(':cidade', $ong->__get('cidade'));
+            $stmt->bindValue(':bairro', $ong->__get('bairro'));
+            $stmt->bindValue(':logradouro', $ong->__get('logradouro'));
+            $stmt->bindValue(':numero', $ong->__get('numero'));
+            $stmt->bindValue(':complemento', $ong->__get('complemento'));
+            $stmt->bindValue(':telefone_1', $ong->__get('telefone_1'));
+            $stmt->bindValue(':telefone_2', $ong->__get('telefone_2'));
+            $stmt->bindValue(':status', $ong->__get('status'));
 
             return $stmt->execute();
 
@@ -212,11 +212,11 @@ class OngDAO extends DAO {
 
             $sql = "DELETE 
                     FROM ong
-                    WHERE ong_id = :ong_id";
+                    WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
 
-            $stmt->bindValue(':ong_id', $id);
+            $stmt->bindValue(':id', $id);
 
             return $stmt->execute();
 

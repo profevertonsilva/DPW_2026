@@ -4,18 +4,18 @@ namespace App\Model;
 
 class ClinicaModel {
 
-    private $cln_id;
-    private $cln_cnpj;
-    private $cln_nome;
-    private $cln_cep;
-    private $cln_estado;
-    private $cln_bairro;
-    private $cln_logradouro;
-    private $cln_cidade;
-    private $cln_numero;
-    private $cln_complemento;
-    private $cln_tel1;
-    private $cln_tel2;
+    private $id;
+    private $cnpj;
+    private $nome;
+    private $cep;
+    private $estado;
+    private $bairro;
+    private $logradouro;
+    private $cidade;
+    private $numero;
+    private $complemento;
+    private $telefone_1;
+    private $telefone_2;
 
     public function __get($nome) {
         return $this->$nome;
@@ -27,18 +27,18 @@ class ClinicaModel {
 
     public function toArray() {
         return [
-            'cln_id' => $this->cln_id,
-            'cln_cnpj' => $this->cln_cnpj,
-            'cln_nome' => $this->cln_nome,
-            'cln_cep' => $this->cln_cep,
-            'cln_estado' => $this->cln_estado,
-            'cln_bairro' => $this->cln_bairro,
-            'cln_logradouro' => $this->cln_logradouro,
-            'cln_cidade' => $this->cln_cidade,
-            'cln_numero' => $this->cln_numero,
-            'cln_complemento' => $this->cln_complemento,
-            'cln_tel1' => $this->cln_tel1,
-            'cln_tel2' => $this->cln_tel2
+            'id' => $this->id,
+            'cnpj' => $this->cnpj,
+            'nome' => $this->nome,
+            'cep' => $this->cep,
+            'estado' => $this->estado,
+            'bairro' => $this->bairro,
+            'logradouro' => $this->logradouro,
+            'cidade' => $this->cidade,
+            'numero' => $this->numero,
+            'complemento' => $this->complemento,
+            'telefone_1' => $this->telefone_1,
+            'telefone_2' => $this->telefone_2
         ];
     }
 }

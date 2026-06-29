@@ -32,17 +32,17 @@ class ClinicaController extends Action {
 
         $clinica = new ClinicaModel();
 
-        $clinica->__set('cln_cnpj', $_POST['cln_cnpj']);
-        $clinica->__set('cln_nome', $_POST['cln_nome']);
-        $clinica->__set('cln_cep', $_POST['cln_cep']);
-        $clinica->__set('cln_estado', $_POST['cln_estado']);
-        $clinica->__set('cln_bairro', $_POST['cln_bairro']);
-        $clinica->__set('cln_logradouro', $_POST['cln_logradouro']);
-        $clinica->__set('cln_cidade', $_POST['cln_cidade']);
-        $clinica->__set('cln_numero', $_POST['cln_numero']);
-        $clinica->__set('cln_complemento', $_POST['cln_complemento']);
-        $clinica->__set('cln_tel1', $_POST['cln_tel1']);
-        $clinica->__set('cln_tel2', $_POST['cln_tel2']);
+        $clinica->__set('cnpj', $_POST['cnpj']);
+        $clinica->__set('nome', $_POST['nome']);
+        $clinica->__set('cep', $_POST['cep']);
+        $clinica->__set('estado', $_POST['estado']);
+        $clinica->__set('bairro', $_POST['bairro']);
+        $clinica->__set('logradouro', $_POST['logradouro']);
+        $clinica->__set('cidade', $_POST['cidade']);
+        $clinica->__set('numero', $_POST['numero']);
+        $clinica->__set('complemento', $_POST['complemento']);
+        $clinica->__set('tel1', $_POST['tel1']);
+        $clinica->__set('tel2', $_POST['tel2']);
 
         $dao = new ClinicaDAO();
 
@@ -69,18 +69,18 @@ class ClinicaController extends Action {
 
         $clinica = new ClinicaModel();
 
-        $clinica->__set('cln_id', $_POST['cln_id']);
-        $clinica->__set('cln_cnpj', $_POST['cln_cnpj']);
-        $clinica->__set('cln_nome', $_POST['cln_nome']);
-        $clinica->__set('cln_cep', $_POST['cln_cep']);
-        $clinica->__set('cln_estado', $_POST['cln_estado']);
-        $clinica->__set('cln_bairro', $_POST['cln_bairro']);
-        $clinica->__set('cln_logradouro', $_POST['cln_logradouro']);
-        $clinica->__set('cln_cidade', $_POST['cln_cidade']);
-        $clinica->__set('cln_numero', $_POST['cln_numero']);
-        $clinica->__set('cln_complemento', $_POST['cln_complemento']);
-        $clinica->__set('cln_tel1', $_POST['cln_tel1']);
-        $clinica->__set('cln_tel2', $_POST['cln_tel2']);
+        $clinica->__set('id', $_POST['id']);
+        $clinica->__set('cnpj', $_POST['cnpj']);
+        $clinica->__set('nome', $_POST['nome']);
+        $clinica->__set('cep', $_POST['cep']);
+        $clinica->__set('estado', $_POST['estado']);
+        $clinica->__set('bairro', $_POST['bairro']);
+        $clinica->__set('logradouro', $_POST['logradouro']);
+        $clinica->__set('cidade', $_POST['cidade']);
+        $clinica->__set('numero', $_POST['numero']);
+        $clinica->__set('complemento', $_POST['complemento']);
+        $clinica->__set('telefone_1', $_POST['telefone_1']);
+        $clinica->__set('telefone_2', $_POST['telefone_2']);
 
         $dao = new ClinicaDAO();
 

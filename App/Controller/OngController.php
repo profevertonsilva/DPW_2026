@@ -32,19 +32,19 @@ class OngController extends Action {
 
         $ong = new OngModel();
 
-        $ong->__set('ong_nome', $_POST['ong_nome']);
-        $ong->__set('ong_cnpj', $_POST['ong_cnpj']);
-        $ong->__set('ong_qnt_animais', $_POST['ong_qnt_animais']);
-        $ong->__set('ong_cep', $_POST['ong_cep']);
-        $ong->__set('ong_estado', $_POST['ong_estado']);
-        $ong->__set('ong_cidade', $_POST['ong_cidade']);
-        $ong->__set('ong_bairro', $_POST['ong_bairro']);
-        $ong->__set('ong_logradouro', $_POST['ong_logradouro']);
-        $ong->__set('ong_numero', $_POST['ong_numero']);
-        $ong->__set('ong_complemento', $_POST['ong_complemento']);
-        $ong->__set('ong_tel1', $_POST['ong_tel1']);
-        $ong->__set('ong_tel2', $_POST['ong_tel2']);
-        $ong->__set('ong_status', $_POST['ong_status']);
+        $ong->__set('nome', $_POST['nome']);
+        $ong->__set('cnpj', $_POST['cnpj']);
+        $ong->__set('qnt_animais', $_POST['qnt_animais']);
+        $ong->__set('cep', $_POST['cep']);
+        $ong->__set('estado', $_POST['estado']);
+        $ong->__set('cidade', $_POST['cidade']);
+        $ong->__set('bairro', $_POST['bairro']);
+        $ong->__set('logradouro', $_POST['logradouro']);
+        $ong->__set('numero', $_POST['numero']);
+        $ong->__set('complemento', $_POST['complemento']);
+        $ong->__set('telefone_1', $_POST['telefone_1']);
+        $ong->__set('telefone_2', $_POST['telefone_2']);
+        $ong->__set('status', $_POST['status']);
 
         $dao = new OngDAO();
         $dao->inserir($ong);
@@ -70,20 +70,20 @@ class OngController extends Action {
 
         $ong = new OngModel();
 
-        $ong->__set('ong_id', $_POST['ong_id']);
-        $ong->__set('ong_nome', $_POST['ong_nome']);
-        $ong->__set('ong_cnpj', $_POST['ong_cnpj']);
-        $ong->__set('ong_qnt_animais', $_POST['ong_qnt_animais']);
-        $ong->__set('ong_cep', $_POST['ong_cep']);
-        $ong->__set('ong_estado', $_POST['ong_estado']);
-        $ong->__set('ong_cidade', $_POST['ong_cidade']);
-        $ong->__set('ong_bairro', $_POST['ong_bairro']);
-        $ong->__set('ong_logradouro', $_POST['ong_logradouro']);
-        $ong->__set('ong_numero', $_POST['ong_numero']);
-        $ong->__set('ong_complemento', $_POST['ong_complemento']);
-        $ong->__set('ong_tel1', $_POST['ong_tel1']);
-        $ong->__set('ong_tel2', $_POST['ong_tel2']);
-        $ong->__set('ong_status', $_POST['ong_status']);
+        $ong->__set('id', $_POST['id']);
+        $ong->__set('nome', $_POST['nome']);
+        $ong->__set('cnpj', $_POST['cnpj']);
+        $ong->__set('qnt_animais', $_POST['qnt_animais']);
+        $ong->__set('cep', $_POST['cep']);
+        $ong->__set('estado', $_POST['estado']);
+        $ong->__set('cidade', $_POST['cidade']);
+        $ong->__set('bairro', $_POST['bairro']);
+        $ong->__set('logradouro', $_POST['logradouro']);
+        $ong->__set('numero', $_POST['numero']);
+        $ong->__set('complemento', $_POST['complemento']);
+        $ong->__set('tel1', $_POST['tel1']);
+        $ong->__set('tel2', $_POST['tel2']);
+        $ong->__set('status', $_POST['status']);
 
         $dao = new OngDAO();
         $dao->alterar($ong);

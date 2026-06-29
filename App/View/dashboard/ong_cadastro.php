@@ -22,37 +22,37 @@
                 <div class="row g-3 mb-4">
 
                     <div class="col-md-6">
-                        <label for="ong_nome" class="form-label">
+                        <label for="nome" class="form-label">
                             Nome da ONG <span class="text-danger">*</span>
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_nome"
-                            name="ong_nome"
+                            id="nome"
+                            name="nome"
                             required>
                     </div>
 
                     <div class="col-md-3">
-                        <label for="ong_cnpj" class="form-label">
+                        <label for="cnpj" class="form-label">
                             CNPJ
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_cnpj"
-                            name="ong_cnpj">
+                            id="cnpj"
+                            name="cnpj">
                     </div>
 
                     <div class="col-md-3">
-                        <label for="ong_qnt_animais" class="form-label">
+                        <label for="qnt_animais" class="form-label">
                             Quantidade de Animais
                         </label>
 
                         <input type="number"
                             class="form-control"
-                            id="ong_qnt_animais"
-                            name="ong_qnt_animais">
+                            id="qnt_animais"
+                            name="qnt_animais">
                     </div>
 
                 </div>
@@ -63,80 +63,80 @@
                 <div class="row g-3 mb-4">
 
                     <div class="col-md-2">
-                        <label for="ong_cep" class="form-label">
+                        <label for="cep" class="form-label">
                             CEP
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_cep"
-                            name="ong_cep">
+                            id="cep"
+                            name="cep">
                     </div>
 
                     <div class="col-md-2">
-                        <label for="ong_estado" class="form-label">
+                        <label for="estado" class="form-label">
                             Estado
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_estado"
-                            name="ong_estado">
+                            id="estado"
+                            name="estado">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="ong_cidade" class="form-label">
+                        <label for="cidade" class="form-label">
                             Cidade
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_cidade"
-                            name="ong_cidade">
+                            id="cidade"
+                            name="cidade">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="ong_bairro" class="form-label">
+                        <label for="bairro" class="form-label">
                             Bairro
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_bairro"
-                            name="ong_bairro">
+                            id="bairro"
+                            name="bairro">
                     </div>
 
                     <div class="col-md-6">
-                        <label for="ong_logradouro" class="form-label">
+                        <label for="logradouro" class="form-label">
                             Logradouro
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_logradouro"
-                            name="ong_logradouro">
+                            id="logradouro"
+                            name="logradouro">
                     </div>
 
                     <div class="col-md-2">
-                        <label for="ong_numero" class="form-label">
+                        <label for="numero" class="form-label">
                             Número
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_numero"
-                            name="ong_numero">
+                            id="numero"
+                            name="numero">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="ong_complemento" class="form-label">
+                        <label for="complemento" class="form-label">
                             Complemento
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_complemento"
-                            name="ong_complemento">
+                            id="complemento"
+                            name="complemento">
                     </div>
 
                 </div>
@@ -147,35 +147,35 @@
                 <div class="row g-3 mb-4">
 
                     <div class="col-md-4">
-                        <label for="ong_tel1" class="form-label">
-                            Telefone 1
+                        <label for="telefone_1" class="form-label">
+                            telefone_efone 1
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_tel1"
-                            name="ong_tel1">
+                            id="telefone_1"
+                            name="telefone_1">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="ong_tel2" class="form-label">
-                            Telefone 2
+                        <label for="telefone_2" class="form-label">
+                            telefone_efone 2
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="ong_tel2"
-                            name="ong_tel2">
+                            id="telefone_2"
+                            name="telefone_2">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="ong_status" class="form-label">
+                        <label for="status" class="form-label">
                             Status
                         </label>
 
                         <select class="form-select"
-                            id="ong_status"
-                            name="ong_status">
+                            id="status"
+                            name="status">
 
                             <option value="Ativa" selected>
                                 Ativa

@@ -23,28 +23,28 @@
 
                     <div class="col-md-6">
 
-                        <label for="cln_nome" class="form-label">
+                        <label for="nome" class="form-label">
                             Nome da Clínica <span class="text-danger">*</span>
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_nome"
-                            name="cln_nome"
+                            id="nome"
+                            name="nome"
                             required>
 
                     </div>
 
                     <div class="col-md-3">
 
-                        <label for="cln_cnpj" class="form-label">
+                        <label for="cnpj" class="form-label">
                             CNPJ
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_cnpj"
-                            name="cln_cnpj">
+                            id="cnpj"
+                            name="cnpj">
 
                     </div>
 
@@ -57,92 +57,92 @@
 
                     <div class="col-md-2">
 
-                        <label for="cln_cep" class="form-label">
+                        <label for="cep" class="form-label">
                             CEP
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_cep"
-                            name="cln_cep">
+                            id="cep"
+                            name="cep">
 
                     </div>
 
                     <div class="col-md-2">
 
-                        <label for="cln_estado" class="form-label">
+                        <label for="estado" class="form-label">
                             Estado
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_estado"
-                            name="cln_estado">
+                            id="estado"
+                            name="estado">
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <label for="cln_cidade" class="form-label">
+                        <label for="cidade" class="form-label">
                             Cidade
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_cidade"
-                            name="cln_cidade">
+                            id="cidade"
+                            name="cidade">
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <label for="cln_bairro" class="form-label">
+                        <label for="bairro" class="form-label">
                             Bairro
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_bairro"
-                            name="cln_bairro">
+                            id="bairro"
+                            name="bairro">
 
                     </div>
 
                     <div class="col-md-6">
 
-                        <label for="cln_logradouro" class="form-label">
+                        <label for="logradouro" class="form-label">
                             Logradouro
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_logradouro"
-                            name="cln_logradouro">
+                            id="logradouro"
+                            name="logradouro">
 
                     </div>
 
                     <div class="col-md-2">
 
-                        <label for="cln_numero" class="form-label">
+                        <label for="numero" class="form-label">
                             Número
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_numero"
-                            name="cln_numero">
+                            id="numero"
+                            name="numero">
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <label for="cln_complemento" class="form-label">
+                        <label for="complemento" class="form-label">
                             Complemento
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_complemento"
-                            name="cln_complemento">
+                            id="complemento"
+                            name="complemento">
 
                     </div>
 
@@ -155,27 +155,27 @@
 
                     <div class="col-md-4">
 
-                        <label for="cln_tel1" class="form-label">
-                            Telefone 1
+                        <label for="telefone_1" class="form-label">
+                            telefone_efone 1
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_tel1"
-                            name="cln_tel1">
+                            id="telefone_1"
+                            name="telefone_1">
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <label for="cln_tel2" class="form-label">
-                            Telefone 2
+                        <label for="telefone_2" class="form-label">
+                            telefone_efone 2
                         </label>
 
                         <input type="text"
                             class="form-control"
-                            id="cln_tel2"
-                            name="cln_tel2">
+                            id="telefone_2"
+                            name="telefone_2">
 
                     </div>
 
