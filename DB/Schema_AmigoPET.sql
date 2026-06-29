@@ -1,6 +1,6 @@
 use eswdev14_dsw_2026;
 
-create table login (
+create table if not exists login (
     id int(11) AUTO_INCREMENT primary key ,
     data_cadastro datetime,
     tipo_usuario enum('administrador', 'ong', 'rastreador', 'adotante', 'veterinario'),
@@ -9,7 +9,7 @@ create table login (
     status enum('a', 'i')
 );
 
-create table administrador (
+create table if not exists administrador (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(150),
     cpf varchar(14),
@@ -24,7 +24,7 @@ create table administrador (
     telefone_2 varchar(20)
 );
 
-create table veterinario (
+create table if not exists veterinario (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     crvm varchar(8),
@@ -41,7 +41,7 @@ create table veterinario (
     estado varchar(100)
 );
 
-create table adotante (
+create table if not exists adotante (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     cpf varchar(14),
@@ -58,7 +58,7 @@ create table adotante (
     logradouro varchar(150)
 );
 
-create table ong (
+create table if not exists ong (
     id int(11) AUTO_INCREMENT primary key ,
     cep varchar(9),
     cnpj varchar(18),
@@ -74,7 +74,7 @@ create table ong (
     cidade varchar(100)
 );
 
-create table rastreador (
+create table if not exists rastreador (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     cpf varchar(14),
@@ -88,7 +88,7 @@ create table rastreador (
     complemento text
 );
 
-create table clinica (
+create table if not exists clinica (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     cnpj varchar(18),
@@ -103,13 +103,13 @@ create table clinica (
     telefone_2 varchar(20)
 );
 
-create table vet_clinica (
+create table if not exists vet_clinica (
     id int(11) AUTO_INCREMENT primary key ,
     fk_clinica_id int(11),
     fk_veterinario_id int(11)
 );
 
-create table historico_animal (
+create table if not exists historico_animal (
     id int(11) AUTO_INCREMENT primary key ,
     descricao text,
     data datetime,
@@ -119,31 +119,45 @@ create table historico_animal (
     fk_veterinario_id int(11)
 );
 
-create table animal (
+create table if not exists animal (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     data_nascimento date,
     sexo enum('m', 'f')
 );
 
-create table animal_raca (
+create table if not exists procedimento (
+    id int(11) AUTO_INCREMENT primary key,
+    nome varchar(100),
+    tipo enum('consulta', 'cirurgia', 'exame', 'castracao', 'outro'),
+    data date,
+    veterinario_nome varchar(100),
+    observacoes text,
+    anexo_url varchar(255),
+    fk_animal_id int(11),
+    fk_login_id int(11),
+    criado_em datetime,
+    criado_por varchar(150)
+);
+
+create table if not exists animal_raca (
     id int(11) AUTO_INCREMENT primary key ,
     fk_raca_id int(11),
     fk_animal_id int(11)
 );
 
-create table raca (
+create table if not exists raca (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100),
     fk_especie_id int(11)
 );
 
-create table especie (
+create table if not exists especie (
     id int(11) AUTO_INCREMENT primary key ,
     nome varchar(100)
 );
 
-create table solicitacao_adocao (
+create table if not exists solicitacao_adocao (
     id int(11) AUTO_INCREMENT primary key ,
     data datetime,
     status enum('a', 'i', 'p'),
@@ -152,97 +166,107 @@ create table solicitacao_adocao (
     fk_animal_id int(11)
 );
 
-create table ong_animal (
+create table if not exists ong_animal (
     id int(11) AUTO_INCREMENT primary key ,
     fk_ong_id int(11),
     fk_animal_id int(11)
 );
- 
+
 alter table login add constraint fk_login_2
     foreign key (fk_adotante_id)
     references adotante (id)
     on delete cascade;
- 
+
 alter table login add constraint fk_login_3
     foreign key (fk_rastreador_id)
     references rastreador (id)
     on delete cascade;
- 
+
 alter table login add constraint fk_login_4
     foreign key (fk_ong_id)
     references ong (id)
     on delete cascade;
- 
+
 alter table login add constraint fk_login_5
     foreign key (fk_administrador_id)
     references administrador (id)
     on delete cascade;
- 
+
 alter table login add constraint fk_login_6
     foreign key (fk_veterinario_id)
     references veterinario (id)
     on delete cascade;
- 
+
 alter table vet_clinica add constraint fk_vet_clinica_2
     foreign key (fk_clinica_id)
     references clinica (id)
     on delete cascade;
- 
+
 alter table vet_clinica add constraint fk_vet_clinica_3
     foreign key (fk_veterinario_id)
     references veterinario (id)
     on delete cascade;
- 
+
 alter table historico_animal add constraint fk_historico_animal_2
     foreign key (fk_animal_id)
     references animal (id)
     on delete cascade;
- 
+
 alter table historico_animal add constraint fk_historico_animal_3
     foreign key (fk_ong_id)
     references ong (id)
     on delete cascade;
- 
+
 alter table historico_animal add constraint fk_historico_animal_4
     foreign key (fk_veterinario_id)
     references veterinario (id)
     on delete cascade;
- 
+
+alter table procedimento add constraint fk_procedimento_1
+    foreign key (fk_animal_id)
+    references animal (id)
+    on delete cascade;
+
+alter table procedimento add constraint fk_procedimento_2
+    foreign key (fk_login_id)
+    references login (id)
+    on delete cascade;
+
 alter table animal_raca add constraint fk_animal_raca_2
     foreign key (fk_raca_id)
     references raca (id)
     on delete cascade;
- 
+
 alter table animal_raca add constraint fk_animal_raca_3
     foreign key (fk_animal_id)
     references animal (id)
     on delete restrict;
- 
+
 alter table raca add constraint fk_raca_2
     foreign key (fk_especie_id)
     references especie (id)
     on delete cascade;
- 
+
 alter table solicitacao_adocao add constraint fk_solicitacao_adocao_2
     foreign key (fk_adotante_id)
     references adotante (id)
     on delete cascade;
- 
+
 alter table solicitacao_adocao add constraint fk_solicitacao_adocao_3
     foreign key (fk_animal_id)
     references animal (id)
     on delete cascade;
- 
+
 alter table ong_animal add constraint fk_ong_animal_2
     foreign key (fk_ong_id)
     references ong (id)
     on delete cascade;
- 
+
 alter table ong_animal add constraint fk_ong_animal_3
     foreign key (fk_animal_id)
     references animal (id)
     on delete cascade;
-    
+
 
 -- adição do numero nas tabelas faltantes.
 alter table ong add numero int(11);
@@ -253,52 +277,52 @@ alter table rastreador add numero int(11);
 alter table veterinario change crvm crmv VARCHAR(8);
 
 -- Alteração da tabela Adotante, adicionando a Fk do Login
-Alter table adotante 
+Alter table adotante
 add fk_login_id int(11) NOT NULL;
-Alter table adotante 
+Alter table adotante
 add constraint fk_adotante_login
  foreign key(fk_login_id)
  references login(id);
 
-alter table animal 
+alter table animal
     add column especie varchar(50) null,
     add column porte enum('pequeno', 'medio', 'grande') null,
     add column localizacao varchar(100) null,
     add column foto varchar(255) null,
     add column status enum('disponivel', 'adotado', 'em_tratamento', 'reservado') not null default 'disponivel';
 
--- adição da data de atualização a tabela login 
-alter table login 
+-- adição da data de atualização a tabela login
+alter table login
 	add column data_atualizacao datetime default current_timestamp;
 
 -- alteração do valor da coluna senha do login
 alter table login
 	change senha senha varchar(255) NOT NULL;
-    
--- alteraçõe necessarias na tabela de login; 
-alter table login 
+
+-- alteraçõe necessarias na tabela de login;
+alter table login
 	modify data_atualizacao datetime default current_timestamp on update current_timestamp not null,
     modify email varchar(255) not null,
     modify tipo_usuario enum('administrador','ong', 'rastreador', 'adotante', 'veterinario') default 'adotante' not null,
     modify status enum('a', 'i') default 'a' not null,
     modify data_cadastro datetime default current_timestamp not null;
 
-ALTER TABLE login 
+ALTER TABLE login
 	MODIFY email VARCHAR(191) NOT NULL;
 
-ALTER TABLE login 
+ALTER TABLE login
 	ADD CONSTRAINT uq_login_email UNIQUE (email);
 
--- Alteração da tabela adotante, adicionado o valor bom com padrao da coluna status    
-alter table adotante 
+-- Alteração da tabela adotante, adicionado o valor bom com padrao da coluna status
+alter table adotante
 	modify status enum('pessimo','ruim', 'bom', 'muito bom', 'excelente') not null default 'bom';
-    
+
 -- alteração da Tabela do adotante, adicionando colunas não nulas e unicas
- alter table adotante 
+ alter table adotante
 	modify nome varchar(100) not null,
     modify cpf varchar(14) not null unique,
     modify telefone_1 varchar(20) not null,
-    modify data_nascimento date not null;   
+    modify data_nascimento date not null;
 -- adição da contraint para o CPF do Adotante
 ALTER TABLE adotante
 ADD CONSTRAINT uq_adotante_cpf UNIQUE (cpf);
