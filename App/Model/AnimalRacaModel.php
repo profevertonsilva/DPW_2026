@@ -2,16 +2,19 @@
 
 namespace App\Model;
 
-class AnimalRaca {
-    private $anlRa_id;
+class AnimalRacaModel
+{
+    private $id;
     private $fk_animal_id;
     private $fk_raca_id;
 
-    public function __get($nome) {
+    public function __get($nome)
+    {
         return $this->$nome;
     }
 
-    public function __set($nome, $valor) {
+    public function __set($nome, $valor)
+    {
         $this->$nome = $valor;
     }
 }

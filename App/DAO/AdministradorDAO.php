@@ -1,176 +1,199 @@
-<?php 
+<?php
 
 namespace App\DAO;
 
 use App\DAO;
 use App\Model\AdministradorModel;
-use FW\Controller\FuncoesGlobais;
 
-class AdministradorDAO extends DAO {
-    public function inserir($obj) {
+class AdministradorDAO extends DAO
+{
+    private function mapRowToModel(array $row): AdministradorModel
+    {
+        $model = new AdministradorModel();
+        $model->__set('adm_id',          $row['id']              ?? null);
+        $model->__set('adm_nome',        $row['nome']            ?? null);
+        $model->__set('adm_cpf',         $row['cpf']             ?? null);
+        $model->__set('adm_cep',         $row['cep']             ?? null);
+        $model->__set('adm_logradouro',  $row['logradouro']      ?? null);
+        $model->__set('adm_estado',      $row['estado']          ?? null);
+        $model->__set('adm_complemento', $row['complemento']     ?? null);
+        $model->__set('adm_dn',          $row['data_nascimento'] ?? null);
+        $model->__set('adm_cidade',      $row['cidade']          ?? null);
+        $model->__set('adm_bairro',      $row['bairro']          ?? null);
+        $model->__set('adm_numero',      $row['numero']          ?? null);
+        $model->__set('adm_tel1',        $row['telefone']        ?? null);
+        $model->__set('adm_tel2',        $row['telefone_2']      ?? null);
+        return $model;
+    }
+
+    public function inserir($obj)
+    {
         try {
-             $adm_nome =  $obj->__get('adm_nome');
-             $adm_cpf = $obj->__get('adm_cpf');
-             $adm_cep = $obj->__get('adm_cep');
-             $adm_logradouro = $obj->__get('adm_logradouro');
-             $adm_estado = $obj->__get('adm_estado');
-             $adm_complemento = $obj->__get('adm_complemento');
-             $adm_dn = $obj->__get('adm_dn');
-             $adm_cidade = $obj->__get('adm_cidade');
-             $adm_bairro = $obj->__get('adm_bairro');
-             $adm_numero = $obj->__get('adm_numero'); // adicionar no bd
-             $adm_tel1 = $obj->__get('adm_tel1');
-             $adm_tel2 = $obj->__get('adm_tel2');
-
             $sql = "INSERT INTO administrador (
-                        adm_nome,
-                        adm_cpf,
-                        adm_cep,
-                        adm_logradouro,
-                        adm_estado,
-                        adm_complemento,
-                        adm_dn,
-                        adm_cidade,
-                        adm_bairro,
-                        adm_numero,
-                        adm_tel1,
-                        adm_tel2
+                        nome,
+                        cpf,
+                        cep,
+                        logradouro,
+                        estado,
+                        complemento,
+                        data_nascimento,
+                        cidade,
+                        bairro,
+                        numero,
+                        telefone,
+                        telefone_2
                     ) VALUES (
-                        :adm_nome,
-                        :adm_cpf,
-                        :adm_cep,
-                        :adm_logradouro,
-                        :adm_estado,
-                        :adm_complemento,
-                        :adm_dn,
-                        :adm_cidade,
-                        :adm_bairro,
-                        :adm_numero,
-                        :adm_tel1,
-                        :adm_tel2
+                        :nome,
+                        :cpf,
+                        :cep,
+                        :logradouro,
+                        :estado,
+                        :complemento,
+                        :data_nascimento,
+                        :cidade,
+                        :bairro,
+                        :numero,
+                        :telefone,
+                        :telefone_2
                     )";
-                      $stmt = $this->getConn()->prepare($sql);
-            $stmt->bindValue(':adm_nome', $adm_nome);
-            $stmt->bindValue(':adm_cpf', $adm_cpf);
-            $stmt->bindValue(':adm_cep', $adm_cep);
-            $stmt->bindValue(':adm_logradouro', $adm_logradouro);
-            $stmt->bindValue(':adm_estado', $adm_estado);
-            $stmt->bindValue(':adm_complemento', $adm_complemento);
-            $stmt->bindValue(':adm_dn', $adm_dn);
-            $stmt->bindValue(':adm_cidade', $adm_cidade);
-            $stmt->bindValue(':adm_numero', $adm_numero);  
-            $stmt->bindValue(':adm_tel1', $adm_tel1);
-            $stmt->bindValue(':adm_tel2', $adm_tel2);
+
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(':nome',            $obj->__get('adm_nome'));
+            $stmt->bindValue(':cpf',             $obj->__get('adm_cpf'));
+            $stmt->bindValue(':cep',             $obj->__get('adm_cep'));
+            $stmt->bindValue(':logradouro',      $obj->__get('adm_logradouro'));
+            $stmt->bindValue(':estado',          $obj->__get('adm_estado'));
+            $stmt->bindValue(':complemento',     $obj->__get('adm_complemento'));
+            $stmt->bindValue(':data_nascimento', $obj->__get('adm_dn'));
+            $stmt->bindValue(':cidade',          $obj->__get('adm_cidade'));
+            $stmt->bindValue(':bairro',          $obj->__get('adm_bairro'));
+            $stmt->bindValue(':numero',          $obj->__get('adm_numero'));
+            $stmt->bindValue(':telefone',        $obj->__get('adm_tel1'));
+            $stmt->bindValue(':telefone_2',      $obj->__get('adm_tel2'));
             $stmt->execute();
-        }
-        catch(\PDOException $ex) {
+            return $this->getConn()->lastInsertId();
+        } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
         }
     }
 
-    public function listar(){
-    try{
-            $administrador = array();
-            $sql = "SELECT 
-                            a.*, 
-                            l.log_email 
-                        FROM 
-                            administrador a,
-                            login l
-                        WHERE
-                            ad.fk_login_log_id = l.log_id
-                    ";
-            $stmt = $this->getConn()->prepare($sql);
+    public function listar()
+    {
+        try {
+            $lista = [];
+            $sql   = "SELECT * FROM administrador ORDER BY nome";
+            $stmt  = $this->getConn()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-            foreach($result as $row){
-                $administradorModel = new AdministradorModel();
-                
-                $global = new FuncoesGlobais();
-                $global->popularModel($administradorModel, $row);
-
-                array_push($administrador, $administradorModel);
+            foreach ($result as $row) {
+                array_push($lista, $this->mapRowToModel($row));
             }
-            return $administrador;
-        }
-        catch(\PDOException $ex){
+            return $lista;
+        } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
-        }    
-    }
-
-    public function excluir($obj){
-    try{
-        $sql = "DELETE FROM administrador WHERE adm_id = :id";
-        
-        $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":id", $obj->getId());
-        $stmt->execute();
-
-        return true;
-    }
-    catch(\PDOException $ex){
-        header('Location:/error103');
-        die();
-    }
-}
-    public function alterar($obj){
-    try{
-        $sql = "UPDATE administrador SET 
-                    adm_nome = :nome,
-                    fk_login_log_id = :login
-                WHERE 
-                    adm_id = :id";
-
-        $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":nome", $obj->getNome());
-        $stmt->bindValue(":login", $obj->getLoginId());
-        $stmt->bindValue(":id", $obj->getId());
-
-        $stmt->execute();
-
-        return true;
-    }
-    catch(\PDOException $ex){
-        header('Location:/error103');
-        die();
-    }
-}
-    public function buscarPorId($id){
-    try{
-        $sql = "SELECT 
-                    a.*, 
-                    l.log_email
-                FROM 
-                    administrador a,
-                    login l
-                WHERE 
-                    a.fk_login_log_id = l.log_id
-                    AND a.adm_id = :id";
-
-        $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        $stmt->execute();
-
-        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if($row){
-            $administradorModel = new AdministradorModel();
-            
-            $global = new FuncoesGlobais();
-            $global->popularModel($administradorModel, $row);
-
-            return $administradorModel;
         }
+    }
 
-        return null;
+    public function buscarPorId($id)
+    {
+        try {
+            $sql  = "SELECT * FROM administrador WHERE id = :id";
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($row) {
+                return $this->mapRowToModel($row);
+            }
+            return false;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
     }
-    catch(\PDOException $ex){
-        header('Location:/error103');
-        die();
+
+    public function alterar($obj)
+    {
+        try {
+            $sql = "UPDATE administrador SET
+                        nome            = :nome,
+                        cpf             = :cpf,
+                        cep             = :cep,
+                        logradouro      = :logradouro,
+                        estado          = :estado,
+                        complemento     = :complemento,
+                        data_nascimento = :data_nascimento,
+                        cidade          = :cidade,
+                        bairro          = :bairro,
+                        numero          = :numero,
+                        telefone        = :telefone,
+                        telefone_2      = :telefone_2
+                    WHERE id = :id";
+
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(':id',              $obj->__get('adm_id'));
+            $stmt->bindValue(':nome',            $obj->__get('adm_nome'));
+            $stmt->bindValue(':cpf',             $obj->__get('adm_cpf'));
+            $stmt->bindValue(':cep',             $obj->__get('adm_cep'));
+            $stmt->bindValue(':logradouro',      $obj->__get('adm_logradouro'));
+            $stmt->bindValue(':estado',          $obj->__get('adm_estado'));
+            $stmt->bindValue(':complemento',     $obj->__get('adm_complemento'));
+            $stmt->bindValue(':data_nascimento', $obj->__get('adm_dn'));
+            $stmt->bindValue(':cidade',          $obj->__get('adm_cidade'));
+            $stmt->bindValue(':bairro',          $obj->__get('adm_bairro'));
+            $stmt->bindValue(':numero',          $obj->__get('adm_numero'));
+            $stmt->bindValue(':telefone',        $obj->__get('adm_tel1'));
+            $stmt->bindValue(':telefone_2',      $obj->__get('adm_tel2'));
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
     }
-}
-    
+
+    public function excluir($id)
+    {
+        try {
+            $sql  = "DELETE FROM administrador WHERE id = :id";
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
+    }
+
+    public function listarUsuariosParaPromover()
+    {
+        try {
+            $lista = [];
+            $sql   = "SELECT id, email, tipo_usuario, status FROM login WHERE tipo_usuario != 'administrador' ORDER BY email";
+            $stmt  = $this->getConn()->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
+    }
+
+    public function promoverUsuario($loginId)
+    {
+        try {
+            $sql = "UPDATE login SET tipo_usuario = 'administrador' WHERE id = :id";
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(':id', $loginId);
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
+    }
 }

@@ -28,12 +28,12 @@
                         <?php if (!empty($this->getView()->adotantes)): ?>
                             <?php foreach ($this->getView()->adotantes as $adotante): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($adotante->__get('adt_id')) ?></td>
-                                    <td><?= htmlspecialchars($adotante->__get('adt_nome')) ?></td>
-                                    <td><?= htmlspecialchars($adotante->__get('adt_cpf')) ?></td>
-                                    <td><?= htmlspecialchars($adotante->__get('adt_tel1')) ?></td>
-                                    <td><?= htmlspecialchars($adotante->__get('adt_cidade')) ?></td>
-                                    <td><?= htmlspecialchars($adotante->__get('adt_estado')) ?></td>
+                                    <td><?= htmlspecialchars($adotante->__get('id')) ?></td>
+                                    <td><?= htmlspecialchars($adotante->__get('nome') ?? '') ?></td>
+                                    <td><?= htmlspecialchars($adotante->__get('cpf') ?? '') ?></td>
+                                    <td><?= htmlspecialchars($adotante->__get('telefone_1') ?? '') ?></td>
+                                    <td><?= htmlspecialchars($adotante->__get('cidade') ?? '') ?></td>
+                                    <td><?= htmlspecialchars($adotante->__get('estado') ?? '') ?></td>
                                     <td>
                                         <?php
                                         $statusMap = [
@@ -43,20 +43,20 @@
                                             'muito bom' => ['label' => 'Muito Bom', 'class' => 'primary'],
                                             'excelente' => ['label' => 'Excelente', 'class' => 'info'],
                                         ];
-                                        $st = strtolower($adotante->__get('adt_status') ?? '');
+                                        $st = strtolower($adotante->__get('status') ?? '');
                                         $info = $statusMap[$st] ?? ['label' => ucfirst($st), 'class' => 'secondary'];
                                         ?>
                                         <span class="badge bg-<?= $info['class'] ?>"><?= $info['label'] ?></span>
                                     </td>
                                     <td>
-                                        <a href="/dashboard/adotante/editar/<?= $adotante->__get('adt_id') ?>"
+                                        <a href="/dashboard/adotante/editar/<?= $adotante->__get('id') ?>"
                                            class="btn btn-warning btn-sm me-1">
                                             <i class="fas fa-edit"></i> Editar
                                         </a>
                                         <form method="POST" action="/dashboard/adotante/excluir"
                                               style="display:inline-block;"
                                               onsubmit="return confirm('Tem certeza que deseja excluir este adotante?');">
-                                            <input type="hidden" name="id" value="<?= $adotante->__get('adt_id') ?>">
+                                            <input type="hidden" name="id" value="<?= $adotante->__get('id') ?>">
                                             <button type="submit" class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i> Excluir
                                             </button>

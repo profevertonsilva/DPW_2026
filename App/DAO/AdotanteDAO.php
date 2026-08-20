@@ -95,8 +95,7 @@ class AdotanteDAO extends DAO
             $complemento = $obj->__get("complemento");
             $telefone_1 = $obj->__get("telefone_1");
             $telefone_2 = $obj->__get("telefone_2");
-            $status = $obj->__get("status");
-
+            $fk_login_id = $obj->__get("fk_login_id");
 
             $sql = "INSERT INTO adotante (
                 nome,
@@ -111,7 +110,7 @@ class AdotanteDAO extends DAO
                 complemento,
                 telefone_1,
                 telefone_2,
-                status
+                fk_login_id
             ) VALUES (
                 :nome,
                 :cpf,
@@ -125,10 +124,12 @@ class AdotanteDAO extends DAO
                 :complemento,
                 :telefone_1,
                 :telefone_2,
-                :status
+                :fk_login_id
             )";
 
-            $stmt = $this->getConn()->prepare($sql);
+            $conn = $this->getConn();
+
+            $stmt = $conn->prepare($sql);
             $stmt->bindValue(':nome', $nome);
             $stmt->bindValue(':cpf', $cpf);
             $stmt->bindValue(':data_nascimento', $data_nascimento);
@@ -141,21 +142,100 @@ class AdotanteDAO extends DAO
             $stmt->bindValue(':complemento', $complemento);
             $stmt->bindValue(':telefone_1', $telefone_1);
             $stmt->bindValue(':telefone_2', $telefone_2);
-            $stmt->bindValue(':status', $status);
+            $stmt->bindValue(':fk_login_id', $fk_login_id);
             $stmt->execute();
+
+            return $conn->lastInsertId();
         } catch (\PDOException $ex) {
             header('Location:/error103');
             die();
         }
     }
 
+    public function inserirComExcecao($obj)
+    {
+        try {
+            $nome = $obj->__get("nome");
+            $cpf = $obj->__get("cpf");
+            $data_nascimento = $obj->__get("data_nascimento");
+            $cep = $obj->__get("cep");
+            $estado = $obj->__get("estado");
+            $cidade = $obj->__get("cidade");
+            $bairro = $obj->__get("bairro");
+            $logradouro = $obj->__get("logradouro");
+            $numero = $obj->__get("numero");
+            $complemento = $obj->__get("complemento");
+            $telefone_1 = $obj->__get("telefone_1");
+            $telefone_2 = $obj->__get("telefone_2");
+            $fk_login_id = $obj->__get("fk_login_id");
+
+            $sql = "INSERT INTO adotante (
+                nome,
+                cpf,
+                data_nascimento,
+                cep,
+                estado,
+                cidade,
+                bairro,
+                logradouro,
+                numero,
+                complemento,
+                telefone_1,
+                telefone_2,
+                fk_login_id
+            ) VALUES (
+                :nome,
+                :cpf,
+                :data_nascimento,
+                :cep,
+                :estado,
+                :cidade,
+                :bairro,
+                :logradouro,
+                :numero,
+                :complemento,
+                :telefone_1,
+                :telefone_2,
+                :fk_login_id
+            )";
+
+            $conn = $this->getConn();
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(':nome', $nome);
+            $stmt->bindValue(':cpf', $cpf);
+            $stmt->bindValue(':data_nascimento', $data_nascimento);
+            $stmt->bindValue(':cep', $cep);
+            $stmt->bindValue(':estado', $estado);
+            $stmt->bindValue(':cidade', $cidade);
+            $stmt->bindValue(':bairro', $bairro);
+            $stmt->bindValue(':logradouro', $logradouro);
+            $stmt->bindValue(':numero', $numero);
+            $stmt->bindValue(':complemento', $complemento);
+            $stmt->bindValue(':telefone_1', $telefone_1);
+            $stmt->bindValue(':telefone_2', $telefone_2);
+            $stmt->bindValue(':fk_login_id', $fk_login_id);
+            $stmt->execute();
+
+            return $conn->lastInsertId();
+        } catch (\PDOException $ex) {
+           throw $ex;
+        }
+    }
+
     public  function excluir($id)
     {
-        $sql = "DELETE FROM adotante WHERE id = :id";
+        try {
+            $sql = "DELETE FROM adotante WHERE id = :id";
 
-        $stmt = $this->getConn()->prepare($sql);
-        $stmt->bindValue(":id", $id);
-        $stmt->execute();
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(":id", $id);
+            $stmt->execute();
+
+        } catch (\PDOException $ex) {
+            header('Location: /error103');
+            die();
+        }
     }
     public  function alterar($obj)
     {
@@ -175,7 +255,7 @@ class AdotanteDAO extends DAO
             $telefone_2 = $obj->__get("telefone_2");
             $status = $obj->__get("status");
 
-            $sql = "UPDATE adotante as a
+            $sql = "UPDATE adotante
                 SET 
                 nome = :nome,
                 cpf = :cpf,
@@ -216,15 +296,29 @@ class AdotanteDAO extends DAO
     public  function buscarPorId($id)
     {
         try {
-            $sql = "SELECT * 
-            FROM Adotante
+            $sql = "SELECT 
+                id,
+                nome,
+                cpf,
+                data_nascimento,
+                cep,
+                estado,
+                cidade,
+                bairro,
+                logradouro,
+                numero,
+                complemento,
+                telefone_1,
+                telefone_2,
+                fk_login_id 
+            FROM adotante
             WHERE id = :id";
 
             $stmt = $this->getConn()->prepare($sql);
             $stmt->bindValue(':id', $id);
             $stmt->execute();
             $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
-            if ($resultado > 0) {
+            if ($resultado) {
                 $adotanteModel = new AdotanteModel();
 
                 $global = new FuncoesGlobais();
@@ -239,13 +333,68 @@ class AdotanteDAO extends DAO
             die();
         }
     }
+
+    public  function buscarPorCpf($cpf)
+    {
+        try {
+            $sql = "SELECT 
+                id,
+                nome,
+                cpf,
+                data_nascimento,
+                cep,
+                estado,
+                cidade,
+                bairro,
+                logradouro,
+                numero,
+                complemento,
+                telefone_1,
+                telefone_2,
+                fk_login_id 
+            FROM adotante
+            WHERE cpf = :cpf";
+
+            $stmt = $this->getConn()->prepare($sql);
+            $stmt->bindValue(':cpf', $cpf);
+            $stmt->execute();
+            $resultado = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if ($resultado) {
+                $adotanteModel = new AdotanteModel();
+
+                $global = new FuncoesGlobais();
+                $global->popularModel($adotanteModel, $resultado);
+
+                return $adotanteModel;
+            }
+
+            return false;
+        } catch (\PDOException $ex) {
+            header('Location:/error103');
+            die();
+        }
+    }
+
     public function listar()
     {
         try {
             $adotantes = array();
 
             $sql = "SELECT 
-                a.*,
+                a.id,
+                a.nome,
+                a.cpf,
+                a.data_nascimento,
+                a.cep,
+                a.estado,
+                a.cidade,
+                a.bairro,
+                a.logradouro,
+                a.numero,
+                a.complemento,
+                a.telefone_1,
+                a.telefone_2,
+                a.fk_login_id,
                 l.email
             FROM 
                 adotante a

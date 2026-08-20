@@ -18,7 +18,10 @@ class AdotanteModel {
     private $telefone_1;
     private $telefone_2;
     private $status;
-    private $fk_login_id;
+
+    // Login
+    private $fk_login_id; 
+    private $email;  
 
     public function __set($nome, $valor) {
         $this->$nome = $valor;
